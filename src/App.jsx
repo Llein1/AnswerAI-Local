@@ -255,8 +255,8 @@ function AppContent() {
         // Error handling via toast
 
         try {
-            // Generate AI response using RAG
-            const { response, sources } = await generateRAGResponse(message, activeFiles)
+            // Generate AI response using RAG with selected method
+            const { response, sources } = await generateRAGResponse(message, activeFiles, settings.ragMethod)
 
             const aiMessage = {
                 id: (Date.now() + 1).toString(),
@@ -444,6 +444,30 @@ function AppContent() {
             const results = searchConversations(searchQuery, defaultFilters)
             setSearchResults(results)
             setSelectedResultIndex(0)
+        }
+    }
+
+    const handleChromaConnected = async () => {
+        const activeFiles = files.filter(f => f.active)
+        for (const file of activeFiles) {
+            const count = await storageFacade.vectors.getChunkCount(file.id)
+            if (count === 0) {
+                setProcessingFiles(prev => new Set([...prev, file.id]))
+                processDocument(file.text, file.id, file.name, file.pages || [])
+                    .then(count => {
+                        console.log(`✅ Embedding tamamlandı (Test sonrası): ${file.name} (${count} chunk)`)
+                    })
+                    .catch(err => {
+                        console.warn(`⚠️ Embedding başarısız (${file.name}):`, err.message)
+                    })
+                    .finally(() => {
+                        setProcessingFiles(prev => {
+                            const next = new Set(prev)
+                            next.delete(file.id)
+                            return next
+                        })
+                    })
+            }
         }
     }
 
@@ -745,6 +769,7 @@ function AppContent() {
                     currentSettings={settings}
                     onSave={handleSaveSettings}
                     onClose={() => setSettingsOpen(false)}
+                    onChromaConnected={handleChromaConnected}
                 />
             )}
         </Layout>

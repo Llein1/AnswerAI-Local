@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
-import { X, Eye, EyeOff, RotateCcw, Save, Settings as SettingsIcon, Wifi, WifiOff, Terminal } from 'lucide-react'
+import { X, Eye, EyeOff, RotateCcw, Save, Settings as SettingsIcon, Wifi, WifiOff, Terminal, Brain } from 'lucide-react'
 import { validateApiKey, validateSettings } from '../services/settingsStorage'
 import { checkHealth } from '../services/chromaDBService'
+import { RAG_METHODS } from '../services/ragService'
 
-export default function Settings({ isOpen, currentSettings, onSave, onClose }) {
+export default function Settings({ isOpen, currentSettings, onSave, onClose, onChromaConnected }) {
     const [settings, setSettings] = useState(currentSettings)
     const [showApiKey, setShowApiKey] = useState(false)
     const [hasChanges, setHasChanges] = useState(false)
@@ -83,6 +84,9 @@ export default function Settings({ isOpen, currentSettings, onSave, onClose }) {
             })
             if (!response.ok) throw new Error(`HTTP ${response.status}`)
             setChromaStatus('ok')
+            if (onChromaConnected) {
+                onChromaConnected();
+            }
         } catch (err) {
             setChromaStatus('error')
             setChromaError(err.message)
@@ -94,7 +98,7 @@ export default function Settings({ isOpen, currentSettings, onSave, onClose }) {
 
     const setupCommands = [
         { label: 'pip kurulumu', cmd: 'pip install chromadb' },
-        { label: 'sunucu başlatma', cmd: 'chroma run --host localhost --port 8000' },
+        { label: 'sunucu başlatma', cmd: 'chroma run --path ./chroma_data --host localhost --port 8000' },
     ]
 
     return (
@@ -366,6 +370,88 @@ export default function Settings({ isOpen, currentSettings, onSave, onClose }) {
                                 <option value="gemini-2.5-flash-lite">Gemini 2.5 Flash-Lite (Ekonomik)</option>
                                 <option value="gemma-3-27b-it">Gemma 3 27B (En Ekonomik)</option>
                             </select>
+                        </div>
+                        {/* RAG Method Selection */}
+                        <div className="space-y-3">
+                            <div className="flex items-center gap-2">
+                                <Brain className="w-4 h-4 text-primary-400" />
+                                <label className="text-sm font-medium text-gray-300">RAG Retrieval Yöntemi</label>
+                            </div>
+
+                            {/* Method Grid Selector */}
+                            <div className="grid grid-cols-2 gap-2">
+                                {Object.values(RAG_METHODS).map(method => (
+                                    <button
+                                        key={method.id}
+                                        onClick={() => handleChange('ragMethod', method.id)}
+                                        className={`flex items-start gap-2 p-3 rounded-lg border text-left transition-all ${
+                                            settings.ragMethod === method.id
+                                                ? 'border-primary-500 bg-primary-500/15 shadow-md shadow-primary-500/10'
+                                                : 'border-slate-600 bg-slate-900/60 hover:border-slate-500 hover:bg-slate-800'
+                                        }`}
+                                    >
+                                        <span className="text-xl shrink-0 mt-0.5">{method.icon}</span>
+                                        <div className="min-w-0">
+                                            <p className={`text-xs font-semibold line-clamp-2 leading-tight ${
+                                                settings.ragMethod === method.id ? 'text-primary-300' : 'text-gray-200'
+                                            }`}>
+                                                {method.name}
+                                            </p>
+                                            <span className={`inline-block text-[10px] px-1.5 py-0.5 rounded mt-0.5 ${
+                                                settings.ragMethod === method.id
+                                                    ? 'bg-primary-500/30 text-primary-200'
+                                                    : 'bg-slate-700 text-gray-400'
+                                            }`}>
+                                                {method.badge}
+                                            </span>
+                                        </div>
+                                    </button>
+                                ))}
+                            </div>
+
+                            {/* Selected Method Detail Card */}
+                            {settings.ragMethod && RAG_METHODS[settings.ragMethod] && (
+                                <div className="bg-slate-900/80 border border-primary-500/30 rounded-lg p-4 space-y-3">
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-2xl">{RAG_METHODS[settings.ragMethod].icon}</span>
+                                        <div>
+                                            <p className="text-sm font-bold text-primary-300">
+                                                {RAG_METHODS[settings.ragMethod].name}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <p className="text-xs text-gray-300 leading-relaxed">
+                                        {RAG_METHODS[settings.ragMethod].description}
+                                    </p>
+                                    {/* Speed & Quality Indicators */}
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div className="space-y-1">
+                                            <p className="text-[10px] text-gray-500 uppercase tracking-wide">Hız</p>
+                                            <div className="flex gap-1">
+                                                {[1,2,3,4,5].map(i => (
+                                                    <div key={i} className={`h-1.5 flex-1 rounded-full ${
+                                                        i <= RAG_METHODS[settings.ragMethod].speed
+                                                            ? 'bg-green-400'
+                                                            : 'bg-slate-700'
+                                                    }`} />
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div className="space-y-1">
+                                            <p className="text-[10px] text-gray-500 uppercase tracking-wide">Kalite</p>
+                                            <div className="flex gap-1">
+                                                {[1,2,3,4,5].map(i => (
+                                                    <div key={i} className={`h-1.5 flex-1 rounded-full ${
+                                                        i <= RAG_METHODS[settings.ragMethod].quality
+                                                            ? 'bg-primary-400'
+                                                            : 'bg-slate-700'
+                                                    }`} />
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

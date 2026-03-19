@@ -13,7 +13,8 @@ export const DEFAULT_SETTINGS = {
     topK: 4,
     temperature: 0.7,
     model: 'gemini-2.5-flash',
-    chromaDBUrl: 'http://localhost:8000'
+    chromaDBUrl: 'http://localhost:8000',
+    ragMethod: 'naive'  // RAG retrieval yöntemi
 }
 
 /**
@@ -107,6 +108,15 @@ export function validateSettings(settings) {
     ]
     if (!validModels.includes(settings.model)) {
         errors.push(`Model must be one of: ${validModels.join(', ')}`)
+    }
+
+    // RAG Method validation
+    const validRagMethods = [
+        'naive', 'mmr', 'hyde', 'queryExpansion', 'multiQuery',
+        'contextualCompression', 'bm25Hybrid', 'rrf', 'stepBack', 'selfRag'
+    ]
+    if (settings.ragMethod !== undefined && !validRagMethods.includes(settings.ragMethod)) {
+        errors.push(`RAG yöntemi geçersiz: ${settings.ragMethod}`)
     }
 
     return {
