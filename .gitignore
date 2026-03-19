@@ -34,4 +34,4 @@ dist-ssr
 # Local artifacts and brain folder
 .gemini/
 brain/
-chroma
+chroma_data
