@@ -23,6 +23,14 @@ class AnswerAIDB extends Dexie {
             conversations: 'id, updatedAt',
             settings: 'key'
         })
+
+        // v3: GraphRAG knowledge graph storage
+        this.version(3).stores({
+            files: 'id, name, uploadedAt, type',
+            conversations: 'id, updatedAt',
+            settings: 'key',
+            graphData: 'fileId, indexedAt'  // entity/relation/community graph per file
+        })
     }
 }
 
@@ -222,3 +230,73 @@ export async function getStorageInfo() {
 }
 
 export default db
+
+// ===== GRAPH DATA OPERATIONS (GraphRAG) =====
+
+/**
+ * Save knowledge graph data for a file.
+ * @param {string} fileId
+ * @param {Object} graphData - { fileId, fileName, entities, relations, communities, indexedAt, version }
+ */
+export async function saveGraphData(fileId, graphData) {
+    try {
+        await db.graphData.put({ ...graphData, fileId })
+        console.log(`✅ GraphRAG: graf verisi kaydedildi (${fileId})`)
+    } catch (error) {
+        console.error('GraphRAG graf kaydetme hatası:', error)
+        throw new Error(`Graf verisi kaydedilemedi: ${error.message}`)
+    }
+}
+
+/**
+ * Load knowledge graph data for a file.
+ * @param {string} fileId
+ * @returns {Promise<Object|null>}
+ */
+export async function loadGraphData(fileId) {
+    try {
+        return await db.graphData.get(fileId) ?? null
+    } catch (error) {
+        console.error('GraphRAG graf yükleme hatası:', error)
+        return null
+    }
+}
+
+/**
+ * Check whether graph data exists for a file.
+ * @param {string} fileId
+ * @returns {Promise<boolean>}
+ */
+export async function hasGraphData(fileId) {
+    try {
+        const count = await db.graphData.where('fileId').equals(fileId).count()
+        return count > 0
+    } catch {
+        return false
+    }
+}
+
+/**
+ * Delete graph data for a specific file.
+ * @param {string} fileId
+ */
+export async function deleteGraphData(fileId) {
+    try {
+        await db.graphData.delete(fileId)
+        console.log(`🗑️ GraphRAG: graf verisi silindi (${fileId})`)
+    } catch (error) {
+        console.error('GraphRAG graf silme hatası:', error)
+    }
+}
+
+/**
+ * Delete all graph data (full wipe).
+ */
+export async function clearAllGraphData() {
+    try {
+        await db.graphData.clear()
+        console.log('🗑️ GraphRAG: tüm graf verisi temizlendi')
+    } catch (error) {
+        console.error('GraphRAG tam temizleme hatası:', error)
+    }
+}

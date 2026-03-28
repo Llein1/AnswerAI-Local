@@ -126,7 +126,7 @@ export function validateSettings(settings) {
     }
 
     // RAG Method validation (yalnızca mevcut 5 yöntem)
-    const validRagMethods = ['naive', 'mmr', 'hyde', 'bm25Hybrid', 'selfRag']
+    const validRagMethods = ['naive', 'mmr', 'hyde', 'bm25Hybrid', 'selfRag', 'graphRag']
     if (settings.ragMethod !== undefined && !validRagMethods.includes(settings.ragMethod)) {
         errors.push(`RAG yöntemi geçersiz: ${settings.ragMethod}`)
     }

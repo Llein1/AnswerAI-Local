@@ -1,6 +1,7 @@
 import { createEmbedding, createEmbeddings, generateResponse as geminiGenerateResponse, generateResponse } from './geminiService'
 import { loadSettings } from './settingsStorage'
 import { addChunks, queryChunks, getChunkCount, clearAll } from './chromaDBService'
+import { ensureGraphIndexed, retrieveGraphRAGLocal } from './graphRAGService'
 
 // ─── RAG Method Definitions ────────────────────────────────────────────────────
 
@@ -54,6 +55,16 @@ export const RAG_METHODS = {
         speed: 1,
         quality: 5,
         badge: 'Öz-değerlendirme'
+    },
+    graphRag: {
+        id: 'graphRag',
+        name: 'GraphRAG - Graph-Based Retrieval',
+        shortName: 'GraphRAG',
+        icon: '🕸️',
+        description: 'Chunk\'lar arasında semantik bir ilişki grafı kurulur. Sorguyla en alakalı pivot chunk\'tan başlayarak komşu chunk\'lara BFS ile yayılır; bağlantılı bağlamları birleştirir.',
+        speed: 2,
+        quality: 5,
+        badge: 'Graf Tabanlı'
     }
 }
 
@@ -491,6 +502,7 @@ Değerlendirme:`
     return buildContextFromChunks(finalChunks)
 }
 
+
 // ─── Main Retrieval Dispatcher ────────────────────────────────────────────────
 
 export async function retrieveContext(query, activeFileIds, ragMethod = 'naive') {
@@ -514,6 +526,8 @@ export async function retrieveContext(query, activeFileIds, ragMethod = 'naive')
             return retrieveBM25Hybrid(query, activeFileIds, topK, minSimilarity)
         case 'selfRag':
             return retrieveSelfRAG(query, activeFileIds, topK, minSimilarity)
+        case 'graphRag':
+            return retrieveGraphRAGLocal(query, activeFileIds, topK, minSimilarity)
         default:
             return retrieveNaive(query, activeFileIds, topK, minSimilarity)
     }
@@ -541,6 +555,12 @@ export async function generateRAGResponse(question, activeFiles, ragMethod) {
         }
 
         const activeFileIds = activeFiles.map(f => f.id)
+
+        // If GraphRAG: ensure knowledge graph index is built before retrieval
+        if (method === 'graphRag') {
+            console.log('🕸️ GraphRAG: bilgi grafı indekslemesi kontrol ediliyor...')
+            await ensureGraphIndexed(activeFiles)
+        }
 
         // Retrieve context using selected method
         const { context, sources } = await retrieveContext(question, activeFileIds, method)

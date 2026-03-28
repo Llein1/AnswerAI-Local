@@ -121,6 +121,23 @@ async function _getEmbeddingsModel() {
 }
 
 /**
+ * Direct LLM invocation — no RAG prompt wrapper.
+ * Use for structured extraction tasks (JSON output, entity extraction, etc.)
+ * @param {string} prompt - Raw prompt to send directly to the model
+ * @returns {Promise<string>} - Model's text response
+ */
+export async function invokeLLM(prompt) {
+    const chatModel = getChatModel()
+    try {
+        const response = await chatModel.invoke(prompt)
+        return typeof response.content === 'string' ? response.content : String(response.content ?? '')
+    } catch (error) {
+        console.error('[invokeLLM] Hata:', error)
+        throw error
+    }
+}
+
+/**
  * Generate a response using LangChain's Google GenAI
  * @param {string} prompt - The prompt to send
  * @param {string} context - Context from retrieved documents
