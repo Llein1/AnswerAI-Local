@@ -57,12 +57,12 @@ export async function createEmbedding(text) {
 export async function createEmbeddings(texts) {
     if (!texts || texts.length === 0) return []
 
-    // Gemini embedding free tier limits:
-    // - 30,000 tokens/min (TPM)
+    // Gemini embedding free tier limits (conservative):
+    // - 20,000 tokens/min (TPM) - Lowered from 30k for safety
     // - 100 requests/min (RPM)
-    const FREE_TIER_TPM = 30000
+    const FREE_TIER_TPM = 20000
     const AVG_CHARS_PER_TOKEN = 4
-    const BATCH_SIZE = 10  // Small batches to keep each request light
+    const BATCH_SIZE = 10
 
     const embeddings = await _getEmbeddingsModel()
     const results = []
@@ -77,15 +77,41 @@ export async function createEmbeddings(texts) {
         // Estimate tokens in this batch to compute required delay
         const batchTokenEstimate = batch.reduce((sum, t) => sum + Math.ceil(t.length / AVG_CHARS_PER_TOKEN), 0)
         // How many ms must pass so we stay under TPM?
-        // delay = (batchTokens / TPM) * 60_000 ms, minimum 500ms
+        // delay = (batchTokens / TPM) * 60_000 ms, minimum 1000ms
         const baseDelayMs = Math.ceil((batchTokenEstimate / FREE_TIER_TPM) * 60000)
         
-        // Add %15 safety margin (hata payı) to the base delay
-        const requiredDelayMs = Math.max(500, Math.ceil(baseDelayMs * 1.15))
+        // Add %30 safety margin (hata payı) to the base delay
+        const requiredDelayMs = Math.max(1000, Math.ceil(baseDelayMs * 1.3))
 
-        console.log(`  📦 Grup ${batchNum}/${totalBatches}: ${batch.length} chunk (~${batchTokenEstimate} token) → ${requiredDelayMs}ms bekleniyor (Hata payı dahil)`)
+        console.log(`  📦 Grup ${batchNum}/${totalBatches}: ${batch.length} chunk (~${batchTokenEstimate} token) → ${requiredDelayMs}ms bekleniyor (Muhafazakar limit)`)
 
-        const batchEmbeddings = await embeddings.embedDocuments(batch)
+        // Dedicated retry logic for 429 (Rate Limit) errors
+        let batchEmbeddings = null
+        let attempt = 0
+        const maxAttempts = 5
+
+        while (attempt < maxAttempts) {
+            try {
+                batchEmbeddings = await embeddings.embedDocuments(batch)
+                if (batchEmbeddings && batchEmbeddings.length === batch.length) {
+                    break // Başarılı
+                }
+                throw new Error(`Batch size mismatch: ${batchEmbeddings?.length} vs ${batch.length}`)
+            } catch (error) {
+                attempt++
+                const isRateLimit = error.message?.includes('429') || error.message?.includes('quota')
+                if (!isRateLimit || attempt >= maxAttempts) {
+                    console.error(`❌ Grup ${batchNum} kalıcı hata:`, error.message)
+                    throw error
+                }
+                
+                // Exponential backoff: 2s, 4s, 8s, 16s
+                const backoffMs = Math.pow(2, attempt) * 1000
+                console.warn(`⚠️ Grup ${batchNum} limit hatası (429), ${backoffMs}ms sonra tekrar deneniyor (${attempt}/${maxAttempts})...`)
+                await new Promise(r => setTimeout(r, backoffMs))
+            }
+        }
+
         results.push(...batchEmbeddings)
 
         // Wait proportional to token count to respect TPM limit

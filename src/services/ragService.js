@@ -196,17 +196,26 @@ export async function processDocument(text, fileId, fileName, pages = []) {
             }
         }
 
-        await addChunks(fileId, processedChunks)
-
-        const validChunks = processedChunks.filter(c => c.embedding && c.embedding.length > 0)
-        if (validChunks[0]?.embedding) {
-            const dim = validChunks[0].embedding.length
-            const magnitude = Math.sqrt(validChunks[0].embedding.reduce((sum, v) => sum + v * v, 0))
-            console.log(`🔬 Embedding doğrulama: ${validChunks.length}/${processedChunks.length} chunk, ${dim} boyut, magnitude=${magnitude.toFixed(4)}`)
+        // ChromaDB'ye kaydetmeden önce geçersiz embedding'leri temizle
+        const validChunks = processedChunks.filter(c => c.embedding && Array.isArray(c.embedding) && c.embedding.length > 0)
+        
+        if (validChunks.length < processedChunks.length) {
+            console.warn(`⚠️ ${processedChunks.length - validChunks.length} chunk geçersiz embedding nedeniyle atlandı.`)
         }
 
-        console.log(`✅ ${processedChunks.length} chunk ChromaDB'ye kaydedildi`)
-        return processedChunks.length
+        if (validChunks.length > 0) {
+            await addChunks(fileId, validChunks)
+            
+            const firstEmb = validChunks[0].embedding
+            const dim = firstEmb.length
+            const magnitude = Math.sqrt(firstEmb.reduce((sum, v) => sum + v * v, 0))
+            console.log(`🔬 Embedding doğrulama: ${validChunks.length}/${processedChunks.length} chunk hazır, ${dim} boyut, magnitude=${magnitude.toFixed(4)}`)
+        } else {
+            throw new Error('Hiçbir chunk için geçerli embedding oluşturulamadı.')
+        }
+
+        console.log(`✅ ${validChunks.length} chunk ChromaDB'ye kaydedildi`)
+        return validChunks.length
     } catch (error) {
         console.error('Document processing error:', error)
         throw new Error(`Belge işlenirken hata oluştu: ${error.message}`)

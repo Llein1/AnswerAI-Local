@@ -129,10 +129,14 @@ export async function addChunks(fileId, chunks) {
 
     const collectionId = await getOrCreateCollection()
 
-    const ids = chunks.map(c => c.id)
-    const embeddings = chunks.map(c => c.embedding)
-    const documents = chunks.map(c => c.text)
-    const metadatas = chunks.map(c => ({
+    // Son güvenlik filtresi: embedding olmayan chunk'ları gönderimden çıkar
+    const finalChunks = chunks.filter(c => c.embedding && Array.isArray(c.embedding) && c.embedding.length > 0)
+    if (finalChunks.length === 0) return
+
+    const ids = finalChunks.map(c => c.id)
+    const embeddings = finalChunks.map(c => c.embedding)
+    const documents = finalChunks.map(c => c.text)
+    const metadatas = finalChunks.map(c => ({
         fileId,
         fileName: c.fileName,
         chunkIndex: c.chunkIndex,
@@ -145,7 +149,7 @@ export async function addChunks(fileId, chunks) {
         body: JSON.stringify({ ids, embeddings, documents, metadatas })
     })
 
-    console.log(`✅ ChromaDB: ${chunks.length} chunk eklendi (fileId: ${fileId})`)
+    console.log(`✅ ChromaDB: ${finalChunks.length} chunk eklendi (fileId: ${fileId})`)
 }
 
 /**
