@@ -35,10 +35,21 @@ Uygulamanın özelliklerini gösteren arayüz görünümü:
 
 ### 🔍 Gelişmiş RAG Yetenekleri
 - **Semantik Arama**: Gemini embedding'leri ile vektör benzerlik araması
+- **Gelişmiş Geri Çağırma (6 Metot)**: Naive, MMR, HyDE, BM25 Hybrid, Self-RAG ve GraphRAG desteği
 - **Çoklu Belge Soru-Cevap**: Birden fazla PDF üzerinden soru sorun
 - **Belge Karşılaştırma**: Akıllı karşılaştırma yetenekleri
 - **Kaynak Gösterimi**: Cevabın hangi belgeden ve sayfa numarasından geldiğini görün
 - **Chunk Caching**: İşlenmiş chunk'lar IndexedDB'de saklanır
+
+### 🧠 Desteklenen RAG Yöntemleri
+Uygulama, farklı kullanım senaryoları için 6 farklı gelişmiş geri çağırma (retrieval) yöntemini destekler:
+
+1. **🔍 Naive Dense Retrieval**: Temel vektör benzerlik araması. Sorgu embedding'i hesaplanır ve en yakın chunk'lar cosine benzerliğiyle bulunur. En hızlı yöntemdir.
+2. **🧩 MMR (Maximal Marginal Relevance)**: Alakalı VE çeşitli sonuçlar döndürür. Benzer chunk'ların tekrarını önleyerek daha kapsamlı bir bağlam oluşturur.
+3. **💭 HyDE (Hypothetical Document Embedding)**: AI, önce soruya cevap veren varsayımsal bir belge üretir. Bu belgenin embedding'i gerçek chunk'larla eşleştirilir. Beklenmedik eşleşmeler için idealdir.
+4. **⚖️ BM25 Hybrid Search**: Anlamsal vektör aramasını geleneksel anahtar kelime eşleşmesiyle birleştirir. Teknik terimlerin ve özel isimlerin önemli olduğu durumlarda en iyi sonuçları verir.
+5. **🤔 Self-RAG**: AI, her aday chunk'ı "Bu soruyla ne kadar alakalı?" diye kendi kendine puanlar. Düşük puanlı (DÜŞÜK) chunk'lar elenir, en kaliteli bağlam seçilir.
+6. **🕸️ GraphRAG**: Chunk'lar arasında anlamsal bir ilişki grafı kurar. Sorguyla alakalı bir noktadan başlayarak komşu (ilişkili) chunk'lara BFS (Breadth-First Search) ile yayılır; bağlantılı bilgileri birleştirir.
 
 ### 🔎 Gelişmiş Arama
 - **Konuşma Araması**: Tüm sohbet geçmişinde anahtar kelime arama
