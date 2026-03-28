@@ -453,6 +453,36 @@ export default function Settings({ isOpen, currentSettings, onSave, onClose, onC
                                 </div>
                             )}
                         </div>
+
+                        {/* Response Language */}
+                        <div className="space-y-2 pt-2 border-t border-slate-700/60">
+                            <div className="flex items-center gap-2">
+                                <span className="text-base">🌐</span>
+                                <label className="text-sm font-medium text-gray-300">Yanıt Dili</label>
+                            </div>
+                            <div className="grid grid-cols-3 gap-2">
+                                {[
+                                    { value: 'auto', label: 'Otomatik', desc: 'Soru diline göre' },
+                                    { value: 'tr', label: 'Türkçe', desc: 'Her zaman TR' },
+                                    { value: 'en', label: 'English', desc: 'Always EN' }
+                                ].map(opt => (
+                                    <button
+                                        key={opt.value}
+                                        onClick={() => handleChange('responseLanguage', opt.value)}
+                                        className={`flex flex-col items-center gap-1 py-2.5 px-2 rounded-lg border text-center transition-all ${
+                                            (settings.responseLanguage ?? 'auto') === opt.value
+                                                ? 'border-primary-500 bg-primary-500/15 shadow-sm shadow-primary-500/10'
+                                                : 'border-slate-600 bg-slate-900/60 hover:border-slate-500 hover:bg-slate-800'
+                                        }`}
+                                    >
+                                        <span className={`text-xs font-semibold ${(settings.responseLanguage ?? 'auto') === opt.value ? 'text-primary-300' : 'text-gray-200'}`}>
+                                            {opt.label}
+                                        </span>
+                                        <span className="text-[10px] text-gray-500">{opt.desc}</span>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 </div>
 

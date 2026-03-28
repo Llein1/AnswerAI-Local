@@ -1,6 +1,10 @@
 import { ChatGoogleGenerativeAI } from '@langchain/google-genai'
 import { loadSettings } from './settingsStorage'
 
+// Module-level cache: aynı apiKey + model için yeniden instance üretme
+let _chatModelCache = null
+let _chatModelCacheKey = ''
+
 /**
  * Get or create ChatGoogleGenerativeAI model instance with current settings
  * @returns {ChatGoogleGenerativeAI} - Configured chat model
@@ -12,14 +16,21 @@ function getChatModel() {
         throw new Error('Gemini API anahtarı yapılandırılmamış. Lütfen Ayarlar menüsünden API anahtarınızı girin.')
     }
 
+    // Cache key: API key + model + temperature + maxOutputTokens
+    const cacheKey = `${settings.apiKey}|${settings.model}|${settings.temperature}|${settings.maxOutputTokens ?? 2048}`
+    if (_chatModelCache && _chatModelCacheKey === cacheKey) {
+        return _chatModelCache
+    }
+
     try {
-        const model = new ChatGoogleGenerativeAI({
+        _chatModelCache = new ChatGoogleGenerativeAI({
             apiKey: settings.apiKey,
             modelName: settings.model,
             temperature: settings.temperature,
-            maxOutputTokens: 2048,
+            maxOutputTokens: settings.maxOutputTokens ?? 2048,
         })
-        return model
+        _chatModelCacheKey = cacheKey
+        return _chatModelCache
     } catch (error) {
         console.error('Failed to initialize ChatGoogleGenerativeAI:', error)
         throw new Error('Gemini modeli başlatılamadı: ' + error.message)
@@ -101,7 +112,7 @@ async function _getEmbeddingsModel() {
         const { GoogleGenerativeAIEmbeddings } = await import('@langchain/google-genai')
         return new GoogleGenerativeAIEmbeddings({
             apiKey: settings.apiKey,
-            modelName: 'gemini-embedding-2-preview',
+            modelName: 'gemini-embedding-001',
         })
     } catch (error) {
         console.error('Embedding model init error:', error)
@@ -151,7 +162,7 @@ export async function generateResponse(prompt, context, documentMetadata = {}) {
 }
 
 /**
- * Build a RAG-optimized prompt
+ * Build a RAG-optimized prompt with language support
  * @param {string} context - Retrieved context
  * @param {string} question - User question
  * @param {Object} documentMetadata - Metadata about documents
@@ -159,6 +170,8 @@ export async function generateResponse(prompt, context, documentMetadata = {}) {
  */
 function buildRAGPrompt(context, question, documentMetadata = {}) {
     const { activeFileCount = 1, fileNames = [] } = documentMetadata
+    const settings = loadSettings()
+    const lang = settings.responseLanguage ?? 'auto'
 
     // Detect comparison queries
     const comparisonKeywords = /compare|difference|contrast|versus|vs\.|which.*better|which.*more|both.*mention|similarities|distinctions/i
@@ -179,6 +192,17 @@ Karşılaştırma sorularını cevaplarken:
 - Bir belge bir konuda daha fazla detaya sahipse, bunu açıkça belirt`
     }
 
+    // Language instruction based on setting
+    let languageInstruction
+    if (lang === 'tr') {
+        languageInstruction = '- Cevabı MUTLAKA Türkçe olarak ver'
+    } else if (lang === 'en') {
+        languageInstruction = '- Always respond in English'
+    } else {
+        // auto: cevap, soru diliyle aynı olsun
+        languageInstruction = '- Cevabı kullanıcının soru yazdığı dilde ver (Türkçe soruyorsa Türkçe, İngilizce soruyorsa İngilizce)'
+    }
+
     return `${basePrompt}
 
 BELGELERDEN BAĞLAM:
@@ -191,9 +215,12 @@ TALİMATLAR:
 - Soruyu YALNIZCA yukarıdaki bağlamda sağlanan bilgilere dayanarak cevapla
 - Cevap bağlamda bulunamazsa, "Bu bilgi sağlanan belgelerde bulunamadı" de
 - Açık ve kapsamlı ol
-- Mümkün olduğunda belirli alıntılar veya referanslar kullan
 - Soru net değilse, açıklama iste
-- Cevabı Türkçe olarak ver
+${languageInstruction}
 
 CEVAP:`
+
+    /* İptal edilen prompt satırları (kodda tutuluyor, kullanılmıyor):
+    - Mümkün olduğunda belirli alıntılar veya referanslar kullan
+    */
 }

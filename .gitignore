@@ -30,6 +30,7 @@ dist-ssr
 
 # Agent files (Antigravity)
 .agent/
+.agents/
 
 # Local artifacts and brain folder
 .gemini/

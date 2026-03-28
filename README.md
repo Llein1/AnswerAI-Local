@@ -161,7 +161,7 @@ Uygulamanın özelliklerini gösteren arayüz görünümü:
 | **PDF İşleme** | PDF.js (Mozilla) |
 | **DOCX İşleme** | Mammoth.js |
 | **AI/LLM** | Google Gemini (Ayarlardan model seçilebilir) |
-| **Embeddings** | gemini-embedding-2 |
+| **Embeddings** | gemini-embedding-100 |
 | **RAG Pipeline** | LangChain + Özel vektör arama |
 | **State Yönetimi** | React Hooks |
 | **İkonlar** | Lucide React |

@@ -101,9 +101,11 @@ export default function ChatInterface({ messages, isLoading, onPageClick }) {
                             </div>
                             <CopyButton text={message.content} />
                         </div>
+                        {/* Alıntı, sayfa numarası ve kaynaklar gizlendi: yalnızca kodda duruyor
                         {message.role === 'assistant' && message.sources && (
                             <SourceReferences sources={message.sources} onPageClick={onPageClick} />
                         )}
+                        */}
                     </div>
 
                     {message.role === 'user' && (

@@ -11,10 +11,13 @@ export const DEFAULT_SETTINGS = {
     chunkSize: 1000,
     chunkOverlap: 200,  // Auto-calculated as chunkSize / 5
     topK: 4,
+    minSimilarity: 0.3, // Cosine similarity eşiği (literatür standardı: 0.3)
     temperature: 0.7,
+    maxOutputTokens: 2048,
     model: 'gemini-2.5-flash',
     chromaDBUrl: 'http://localhost:8000',
-    ragMethod: 'naive'  // RAG retrieval yöntemi
+    ragMethod: 'naive',      // RAG retrieval yöntemi
+    responseLanguage: 'auto' // Yanıt dili: 'auto' | 'tr' | 'en'
 }
 
 /**
@@ -93,9 +96,21 @@ export function validateSettings(settings) {
         errors.push('Top-K must be between 1 and 10')
     }
 
+    // minSimilarity validation
+    if (settings.minSimilarity !== undefined &&
+        (typeof settings.minSimilarity !== 'number' || settings.minSimilarity < 0 || settings.minSimilarity > 1)) {
+        errors.push('minSimilarity must be between 0.0 and 1.0')
+    }
+
     // Temperature validation
     if (typeof settings.temperature !== 'number' || settings.temperature < 0 || settings.temperature > 1) {
         errors.push('Temperature must be between 0.0 and 1.0')
+    }
+
+    // maxOutputTokens validation
+    if (settings.maxOutputTokens !== undefined &&
+        (!Number.isInteger(settings.maxOutputTokens) || settings.maxOutputTokens < 256 || settings.maxOutputTokens > 8192)) {
+        errors.push('maxOutputTokens must be between 256 and 8192')
     }
 
     // Model validation
@@ -110,13 +125,16 @@ export function validateSettings(settings) {
         errors.push(`Model must be one of: ${validModels.join(', ')}`)
     }
 
-    // RAG Method validation
-    const validRagMethods = [
-        'naive', 'mmr', 'hyde', 'queryExpansion', 'multiQuery',
-        'contextualCompression', 'bm25Hybrid', 'rrf', 'stepBack', 'selfRag'
-    ]
+    // RAG Method validation (yalnızca mevcut 5 yöntem)
+    const validRagMethods = ['naive', 'mmr', 'hyde', 'bm25Hybrid', 'selfRag']
     if (settings.ragMethod !== undefined && !validRagMethods.includes(settings.ragMethod)) {
         errors.push(`RAG yöntemi geçersiz: ${settings.ragMethod}`)
+    }
+
+    // Response language validation
+    const validLanguages = ['auto', 'tr', 'en']
+    if (settings.responseLanguage !== undefined && !validLanguages.includes(settings.responseLanguage)) {
+        errors.push(`Yanıt dili geçersiz: ${settings.responseLanguage}`)
     }
 
     return {

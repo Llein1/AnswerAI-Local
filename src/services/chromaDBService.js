@@ -30,19 +30,46 @@ function collectionsBase() {
     return `/tenants/${TENANT}/databases/${DATABASE}/collections`
 }
 
-async function chromaFetch(path, options = {}) {
+async function chromaFetch(path, options = {}, retries = 2) {
     const url = `${getBaseUrl()}/api/v2${path}`
-    const response = await fetch(url, {
-        headers: { 'Content-Type': 'application/json' },
-        ...options
-    })
+    let lastError
 
-    if (!response.ok) {
-        const errorText = await response.text().catch(() => response.statusText)
-        throw new Error(`ChromaDB API hatası [${response.status}]: ${errorText}`)
+    for (let attempt = 0; attempt <= retries; attempt++) {
+        try {
+            const response = await fetch(url, {
+                headers: { 'Content-Type': 'application/json' },
+                ...options
+            })
+
+            // 5xx errors are retryable; 4xx are not
+            if (!response.ok) {
+                const errorText = await response.text().catch(() => response.statusText)
+                const err = new Error(`ChromaDB API hatası [${response.status}]: ${errorText}`)
+                if (response.status >= 500 && attempt < retries) {
+                    lastError = err
+                    const delay = 600 * Math.pow(2, attempt) // 600ms, 1200ms
+                    console.warn(`[ChromaDB] ${response.status} hatası, ${delay}ms sonra tekrar deneniyor (${attempt + 1}/${retries})...`)
+                    await new Promise(r => setTimeout(r, delay))
+                    continue
+                }
+                throw err
+            }
+
+            return response.json()
+        } catch (error) {
+            // Network-level errors (fetch throws) are retryable
+            if (error.name === 'TypeError' && attempt < retries) {
+                lastError = error
+                const delay = 600 * Math.pow(2, attempt)
+                console.warn(`[ChromaDB] Ağ hatası, ${delay}ms sonra tekrar deneniyor (${attempt + 1}/${retries})...`)
+                await new Promise(r => setTimeout(r, delay))
+                continue
+            }
+            throw error
+        }
     }
 
-    return response.json()
+    throw lastError
 }
 
 // ─── Health ───────────────────────────────────────────────────────────────────
@@ -246,10 +273,12 @@ export async function getChunksByFile(fileId) {
  */
 export async function clearAll() {
     try {
-        await chromaFetch(`${collectionsBase()}/${COLLECTION_NAME}`, { method: 'DELETE' })
+        // Get the collection UUID first (required by ChromaDB v2 API)
+        const collectionId = await getOrCreateCollection()
+        await chromaFetch(`${collectionsBase()}/${collectionId}`, { method: 'DELETE' })
         console.log('🗑️ ChromaDB: Tüm chunk koleksiyonu temizlendi')
     } catch (error) {
-        // Collection may not exist yet — that's fine
+        // Collection may not exist yet — that’s fine
         console.warn('ChromaDB clearAll (koleksiyon bulunamadı, sorun değil):', error.message)
     }
 }
