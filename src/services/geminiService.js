@@ -1,6 +1,11 @@
 import { ChatGoogleGenerativeAI } from '@langchain/google-genai'
 import { loadSettings } from './settingsStorage'
 
+// ─── Embedding: Ollama'ya delege edildi ──────────────────────────────────────
+// LLM (generateResponse, invokeLLM) bu dosyada kalıyor;
+// embedding fonksiyonları local Ollama'ya taşındı.
+export { createEmbedding, createEmbeddings } from './ollamaEmbeddingService'
+
 // Module-level cache: aynı apiKey + model için yeniden instance üretme
 let _chatModelCache = null
 let _chatModelCacheKey = ''
@@ -37,114 +42,7 @@ function getChatModel() {
     }
 }
 
-/**
- * Generate embedding for a single text using Gemini
- * @param {string} text - Text to embed
- * @returns {Promise<number[]>} - Embedding vector
- */
-export async function createEmbedding(text) {
-    const embeddings = await _getEmbeddingsModel()
-    const embedding = await embeddings.embedQuery(text)
-    return embedding
-}
-
-/**
- * Generate embeddings for multiple texts using chunked mini-batches
- * Sends BATCH_SIZE texts per API call to avoid 429 rate limit errors
- * @param {string[]} texts - Array of texts to embed
- * @returns {Promise<number[][]>} - Array of embedding vectors
- */
-export async function createEmbeddings(texts) {
-    if (!texts || texts.length === 0) return []
-
-    // Gemini embedding free tier limits (conservative):
-    // - 20,000 tokens/min (TPM) - Lowered from 30k for safety
-    // - 100 requests/min (RPM)
-    const FREE_TIER_TPM = 20000
-    const AVG_CHARS_PER_TOKEN = 4
-    const BATCH_SIZE = 10
-
-    const embeddings = await _getEmbeddingsModel()
-    const results = []
-    const totalBatches = Math.ceil(texts.length / BATCH_SIZE)
-
-    console.log(`⚡ Batch embedding: ${texts.length} chunk, ${totalBatches} grup halinde gönderiliyor (${BATCH_SIZE}/grup)`)
-
-    for (let i = 0; i < texts.length; i += BATCH_SIZE) {
-        const batch = texts.slice(i, i + BATCH_SIZE)
-        const batchNum = Math.floor(i / BATCH_SIZE) + 1
-
-        // Estimate tokens in this batch to compute required delay
-        const batchTokenEstimate = batch.reduce((sum, t) => sum + Math.ceil(t.length / AVG_CHARS_PER_TOKEN), 0)
-        // How many ms must pass so we stay under TPM?
-        // delay = (batchTokens / TPM) * 60_000 ms, minimum 1000ms
-        const baseDelayMs = Math.ceil((batchTokenEstimate / FREE_TIER_TPM) * 60000)
-        
-        // Add %30 safety margin (hata payı) to the base delay
-        const requiredDelayMs = Math.max(1000, Math.ceil(baseDelayMs * 1.3))
-
-        console.log(`  📦 Grup ${batchNum}/${totalBatches}: ${batch.length} chunk (~${batchTokenEstimate} token) → ${requiredDelayMs}ms bekleniyor (Muhafazakar limit)`)
-
-        // Dedicated retry logic for 429 (Rate Limit) errors
-        let batchEmbeddings = null
-        let attempt = 0
-        const maxAttempts = 5
-
-        while (attempt < maxAttempts) {
-            try {
-                batchEmbeddings = await embeddings.embedDocuments(batch)
-                if (batchEmbeddings && batchEmbeddings.length === batch.length) {
-                    break // Başarılı
-                }
-                throw new Error(`Batch size mismatch: ${batchEmbeddings?.length} vs ${batch.length}`)
-            } catch (error) {
-                attempt++
-                const isRateLimit = error.message?.includes('429') || error.message?.includes('quota')
-                if (!isRateLimit || attempt >= maxAttempts) {
-                    console.error(`❌ Grup ${batchNum} kalıcı hata:`, error.message)
-                    throw error
-                }
-                
-                // Exponential backoff: 2s, 4s, 8s, 16s
-                const backoffMs = Math.pow(2, attempt) * 1000
-                console.warn(`⚠️ Grup ${batchNum} limit hatası (429), ${backoffMs}ms sonra tekrar deneniyor (${attempt}/${maxAttempts})...`)
-                await new Promise(r => setTimeout(r, backoffMs))
-            }
-        }
-
-        results.push(...batchEmbeddings)
-
-        // Wait proportional to token count to respect TPM limit
-        if (i + BATCH_SIZE < texts.length) {
-            await new Promise(resolve => setTimeout(resolve, requiredDelayMs))
-        }
-    }
-
-    console.log(`✅ Tüm embedding'ler tamamlandı: ${results.length} chunk`)
-    return results
-}
-
-/**
- * Internal: create and return an embeddings model instance
- */
-async function _getEmbeddingsModel() {
-    const settings = loadSettings()
-
-    if (!settings.apiKey) {
-        throw new Error('Gemini API anahtarı yapılandırılmamış. Lütfen Ayarlar menüsünden API anahtarınızı girin.')
-    }
-
-    try {
-        const { GoogleGenerativeAIEmbeddings } = await import('@langchain/google-genai')
-        return new GoogleGenerativeAIEmbeddings({
-            apiKey: settings.apiKey,
-            modelName: 'gemini-embedding-001',
-        })
-    } catch (error) {
-        console.error('Embedding model init error:', error)
-        throw new Error(`Embedding modeli başlatılamadı: ${error.message}`)
-    }
-}
+// createEmbedding ve createEmbeddings ollamaEmbeddingService'den re-export edildi (yukarıda).
 
 /**
  * Direct LLM invocation — no RAG prompt wrapper.

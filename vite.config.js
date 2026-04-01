@@ -19,11 +19,17 @@ export default defineConfig({
       'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://generativelanguage.googleapis.com ws: wss: http://localhost:* http://127.0.0.1:*;"
     },
     // Proxy /chroma requests to ChromaDB to avoid CORS issues
+    // Proxy /ollama requests to local Ollama server to avoid CORS issues
     proxy: {
       '/chroma': {
         target: 'http://localhost:8000',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/chroma/, '')
+      },
+      '/ollama': {
+        target: 'http://localhost:11434',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/ollama/, '')
       }
     }
   },

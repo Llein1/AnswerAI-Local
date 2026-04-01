@@ -65,7 +65,7 @@ export async function extractTextFromPDF(file) {
  * @throws {Error} - If validation fails
  */
 export function validatePDFFile(file) {
-    const maxSize = 10 * 1024 * 1024 // 10MB
+    const maxSize = 25 * 1024 * 1024 // 25MB
 
     if (!file) {
         throw new Error('Dosya bulunamadı')
@@ -76,7 +76,7 @@ export function validatePDFFile(file) {
     }
 
     if (file.size > maxSize) {
-        throw new Error('Dosya boyutu 10MB\'den küçük olmalıdır')
+        throw new Error('Dosya boyutu 25MB\'den küçük olmalıdır')
     }
 
     if (file.size === 0) {

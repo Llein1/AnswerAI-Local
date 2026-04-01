@@ -74,7 +74,7 @@ export default function FileUpload({ onFileUpload }) {
                                 <p className="text-sm text-gray-300">
                                     <span className="text-primary-400 font-medium">Dosya seçin</span> veya sürükleyip bırakın
                                 </p>
-                                <p className="text-xs text-gray-500">PDF, DOCX (maks 10MB)</p>
+                                <p className="text-xs text-gray-500">PDF, DOCX (maks 25MB)</p>
                             </>
                         )}
                     </div>

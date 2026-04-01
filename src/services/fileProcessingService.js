@@ -8,14 +8,14 @@ const SUPPORTED_TYPES = {
     pdf: {
         mimeTypes: ['application/pdf'],
         extensions: ['.pdf'],
-        maxSize: 10 * 1024 * 1024 // 10MB
+        maxSize: 25 * 1024 * 1024 // 25MB
     },
     docx: {
         mimeTypes: [
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
         ],
         extensions: ['.docx'],
-        maxSize: 10 * 1024 * 1024 // 10MB
+        maxSize: 25 * 1024 * 1024 // 25MB
     }
 }
 

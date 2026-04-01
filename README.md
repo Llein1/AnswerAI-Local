@@ -19,7 +19,7 @@ Uygulamanın özelliklerini gösteren arayüz görünümü:
 ## ✨ Özellikler
 
 ### 📄 Belge Yönetimi
-- **PDF ve DOCX Desteği**: Birden fazla format desteği (maks 10MB)
+- **PDF ve DOCX Desteği**: Birden fazla format desteği (maks 25MB)
 - **IndexedDB Kalıcılığı**: Dosyalar tarayıcı veritabanında saklanır, sayfa kapansa bile kalır
 - **Vektör Veritabanı**: İşlenmiş metinler ve vektörler yerel ChromaDB sunucusunda saklanır
 - **Çoklu Dosya**: Aynı anda birden fazla belge yükleyin ve yönetin
@@ -124,7 +124,7 @@ Uygulama, farklı kullanım senaryoları için 6 farklı gelişmiş geri çağı
 ### 📄 Adım 2: Belge Yükleme
 
 1. Sol paneldeki **"Dosya seçin veya sürükleyip bırakın"** alanını kullanın
-2. PDF veya DOCX dosyanızı seçin (maks 10MB)
+2. PDF veya DOCX dosyanızı seçin (maks 25MB)
 3. Dosya yüklendikten sonra otomatik işlenir ve IndexedDB'ye kaydedilir
 
 ### 💬 Adım 3: Soru Sorma
@@ -264,7 +264,7 @@ location.reload()
 
 ### Dosya yükleme hatası
 - Dosyanın geçerli PDF/DOCX olduğunu kontrol edin
-- Boyutun 10MB altında olduğunu doğrulayın
+- Boyutun 25MB altında olduğunu doğrulayın
 - IndexedDB kotasını kontrol edin (Settings'ten)
 
 ### "QuotaExceededError"

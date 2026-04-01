@@ -16,6 +16,7 @@ export const DEFAULT_SETTINGS = {
     maxOutputTokens: 2048,
     model: 'gemini-2.5-flash',
     chromaDBUrl: 'http://localhost:8000',
+    ollamaUrl: 'http://localhost:11434',  // Local Ollama embedding server
     ragMethod: 'naive',      // RAG retrieval yöntemi
     responseLanguage: 'auto' // Yanıt dili: 'auto' | 'tr' | 'en'
 }
