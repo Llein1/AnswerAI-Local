@@ -11,7 +11,10 @@ export default function Settings({ isOpen, currentSettings, onSave, onClose, onC
     const [showResetConfirm, setShowResetConfirm] = useState(false)
     const [chromaStatus, setChromaStatus] = useState(null) // null | 'checking' | 'ok' | 'error'
     const [chromaError, setChromaError] = useState('')
+    const [ollamaStatus, setOllamaStatus] = useState(null) // null | 'checking' | 'ok' | 'error'
+    const [ollamaError, setOllamaError] = useState('')
     const [showSetupGuide, setShowSetupGuide] = useState(false)
+    const [showOllamaSetupGuide, setShowOllamaSetupGuide] = useState(false)
 
     // Update local state when currentSettings changes
     useEffect(() => {
@@ -93,12 +96,33 @@ export default function Settings({ isOpen, currentSettings, onSave, onClose, onC
         }
     }
 
+    const handleTestOllama = async () => {
+        setOllamaStatus('checking')
+        setOllamaError('')
+        try {
+            // Use Vite's proxy (/ollama) to avoid CORS issues
+            const response = await fetch('/ollama/api/tags', {
+                signal: AbortSignal.timeout(5000)
+            })
+            if (!response.ok) throw new Error(`HTTP ${response.status}`)
+            setOllamaStatus('ok')
+        } catch (err) {
+            setOllamaStatus('error')
+            setOllamaError(err.message)
+        }
+    }
+
     const isApiKeyValid = validateApiKey(settings.apiKey)
     const chunkSizeChanged = settings.chunkSize !== currentSettings.chunkSize
 
     const setupCommands = [
         { label: 'pip kurulumu', cmd: 'pip install chromadb' },
         { label: 'sunucu başlatma', cmd: 'chroma run --path ./chroma_data --host localhost --port 8000' },
+    ]
+
+    const ollamaSetupCommands = [
+        { label: 'gerekli modelin indirilmesi', cmd: 'ollama pull qwen3-embedding:8b-q4_K_M' },
+        { label: 'sunucu başlatma', cmd: 'ollama serve' },
     ]
 
     return (
@@ -167,6 +191,103 @@ export default function Settings({ isOpen, currentSettings, onSave, onClose, onC
                             </a>
                             {' '}adresinden alabilirsiniz.
                         </p>
+                    </div>
+
+                    {/* Ollama Section */}
+                    <div className="space-y-4 pt-4 border-t border-slate-700">
+                        <div className="flex items-center justify-between">
+                            <h3 className="text-lg font-semibold text-gray-200">Ollama Servisi (Yerel Modeller)</h3>
+                            <button
+                                onClick={() => setShowOllamaSetupGuide(v => !v)}
+                                className="flex items-center gap-1.5 text-xs text-primary-400 hover:text-primary-300 px-2 py-1 rounded hover:bg-slate-700 transition-colors"
+                            >
+                                <Terminal className="w-3.5 h-3.5" />
+                                {showOllamaSetupGuide ? 'Kılavuzu Gizle' : 'Kurulum Kılavuzu'}
+                            </button>
+                        </div>
+
+                        {/* Ollama Setup Guide */}
+                        {showOllamaSetupGuide && (
+                            <div className="bg-slate-900/70 border border-slate-600 rounded-lg p-4 space-y-3">
+                                <p className="text-sm text-gray-300 font-medium">📦 Ollama Kurulumu</p>
+                                <p className="text-xs text-gray-400">
+                                    Yerel embeddings işlemleri için Ollama servisinin çalışması gereklidir. Terminale sırasıyla şu komutları çalıştırın:
+                                </p>
+                                <div className="space-y-2">
+                                    {ollamaSetupCommands.map((item, i) => (
+                                        <div key={i} className="space-y-0.5">
+                                            <p className="text-xs text-gray-500">{i + 1}. {item.label}:</p>
+                                            <div className="flex items-center gap-2 bg-slate-950 rounded px-3 py-2">
+                                                <code className="flex-1 text-xs text-green-400 font-mono">{item.cmd}</code>
+                                                <button
+                                                    onClick={() => navigator.clipboard.writeText(item.cmd)}
+                                                    className="text-xs text-gray-500 hover:text-gray-300 transition-colors shrink-0"
+                                                    title="Kopyala"
+                                                >
+                                                    📋
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="flex items-start gap-2 p-2 bg-amber-500/10 border border-amber-500/20 rounded text-xs text-amber-300">
+                                    <span className="shrink-0">⚠️</span>
+                                    <span>Uygulamayı her kullandığınızda 2. komutu (sunucu başlatma) çalıştırmanız gerekir. Cihazınızda Ollama'nın yüklü olması gerektiğini unutmayınız.</span>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* URL Input */}
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-300">Sunucu URL</label>
+                            <div className="flex gap-2">
+                                <input
+                                    type="text"
+                                    value={settings.ollamaUrl || 'http://localhost:11434'}
+                                    onChange={(e) => handleChange('ollamaUrl', e.target.value)}
+                                    placeholder="http://localhost:11434"
+                                    className="flex-1 px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-gray-200
+                                             placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500
+                                             font-mono text-sm"
+                                />
+                                <button
+                                    onClick={handleTestOllama}
+                                    disabled={ollamaStatus === 'checking'}
+                                    className="flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600
+                                             text-gray-200 rounded-lg transition-colors disabled:opacity-50 shrink-0"
+                                >
+                                    {ollamaStatus === 'checking' ? (
+                                        <span className="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
+                                    ) : ollamaStatus === 'ok' ? (
+                                        <Wifi className="w-4 h-4 text-green-400" />
+                                    ) : ollamaStatus === 'error' ? (
+                                        <WifiOff className="w-4 h-4 text-red-400" />
+                                    ) : (
+                                        <Wifi className="w-4 h-4 text-gray-400" />
+                                    )}
+                                    Test Et
+                                </button>
+                            </div>
+
+                            {/* Connection Status */}
+                            {ollamaStatus === 'ok' && (
+                                <div className="flex items-center gap-2 text-sm text-green-400 mt-2">
+                                    <span>✅</span>
+                                    <span>Ollama bağlantısı başarılı</span>
+                                </div>
+                            )}
+                            {ollamaStatus === 'error' && (
+                                <div className="space-y-1 mt-2">
+                                    <div className="flex items-center gap-2 text-sm text-red-400">
+                                        <span>❌</span>
+                                        <span>Bağlantı kurulamadı: {ollamaError}</span>
+                                    </div>
+                                    <p className="text-xs text-gray-400 ml-6">
+                                        Lütfen terminalde "ollama serve" komutunu çalıştırdığınızdan emin olun.
+                                    </p>
+                                </div>
+                            )}
+                        </div>
                     </div>
 
                     {/* ChromaDB Section */}
