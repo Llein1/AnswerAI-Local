@@ -49,6 +49,7 @@ export default function FileList({ files, onDelete, onToggle, onPreview, process
                         />
                     </div>
                 </div>
+                <p className="text-xs text-gray-500 mt-1">Aynı anda yalnızca 1 belge aktif olabilir</p>
             </div>
             {/* Scrollable Content */}
             <div className="flex-1 overflow-y-auto p-3">

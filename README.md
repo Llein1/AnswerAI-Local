@@ -151,16 +151,6 @@ Uygulama, farklı kullanım senaryoları için 6 farklı gelişmiş geri çağı
 2. Aramak istediğiniz kelimeyi yazın
 3. Sonuçlara tıklayarak o mesaja gidin
 
-### 🔄 Adım 6: Çoklu Belge Karşılaştırma
-
-1. **2 veya daha fazla dosya** yükleyin
-2. Her belgenin **göz ikonunu** aktif edin
-3. Karşılaştırma soruları sorun:
-   ```
-   - "Bu iki belge arasındaki farklar neler?"
-   - "Hangi belgede X konusu daha detaylı?"
-   ```
-
 ## 🛠️ Kullanılan Teknolojiler
 
 | Kategori | Teknoloji |
@@ -172,7 +162,7 @@ Uygulama, farklı kullanım senaryoları için 6 farklı gelişmiş geri çağı
 | **PDF İşleme** | PDF.js (Mozilla) |
 | **DOCX İşleme** | Mammoth.js |
 | **AI/LLM** | Google Gemini (Ayarlardan model seçilebilir) |
-| **Embeddings** | gemini-embedding-100 |
+| **Embeddings** | qwen3-embedding:8b-q4_K_M (Ollama) |
 | **RAG Pipeline** | LangChain + Özel vektör arama |
 | **State Yönetimi** | React Hooks |
 | **İkonlar** | Lucide React |

@@ -14,7 +14,8 @@ const PDFViewer = lazy(() => import('./components/PDFViewer'))
 const DOCXViewer = lazy(() => import('./components/DOCXViewer'))
 import SearchResults from './components/SearchResults'
 import Settings from './components/Settings'
-import { ChevronDown } from 'lucide-react'
+import EvaluationPanel from './components/EvaluationPanel'
+import { ChevronDown, MessageSquare, BarChart3 } from 'lucide-react'
 import { processFile } from './services/fileProcessingService'
 import { generateRAGResponse, processDocument, clearVectorStore } from './services/ragService'
 import { searchConversations, debounce, invalidateSearchCache } from './services/searchService'
@@ -33,6 +34,7 @@ function AppContent() {
     const [isLoading, setIsLoading] = useState(false)
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [processingFiles, setProcessingFiles] = useState(new Set()) // tracks files being embedded
+    const [activeTab, setActiveTab] = useState('chat') // 'chat' | 'evaluation'
     const { toasts, removeToast, showError } = useToast()
 
     // Conversation management
@@ -176,7 +178,15 @@ function AppContent() {
             try {
                 const saved = await storageFacade.files.save(newFile)
                 if (saved) {
-                    setFiles(prev => [...prev, newFile])
+                    // Yeni dosyayı aktif yap, diğerlerini pasife çek (tek-seçim kuralı)
+                    setFiles(prev => [
+                        ...prev.map(f => ({ ...f, active: false })),
+                        newFile
+                    ])
+                    // Deactivate previously active files in storage
+                    const prevActive = files.filter(f => f.active)
+                    await Promise.all(prevActive.map(f => storageFacade.files.updateActiveState(f.id, false)))
+
                     console.log(`File uploaded: ${newFile.name}`)
 
                     // Trigger embedding immediately in background (embed on upload)
@@ -221,11 +231,22 @@ function AppContent() {
     const handleToggleFileActive = async (fileId) => {
         try {
             const fileToToggle = files.find(f => f.id === fileId)
-            if (fileToToggle) {
+            if (!fileToToggle) return
+
+            if (fileToToggle.active) {
+                // Zaten aktifse → pasife çek
                 const updatedFiles = files.map(f =>
-                    f.id === fileId ? { ...f, active: !f.active } : f
+                    f.id === fileId ? { ...f, active: false } : f
                 )
-                await storageFacade.files.updateActiveState(fileId, !fileToToggle.active)
+                await storageFacade.files.updateActiveState(fileId, false)
+                setFiles(updatedFiles)
+            } else {
+                // Diğer tüm aktif dosyaları pasife çek, sadece bu dosyayı aktif yap
+                const updatedFiles = files.map(f => ({ ...f, active: f.id === fileId }))
+                // Tüm dosyaların durumunu güncelle
+                await Promise.all(
+                    files.map(f => storageFacade.files.updateActiveState(f.id, f.id === fileId))
+                )
                 setFiles(updatedFiles)
             }
         } catch (error) {
@@ -592,6 +613,32 @@ function AppContent() {
                 </div>
             </div>
 
+            {/* Tab Navigation */}
+            <div className="flex-shrink-0 flex items-center gap-1 px-4 py-1.5 bg-slate-900/80 border-b border-slate-700/60">
+                <button
+                    id="tab-chat"
+                    onClick={() => setActiveTab('chat')}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                        activeTab === 'chat'
+                            ? 'bg-slate-700 text-white'
+                            : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                    }`}
+                >
+                    <MessageSquare className="w-3.5 h-3.5" /> Sohbet
+                </button>
+                <button
+                    id="tab-evaluation"
+                    onClick={() => setActiveTab('evaluation')}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                        activeTab === 'evaluation'
+                            ? 'bg-violet-600/80 text-white'
+                            : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                    }`}
+                >
+                    <BarChart3 className="w-3.5 h-3.5" /> Değerlendirme
+                </button>
+            </div>
+
             <div className="flex-1 flex h-0 overflow-hidden relative">
                 {/* Mobile Menu Button */}
                 <button
@@ -643,7 +690,12 @@ function AppContent() {
                     />
                 )}
 
-                {/* Main Chat Area */}
+                {/* Main Content Area — Chat veya Evaluation */}
+                {activeTab === 'evaluation' ? (
+                    <div className="flex-1 overflow-y-auto">
+                        <EvaluationPanel activeFiles={files.filter(f => f.active)} />
+                    </div>
+                ) : (
                 <div className={`flex-1 flex flex-col overflow-hidden relative ${previewFile ? 'lg:pr-96' : ''}`}>
                     {/* Scrollable Chat Interface */}
                     <div
@@ -671,6 +723,7 @@ function AppContent() {
                         </button>
                     )}
                 </div>
+                )}
 
                 {/* Document Preview Panel (PDF or DOCX) */}
                 {previewFile && (
@@ -741,7 +794,8 @@ function AppContent() {
                 )}
             </div>
 
-            {/* Fixed Text Input - Always at Screen Bottom */}
+            {/* Fixed Text Input - Sadece Sohbet sekmesinde görünür */}
+            {activeTab === 'chat' && (
             <div className="fixed bottom-0 left-0 md:left-80 right-0 bg-slate-900/95 backdrop-blur-sm 
                             border-t border-slate-700 z-20">
                 <ChatInput
@@ -749,6 +803,7 @@ function AppContent() {
                     disabled={isLoading || files.filter(f => f.active).length === 0}
                 />
             </div>
+            )}
 
             {/* Toast Container */}
             <ToastContainer toasts={toasts} onClose={removeToast} />

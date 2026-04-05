@@ -110,28 +110,10 @@ export async function generateResponse(prompt, context, documentMetadata = {}) {
  * @returns {string} - Formatted prompt
  */
 function buildRAGPrompt(context, question, documentMetadata = {}) {
-    const { activeFileCount = 1, fileNames = [] } = documentMetadata
     const settings = loadSettings()
     const lang = settings.responseLanguage ?? 'auto'
 
-    // Detect comparison queries
-    const comparisonKeywords = /compare|difference|contrast|versus|vs\.|which.*better|which.*more|both.*mention|similarities|distinctions/i
-    const isComparisonQuery = comparisonKeywords.test(question)
-
-    let basePrompt = `Sen, sağlanan belge bağlamına dayalı olarak soruları cevaplayan yardımcı bir yapay zeka asistanısın.`
-
-    // Add comparison-specific instructions for multi-document queries
-    if (isComparisonQuery && activeFileCount > 1) {
-        basePrompt += `\n\n🔍 KARŞILAŞTIRMA MODU AKTİF:
-Kullanıcı birden fazla belgeyi karşılaştırmak/zıtlaştırmak istiyor: ${fileNames.join(', ')}.
-
-Karşılaştırma sorularını cevaplarken:
-- Hangi bilginin hangi belgeden geldiğini açıkça belirt
-- Benzerlikleri VE farklılıkları vurgula
-- Kaynaklara atıfta bulunurken belge adlarını kullan
-- Sadece ayrı özetler değil, karşılaştırmalı bir analiz sun
-- Bir belge bir konuda daha fazla detaya sahipse, bunu açıkça belirt`
-    }
+    const basePrompt = `Sen, sağlanan belge bağlamına dayalı olarak soruları cevaplayan yardımcı bir yapay zeka asistanısın.`
 
     // Language instruction based on setting
     let languageInstruction
