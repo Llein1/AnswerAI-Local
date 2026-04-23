@@ -19,8 +19,8 @@
  *   - Tüm bu önlemler birlikte asla rate limit'e takılmaz, uzun sürer ama güvenlidir
  */
 
-import { generateRAGResponse } from './ragService'
-import { invokeLLM } from './geminiService'
+import { generateRAGResponse, prewarmActiveFiles } from './ragService'
+import { invokeLLM, getAndResetTokenUsage } from './geminiService'
 
 // ─── Sabitler ────────────────────────────────────────────────────────────────
 
@@ -253,6 +253,22 @@ export async function runEvaluation({
     const totalSteps  = selectedMethods.length * questions.length
     let completedSteps = results.length
 
+    if (startMethodIdx === 0 && startQIdx === 0) {
+        onProgress?.({
+            step: completedSteps,
+            total: totalSteps,
+            method: 'Hazırlık',
+            questionId: '-',
+            questionText: 'Belgeler kontrol ediliyor ve indeksleniyor (Pre-warming)...',
+            phase: 'rag'
+        })
+        try {
+            await prewarmActiveFiles(activeFiles, selectedMethods)
+        } catch (err) {
+            console.error('[Eval] Pre-warm hatası:', err)
+        }
+    }
+
     for (let mi = startMethodIdx; mi < selectedMethods.length; mi++) {
         const method = selectedMethods[mi]
         const startQ = (mi === startMethodIdx) ? startQIdx : 0
@@ -275,11 +291,14 @@ export async function runEvaluation({
             })
 
             // ── Adım 1: RAG Pipeline ────────────────────────────────────────
-            const startTs = performance.now()
+            getAndResetTokenUsage() // Clear any previous token count
+            
             let answer  = ''
             let context = ''
             let latency = 0
             let ragError = false
+            let ragStartTs = performance.now()
+            let ragTokens = 0
 
             try {
                 // generateRAGResponse zaten kendi içinde Gemini çağrısı yapıyor.
@@ -287,10 +306,14 @@ export async function runEvaluation({
                 await sleep(RL.MIN_DELAY_MS)
                 callLog.push({ ts: Date.now(), tokens: estimateTokens(q.question) + 200 })
 
+                ragStartTs = performance.now() // Gerçek başlangıç zamanı (bekleme sonrası)
                 const ragResult = await generateRAGResponse(q.question, activeFiles, method)
                 answer  = typeof ragResult.response === 'string' ? ragResult.response : String(ragResult.response ?? '')
                 context = (ragResult.sources ?? []).map(s => s.text ?? '').join('\n')
-                latency = Math.round(performance.now() - startTs)
+                latency = Math.round(performance.now() - ragStartTs)
+                
+                // Sadece RAG aşamasının tokenlarını alıyoruz (Hakem dahil edilmiyor)
+                ragTokens = getAndResetTokenUsage()
             } catch (err) {
                 if (err.message === 'ABORTED') {
                     saveCheckpoint({ results, methodIdx: mi, qIdx: qi })
@@ -298,8 +321,9 @@ export async function runEvaluation({
                 }
                 console.error(`[Eval] RAG hatası (${method}, ${q.id}):`, err.message)
                 ragError = true
-                latency  = Math.round(performance.now() - startTs)
+                latency  = Math.round(performance.now() - ragStartTs)
                 answer   = `[HATA: ${err.message}]`
+                ragTokens = getAndResetTokenUsage()
             }
 
             // ── Adım 2: LLM Hakem ───────────────────────────────────────────
@@ -333,7 +357,12 @@ export async function runEvaluation({
 
             // ── Adım 3: ROUGE-L (Yerel hesaplama, API yok) ─────────────────
             const rougeLScore       = ragError ? 0 : calculateROUGEL(answer, q.ground_truth)
-            const estimatedTokens   = estimateTokens(q.question + context + answer)
+            
+            let usedTokens = ragTokens
+            if (usedTokens === 0) {
+                // Eğer API token dönmezse eski usul tahmin kullan
+                usedTokens = estimateTokens(q.question + context + answer)
+            }
 
             const entry = {
                 method,
@@ -346,7 +375,7 @@ export async function runEvaluation({
                 answerRelevance:  scores.answerRelevance,
                 rougeL:           rougeLScore,
                 latency,
-                estimatedTokens,
+                usedTokens,
                 error: ragError
             }
 
@@ -398,7 +427,7 @@ export function aggregateResults(results) {
         m.sumAR      += r.answerRelevance
         m.sumRL      += r.rougeL
         m.sumLatency += r.latency
-        m.sumTokens  += r.estimatedTokens ?? 0
+        m.sumTokens  += r.usedTokens ?? r.estimatedTokens ?? 0
     }
 
     return Object.values(byMethod).map(m => {
@@ -424,7 +453,7 @@ export function exportToCSV(results) {
     const headers = [
         'Yöntem', 'Soru ID', 'Soru', 'Sistem Cevabı', 'Referans Cevap',
         'Bağlam Alaka (1-5)', 'Sadakat (1-5)', 'Cevap Alaka (1-5)',
-        'ROUGE-L (0-1)', 'Gecikme (ms)', 'Tahmini Token', 'Hata'
+        'ROUGE-L (0-1)', 'Gecikme (ms)', 'Kullanılan Token', 'Hata'
     ]
 
     const esc = v => `"${String(v ?? '').replace(/"/g, '""')}"`
@@ -440,7 +469,7 @@ export function exportToCSV(results) {
         r.answerRelevance,
         r.rougeL,
         r.latency,
-        r.estimatedTokens ?? 0,
+        r.usedTokens ?? r.estimatedTokens ?? 0,
         r.error ? 'EVET' : 'HAYIR'
     ].join(','))
 

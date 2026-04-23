@@ -598,3 +598,26 @@ export async function clearVectorStore() {
     await clearAll()
     console.log('🗑️ ChromaDB vektör deposu temizlendi')
 }
+
+export async function prewarmActiveFiles(activeFiles, selectedMethods = []) {
+    console.log('🔥 [Pre-warm] Değerlendirme öncesi belgeler hazırlanıyor...')
+    
+    // 1. Vector Indexing (Chroma)
+    for (const file of activeFiles) {
+        const count = await getChunkCount(file.id)
+        if (count === 0) {
+            console.log(`🔥 [Pre-warm] ${file.name} ChromaDB'de bulunamadı, işleniyor...`)
+            await processDocument(file.text, file.id, file.name, file.pages || [])
+        } else {
+            console.log(`🔥 [Pre-warm] ✓ ${file.name} ChromaDB'de zaten hazır (${count} chunk)`)
+        }
+    }
+
+    // 2. Graph Indexing (GraphRAG)
+    if (selectedMethods.includes('graphRag')) {
+        console.log('🔥 [Pre-warm] GraphRAG için bilgi grafı kontrol ediliyor...')
+        await ensureGraphIndexed(activeFiles)
+    }
+    
+    console.log('🔥 [Pre-warm] Belgeler değerlendirme için hazır.')
+}

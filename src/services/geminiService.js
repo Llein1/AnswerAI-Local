@@ -10,6 +10,24 @@ export { createEmbedding, createEmbeddings } from './ollamaEmbeddingService'
 let _chatModelCache = null
 let _chatModelCacheKey = ''
 
+// ─── Token Tracking ───────────────────────────────────────────────────────────
+let _totalTokens = 0
+
+export function getAndResetTokenUsage() {
+    const tokens = _totalTokens
+    _totalTokens = 0
+    return tokens
+}
+
+function _updateTokens(response) {
+    if (response?.usage_metadata?.total_tokens) {
+        _totalTokens += response.usage_metadata.total_tokens
+    } else if (response?.usageMetadata?.totalTokenCount) {
+        _totalTokens += response.usageMetadata.totalTokenCount
+    }
+}
+// ──────────────────────────────────────────────────────────────────────────────
+
 /**
  * Get or create ChatGoogleGenerativeAI model instance with current settings
  * @returns {ChatGoogleGenerativeAI} - Configured chat model
@@ -54,6 +72,7 @@ export async function invokeLLM(prompt) {
     const chatModel = getChatModel()
     try {
         const response = await chatModel.invoke(prompt)
+        _updateTokens(response)
         return typeof response.content === 'string' ? response.content : String(response.content ?? '')
     } catch (error) {
         console.error('[invokeLLM] Hata:', error)
@@ -78,6 +97,8 @@ export async function generateResponse(prompt, context, documentMetadata = {}) {
 
         // Use LangChain's invoke method
         const response = await chatModel.invoke(fullPrompt)
+        
+        _updateTokens(response)
 
         console.log('✅ Response received from Gemini')
 
