@@ -4,12 +4,10 @@
  * 6 RAG yöntemini bir soru seti üzerinde otomatik değerlendirir.
  *
  * Değerlendirilen metrikler:
- *   1. Context Relevance   — LLM hakem (1-5)
- *   2. Faithfulness        — LLM hakem (1-5)
- *   3. Answer Relevance    — LLM hakem (1-5)
- *   4. ROUGE-L             — yerel LCS algoritması (0-1)
- *   5. Latency             — ms cinsinden gerçek süre
- *   6. Est. Token          — yaklaşık token tahmini (len/4)
+ *   LLM-as-a-Judge : Context Relevance, Faithfulness, Answer Relevance (1-5)
+ *   Referans Tabanlı: BLEU-4, ROUGE-1, ROUGE-2, ROUGE-L, METEOR (0-1)
+ *   Retrieval       : Precision@K, Recall@K, MRR, nDCG@K (0-1)
+ *   End-to-End      : Latency (ms), Token kullanımı
  *
  * Rate Limit Stratejisi (Free Tier: 30 RPM / 15,000 TPM):
  *   - Her API çağrısı öncesi MIN_DELAY_MS bekler → en fazla 10 çağrı/dk
@@ -149,6 +147,218 @@ export function calculateROUGEL(generated, reference) {
     if (precision + recall === 0) return 0
 
     return parseFloat(((2 * precision * recall) / (precision + recall)).toFixed(4))
+}
+
+// ─── N-gram Yardımcı Fonksiyonlar ──────────────────────────────────────────────
+
+/** Verilen token dizisinden n uzunluklu tüm n-gram'ları döndürür */
+function getNgrams(tokens, n) {
+    const ngrams = []
+    for (let i = 0; i <= tokens.length - n; i++) {
+        ngrams.push(tokens.slice(i, i + n).join(' '))
+    }
+    return ngrams
+}
+
+/** N-gram listesini frekans haritasına çevirir */
+function countNgrams(ngrams) {
+    const counts = {}
+    for (const ng of ngrams) counts[ng] = (counts[ng] || 0) + 1
+    return counts
+}
+
+/** Türkçe/İngilizce için basit suffix stripping */
+function stem(word) {
+    const suffixes = [
+        'nın','nin','nun','nün','ların','lerin','lardan','lerden','larda','lerde',
+        'lar','ler','ından','inden','dan','den','tan','ten','da','de','ta','te',
+        'ını','ini','unu','ünü','yı','yi','yu','yü','ı','i','u','ü',
+        'tion','ness','ing','ed','es','ly','er','est','s'
+    ]
+    let w = word
+    for (const suf of suffixes) {
+        if (w.endsWith(suf) && w.length - suf.length >= 3) {
+            return w.slice(0, w.length - suf.length)
+        }
+    }
+    return w
+}
+
+/** Eşleşen index kümesindeki ardışık olmayan segment sayısını döndürür */
+function countChunks(matchedIndices) {
+    if (matchedIndices.size === 0) return 0
+    const sorted = [...matchedIndices].sort((a, b) => a - b)
+    let chunks = 1
+    for (let i = 1; i < sorted.length; i++) {
+        if (sorted[i] !== sorted[i - 1] + 1) chunks++
+    }
+    return chunks
+}
+
+// ─── Referans Tabanlı Metrikler ───────────────────────────────────────────────
+
+/**
+ * BLEU-4 skoru (1-4 gram precision geometrik ortalaması + brevity penalty).
+ * @param {string} generated
+ * @param {string} reference
+ * @returns {number} 0-1
+ */
+export function calculateBLEU(generated, reference) {
+    if (!generated || !reference) return 0
+    const gen = generated.toLowerCase().split(/\s+/).filter(Boolean)
+    const ref = reference.toLowerCase().split(/\s+/).filter(Boolean)
+    if (gen.length === 0 || ref.length === 0) return 0
+
+    const bp = gen.length >= ref.length ? 1 : Math.exp(1 - ref.length / gen.length)
+
+    let logSum = 0
+    for (let n = 1; n <= 4; n++) {
+        const genNg = getNgrams(gen, n)
+        const refNg = getNgrams(ref, n)
+        if (genNg.length === 0) return 0
+        const refCounts = countNgrams(refNg)
+        const genCounts = countNgrams(genNg)
+        let clipped = 0
+        for (const [ng, cnt] of Object.entries(genCounts)) {
+            clipped += Math.min(cnt, refCounts[ng] || 0)
+        }
+        const prec = clipped / genNg.length
+        if (prec === 0) return 0
+        logSum += Math.log(prec)
+    }
+    return parseFloat((bp * Math.exp(logSum / 4)).toFixed(4))
+}
+
+/**
+ * ROUGE-N F1 skoru (n=1 veya n=2).
+ */
+function calculateROUGEN(generated, reference, n) {
+    if (!generated || !reference) return 0
+    const gen = generated.toLowerCase().split(/\s+/).filter(Boolean)
+    const ref = reference.toLowerCase().split(/\s+/).filter(Boolean)
+    const genNg = getNgrams(gen, n)
+    const refNg = getNgrams(ref, n)
+    if (genNg.length === 0 || refNg.length === 0) return 0
+    const refCounts = countNgrams(refNg)
+    const genCounts = countNgrams(genNg)
+    let overlap = 0
+    for (const [ng, cnt] of Object.entries(genCounts)) {
+        overlap += Math.min(cnt, refCounts[ng] || 0)
+    }
+    const precision = overlap / genNg.length
+    const recall    = overlap / refNg.length
+    if (precision + recall === 0) return 0
+    return parseFloat(((2 * precision * recall) / (precision + recall)).toFixed(4))
+}
+
+export const calculateROUGE1 = (gen, ref) => calculateROUGEN(gen, ref, 1)
+export const calculateROUGE2 = (gen, ref) => calculateROUGEN(gen, ref, 2)
+
+/**
+ * METEOR skoru (exact + stem eşleme, fragmentation penalty).
+ * @param {string} generated
+ * @param {string} reference
+ * @returns {number} 0-1
+ */
+export function calculateMETEOR(generated, reference) {
+    if (!generated || !reference) return 0
+    const gen = generated.toLowerCase().split(/\s+/).filter(Boolean)
+    const ref = reference.toLowerCase().split(/\s+/).filter(Boolean)
+    if (gen.length === 0 || ref.length === 0) return 0
+
+    const matchedRef = new Set()
+    const matchedGen = new Set()
+
+    // Exact match
+    for (let i = 0; i < gen.length; i++) {
+        for (let j = 0; j < ref.length; j++) {
+            if (!matchedRef.has(j) && !matchedGen.has(i) && gen[i] === ref[j]) {
+                matchedRef.add(j); matchedGen.add(i); break
+            }
+        }
+    }
+    // Stem match
+    for (let i = 0; i < gen.length; i++) {
+        if (matchedGen.has(i)) continue
+        for (let j = 0; j < ref.length; j++) {
+            if (!matchedRef.has(j) && stem(gen[i]) === stem(ref[j])) {
+                matchedRef.add(j); matchedGen.add(i); break
+            }
+        }
+    }
+
+    const m = matchedGen.size
+    if (m === 0) return 0
+
+    const precision = m / gen.length
+    const recall    = m / ref.length
+    const alpha     = 0.9
+    const fMean     = (precision * recall) / (alpha * precision + (1 - alpha) * recall)
+    const chunks    = countChunks(matchedGen)
+    const penalty   = 0.5 * Math.pow(chunks / m, 3)
+    return parseFloat(Math.max(0, fMean * (1 - penalty)).toFixed(4))
+}
+
+// ─── Retrieval Metrikleri ─────────────────────────────────────────────────────
+
+/** Chunk metni relevant_keywords'lerden herhangi birini içeriyor mu? */
+function isChunkRelevant(text, keywords) {
+    if (!keywords || keywords.length === 0 || !text) return false
+    const lower = text.toLowerCase()
+    return keywords.some(kw => lower.includes(kw.toLowerCase()))
+}
+
+/**
+ * Precision@K: İlk K kaynak chunk'ın kaçı en az bir anahtar kelimeyi içeriyor?
+ */
+export function calculatePrecisionAtK(sources, keywords, k) {
+    if (!keywords?.length || !sources?.length) return 0
+    const top = sources.slice(0, k)
+    const relevant = top.filter(s => isChunkRelevant(s.text, keywords))
+    return parseFloat((relevant.length / top.length).toFixed(4))
+}
+
+/**
+ * Recall@K: İlgili anahtar kelimelerin kaçı ilk K chunk'ta bulunuyor?
+ */
+export function calculateRecallAtK(sources, keywords, k) {
+    if (!keywords?.length || !sources?.length) return 0
+    const top = sources.slice(0, k)
+    const covered = keywords.filter(kw =>
+        top.some(s => (s.text || '').toLowerCase().includes(kw.toLowerCase()))
+    )
+    return parseFloat((covered.length / keywords.length).toFixed(4))
+}
+
+/**
+ * MRR: İlk ilgili chunk'ın sıralamadaki pozisyonunun tersi.
+ */
+export function calculateMRR(sources, keywords) {
+    if (!keywords?.length || !sources?.length) return 0
+    for (let i = 0; i < sources.length; i++) {
+        if (isChunkRelevant(sources[i].text, keywords)) {
+            return parseFloat((1 / (i + 1)).toFixed(4))
+        }
+    }
+    return 0
+}
+
+/**
+ * nDCG@K: Logaritmik konuma göre normalize edilmiş alaka skoru.
+ */
+export function calculateNDCG(sources, keywords, k) {
+    if (!keywords?.length || !sources?.length) return 0
+    const top = sources.slice(0, k)
+    let dcg = 0
+    for (let i = 0; i < top.length; i++) {
+        const rel = isChunkRelevant(top[i].text, keywords) ? 1 : 0
+        dcg += rel / Math.log2(i + 2)
+    }
+    const numRelevant = top.filter(s => isChunkRelevant(s.text, keywords)).length
+    let idcg = 0
+    for (let i = 0; i < numRelevant; i++) idcg += 1 / Math.log2(i + 2)
+    if (idcg === 0) return 0
+    return parseFloat((dcg / idcg).toFixed(4))
 }
 
 // ─── LLM Hakem ───────────────────────────────────────────────────────────────
@@ -293,12 +503,13 @@ export async function runEvaluation({
             // ── Adım 1: RAG Pipeline ────────────────────────────────────────
             getAndResetTokenUsage() // Clear any previous token count
             
-            let answer  = ''
-            let context = ''
-            let latency = 0
+            let answer   = ''
+            let context  = ''
+            let sources  = []
+            let latency  = 0
             let ragError = false
             let ragStartTs = performance.now()
-            let ragTokens = 0
+            let ragTokens  = 0
 
             try {
                 // generateRAGResponse zaten kendi içinde Gemini çağrısı yapıyor.
@@ -308,9 +519,10 @@ export async function runEvaluation({
 
                 ragStartTs = performance.now() // Gerçek başlangıç zamanı (bekleme sonrası)
                 const ragResult = await generateRAGResponse(q.question, activeFiles, method)
-                answer  = typeof ragResult.response === 'string' ? ragResult.response : String(ragResult.response ?? '')
-                context = (ragResult.sources ?? []).map(s => s.text ?? '').join('\n')
-                latency = Math.round(performance.now() - ragStartTs)
+                answer   = typeof ragResult.response === 'string' ? ragResult.response : String(ragResult.response ?? '')
+                sources  = ragResult.sources ?? []
+                context  = sources.map(s => s.text ?? '').join('\n')
+                latency  = Math.round(performance.now() - ragStartTs)
                 
                 // Sadece RAG aşamasının tokenlarını alıyoruz (Hakem dahil edilmiyor)
                 ragTokens = getAndResetTokenUsage()
@@ -355,8 +567,20 @@ export async function runEvaluation({
                 }
             }
 
-            // ── Adım 3: ROUGE-L (Yerel hesaplama, API yok) ─────────────────
-            const rougeLScore       = ragError ? 0 : calculateROUGEL(answer, q.ground_truth)
+            // ── Adım 3: Referans Tabanlı ve Retrieval Metrikleri ─────────────────
+            const rougeLScore   = ragError ? 0 : calculateROUGEL(answer, q.ground_truth)
+            const bleuScore     = ragError ? 0 : calculateBLEU(answer, q.ground_truth)
+            const rouge1Score   = ragError ? 0 : calculateROUGE1(answer, q.ground_truth)
+            const rouge2Score   = ragError ? 0 : calculateROUGE2(answer, q.ground_truth)
+            const meteorScore   = ragError ? 0 : calculateMETEOR(answer, q.ground_truth)
+
+            // Retrieval metrikleri: relevant_keywords yoksa 0 döner
+            const kw = q.relevant_keywords
+            const k  = sources.length || 1
+            const precisionAtK = ragError ? 0 : calculatePrecisionAtK(sources, kw, k)
+            const recallAtK    = ragError ? 0 : calculateRecallAtK(sources, kw, k)
+            const mrr          = ragError ? 0 : calculateMRR(sources, kw)
+            const ndcg         = ragError ? 0 : calculateNDCG(sources, kw, k)
             
             let usedTokens = ragTokens
             if (usedTokens === 0) {
@@ -370,10 +594,22 @@ export async function runEvaluation({
                 question:   q.question,
                 answer,
                 groundTruth:      q.ground_truth,
+                // LLM-as-a-Judge
                 contextRelevance: scores.contextRelevance,
                 faithfulness:     scores.faithfulness,
                 answerRelevance:  scores.answerRelevance,
+                // Referans Tabanlı
+                bleu:             bleuScore,
+                rouge1:           rouge1Score,
+                rouge2:           rouge2Score,
                 rougeL:           rougeLScore,
+                meteor:           meteorScore,
+                // Retrieval
+                precisionAtK,
+                recallAtK,
+                mrr,
+                ndcg,
+                // End-to-End
                 latency,
                 usedTokens,
                 error: ragError
@@ -415,7 +651,9 @@ export function aggregateResults(results) {
             byMethod[r.method] = {
                 method: r.method,
                 count: 0, errorCount: 0,
-                sumCR: 0, sumF: 0, sumAR: 0, sumRL: 0,
+                sumCR: 0, sumF: 0, sumAR: 0,
+                sumBLEU: 0, sumR1: 0, sumR2: 0, sumRL: 0, sumMETEOR: 0,
+                sumPrec: 0, sumRec: 0, sumMRR: 0, sumNDCG: 0,
                 sumLatency: 0, sumTokens: 0
             }
         }
@@ -425,7 +663,15 @@ export function aggregateResults(results) {
         m.sumCR      += r.contextRelevance
         m.sumF       += r.faithfulness
         m.sumAR      += r.answerRelevance
+        m.sumBLEU    += r.bleu    ?? 0
+        m.sumR1      += r.rouge1  ?? 0
+        m.sumR2      += r.rouge2  ?? 0
         m.sumRL      += r.rougeL
+        m.sumMETEOR  += r.meteor  ?? 0
+        m.sumPrec    += r.precisionAtK ?? 0
+        m.sumRec     += r.recallAtK    ?? 0
+        m.sumMRR     += r.mrr          ?? 0
+        m.sumNDCG    += r.ndcg         ?? 0
         m.sumLatency += r.latency
         m.sumTokens  += r.usedTokens ?? r.estimatedTokens ?? 0
     }
@@ -433,13 +679,21 @@ export function aggregateResults(results) {
     return Object.values(byMethod).map(m => {
         const v = m.count - m.errorCount
         return {
-            method:             m.method,
-            questionCount:      m.count,
-            errorCount:         m.errorCount,
-            avgContextRelevance: v > 0 ? parseFloat((m.sumCR / v).toFixed(2)) : 0,
-            avgFaithfulness:     v > 0 ? parseFloat((m.sumF  / v).toFixed(2)) : 0,
-            avgAnswerRelevance:  v > 0 ? parseFloat((m.sumAR / v).toFixed(2)) : 0,
-            avgRougeL:           v > 0 ? parseFloat((m.sumRL / v).toFixed(4)) : 0,
+            method:              m.method,
+            questionCount:       m.count,
+            errorCount:          m.errorCount,
+            avgContextRelevance: v > 0 ? parseFloat((m.sumCR   / v).toFixed(2)) : 0,
+            avgFaithfulness:     v > 0 ? parseFloat((m.sumF    / v).toFixed(2)) : 0,
+            avgAnswerRelevance:  v > 0 ? parseFloat((m.sumAR   / v).toFixed(2)) : 0,
+            avgBLEU:             v > 0 ? parseFloat((m.sumBLEU / v).toFixed(4)) : 0,
+            avgROUGE1:           v > 0 ? parseFloat((m.sumR1   / v).toFixed(4)) : 0,
+            avgROUGE2:           v > 0 ? parseFloat((m.sumR2   / v).toFixed(4)) : 0,
+            avgRougeL:           v > 0 ? parseFloat((m.sumRL   / v).toFixed(4)) : 0,
+            avgMETEOR:           v > 0 ? parseFloat((m.sumMETEOR / v).toFixed(4)) : 0,
+            avgPrecisionAtK:     v > 0 ? parseFloat((m.sumPrec / v).toFixed(4)) : 0,
+            avgRecallAtK:        v > 0 ? parseFloat((m.sumRec  / v).toFixed(4)) : 0,
+            avgMRR:              v > 0 ? parseFloat((m.sumMRR  / v).toFixed(4)) : 0,
+            avgNDCG:             v > 0 ? parseFloat((m.sumNDCG / v).toFixed(4)) : 0,
             avgLatency:          v > 0 ? Math.round(m.sumLatency / v) : 0,
             avgTokens:           v > 0 ? Math.round(m.sumTokens  / v) : 0,
         }
@@ -452,8 +706,14 @@ export function aggregateResults(results) {
 export function exportToCSV(results) {
     const headers = [
         'Yöntem', 'Soru ID', 'Soru', 'Sistem Cevabı', 'Referans Cevap',
+        // LLM-as-a-Judge
         'Bağlam Alaka (1-5)', 'Sadakat (1-5)', 'Cevap Alaka (1-5)',
-        'ROUGE-L (0-1)', 'Gecikme (ms)', 'Kullanılan Token', 'Hata'
+        // Referans Tabanlı
+        'BLEU-4 (0-1)', 'ROUGE-1 (0-1)', 'ROUGE-2 (0-1)', 'ROUGE-L (0-1)', 'METEOR (0-1)',
+        // Retrieval
+        'Precision@K (0-1)', 'Recall@K (0-1)', 'MRR (0-1)', 'nDCG@K (0-1)',
+        // End-to-End
+        'Gecikme (ms)', 'Kullanılan Token', 'Hata'
     ]
 
     const esc = v => `"${String(v ?? '').replace(/"/g, '""')}"`
@@ -467,7 +727,15 @@ export function exportToCSV(results) {
         r.contextRelevance,
         r.faithfulness,
         r.answerRelevance,
+        r.bleu    ?? 0,
+        r.rouge1  ?? 0,
+        r.rouge2  ?? 0,
         r.rougeL,
+        r.meteor  ?? 0,
+        r.precisionAtK ?? 0,
+        r.recallAtK    ?? 0,
+        r.mrr          ?? 0,
+        r.ndcg         ?? 0,
         r.latency,
         r.usedTokens ?? r.estimatedTokens ?? 0,
         r.error ? 'EVET' : 'HAYIR'

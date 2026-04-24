@@ -257,7 +257,8 @@ function buildContextFromChunks(topChunks) {
             chunkIndex: chunk.metadata?.chunkIndex,
             pageNumbers: chunk.metadata?.pageNumbers
                 ? JSON.parse(chunk.metadata.pageNumbers || '[]')
-                : null
+                : null,
+            text: chunk.text || ''
         }))
     }
 }

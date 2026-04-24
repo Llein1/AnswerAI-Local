@@ -3,144 +3,241 @@
         "id": "q_001",
         "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
         "question": "TCMB 2024 Yılı Yıllık Faaliyet Raporu'nun kapak ve ayraçlarında kullanılan fotoğraflar hangi temalı yarışmadan seçilmiştir?",
-        "ground_truth": "TCMB tarafından düzenlenen 'Ekonomi ve İnsan' temalı Uluslararası Fotoğraf Yarışmasından seçilmiştir."
+        "ground_truth": "TCMB tarafından düzenlenen 'Ekonomi ve İnsan' temalı Uluslararası Fotoğraf Yarışmasından seçilmiştir.",
+        "relevant_keywords": [
+            "Ekonomi ve İnsan",
+            "Fotoğraf Yarışması"
+        ]
     },
     {
         "id": "q_002",
         "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
         "question": "TCMB'nin 2024 yılı sonu itibarıyla toplam çalışan sayısı kaçtır?",
-        "ground_truth": "2024 yılı sonu itibarıyla TCMB'nin toplam çalışan sayısı 3.892'dir."
+        "ground_truth": "2024 yılı sonu itibarıyla TCMB'nin toplam çalışan sayısı 3.892'dir.",
+        "relevant_keywords": [
+            "3.892"
+        ]
     },
     {
         "id": "q_003",
         "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
         "question": "Türkiye'de 2024 yıl sonunda yıllık enflasyon yüzde kaç olarak gerçekleşmiştir?",
-        "ground_truth": "Yıllık enflasyon 2024 yıl sonunda yüzde 44,4 olarak gerçekleşmiştir."
+        "ground_truth": "Yıllık enflasyon 2024 yıl sonunda yüzde 44,4 olarak gerçekleşmiştir.",
+        "relevant_keywords": [
+            "yüzde 44,4",
+            "44,4"
+        ]
     },
     {
         "id": "q_004",
         "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
         "question": "TCMB 2024 yılı Aralık ayında politika faizini hangi seviyeye indirmiştir?",
-        "ground_truth": "Aralık ayında politika faizi seviyesi yüzde 47,5 seviyesine indirilmiştir."
+        "ground_truth": "Aralık ayında politika faizi seviyesi yüzde 47,5 seviyesine indirilmiştir.",
+        "relevant_keywords": [
+            "47,5 seviyesine",
+            "yüzde 47,5"
+        ]
     },
     {
         "id": "q_005",
         "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
         "question": "TCMB'nin 2023-2025 Stratejik Planı'na göre misyonu nedir?",
-        "ground_truth": "Sürdürülebilir fiyat istikrarını sağlayarak ve finansal istikrarı destekleyerek toplumsal refaha katkıda bulunmaktır."
+        "ground_truth": "Sürdürülebilir fiyat istikrarını sağlayarak ve finansal istikrarı destekleyerek toplumsal refaha katkıda bulunmaktır.",
+        "relevant_keywords": [
+            "toplumsal refaha katkıda",
+            "Sürdürülebilir fiyat istikrarını"
+        ]
     },
     {
         "id": "q_006",
         "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
         "question": "TCMB'nin vizyonu nedir?",
-        "ground_truth": "Dinamik ve yenilikçi yapısıyla finansal piyasalara, ödeme sistemlerine ve dijital dönüşüme yön veren bir Merkez Bankası olmaktır."
+        "ground_truth": "Dinamik ve yenilikçi yapısıyla finansal piyasalara, ödeme sistemlerine ve dijital dönüşüme yön veren bir Merkez Bankası olmaktır.",
+        "relevant_keywords": [
+            "dijital dönüşüme yön veren",
+            "yenilikçi yapısıyla"
+        ]
     },
     {
         "id": "q_007",
         "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
         "question": "FAST işlem tutar limiti 4 Nisan 2024 tarihi itibarıyla standart para transferlerinde ve iş yeri ödemelerinde ne kadara yükseltilmiştir?",
-        "ground_truth": "Standart para transferlerinde 100 bin TL'ye, FAST TR Karekod kullanılarak gerçekleştirilen iş yeri ödemelerinde ise 250 bin TL'ye yükseltilmiştir."
+        "ground_truth": "Standart para transferlerinde 100 bin TL'ye, FAST TR Karekod kullanılarak gerçekleştirilen iş yeri ödemelerinde ise 250 bin TL'ye yükseltilmiştir.",
+        "relevant_keywords": [
+            "FAST TR Karekod",
+            "250 bin TL",
+            "100 bin TL"
+        ]
     },
     {
         "id": "q_008",
         "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
         "question": "Bankacılık sektöründe tahsili gecikmiş alacaklar (TGA) oranı 2024 yıl sonunda yüzde kaç olmuştur?",
-        "ground_truth": "TGA oranı 2024 yıl sonunda yüzde 1,80 seviyesine yükselmiştir."
+        "ground_truth": "TGA oranı 2024 yıl sonunda yüzde 1,80 seviyesine yükselmiştir.",
+        "relevant_keywords": [
+            "yüzde 1,80",
+            "TGA oranı"
+        ]
     },
     {
         "id": "q_009",
         "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
         "question": "31 Aralık 2024 tarihi itibarıyla TCMB'nin toplam uluslararası rezervleri ne kadardır?",
-        "ground_truth": "TCMB'nin uluslararası rezervleri 155,1 milyar ABD dolarına ulaşmıştır."
+        "ground_truth": "TCMB'nin uluslararası rezervleri 155,1 milyar ABD dolarına ulaşmıştır.",
+        "relevant_keywords": [
+            "155,1 milyar",
+            "uluslararası rezervleri"
+        ]
     },
     {
         "id": "q_010",
         "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
         "question": "2024 yılı sonunda toplam mevduat içerisinde Türk lirası mevduatın payı yüzde kaça ulaşmıştır?",
-        "ground_truth": "2024 yıl sonunda Türk lirası mevduatın payı yüzde 59,2 seviyesine ulaşmıştır."
+        "ground_truth": "2024 yıl sonunda Türk lirası mevduatın payı yüzde 59,2 seviyesine ulaşmıştır.",
+        "relevant_keywords": [
+            "yüzde 59,2",
+            "59,2 seviyesine"
+        ]
     },
     {
         "id": "q_011",
         "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
         "question": "TCMB 2024 yılında kurumsal yatırımcılar, ekonomistler ve analistlerin katılımıyla kaç adet yatırımcı toplantısı düzenlemiştir?",
-        "ground_truth": "86 yatırımcı toplantısı gerçekleştirilmiş ve 812 kuruluş ile iletişim sağlanmıştır."
+        "ground_truth": "86 yatırımcı toplantısı gerçekleştirilmiş ve 812 kuruluş ile iletişim sağlanmıştır.",
+        "relevant_keywords": [
+            "86 yatırımcı",
+            "812 kuruluş"
+        ]
     },
     {
         "id": "q_012",
         "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
         "question": "TCMB'nin sermaye tutarı ve hisse adedi ne kadardır?",
-        "ground_truth": "TCMB'nin sermayesi 25.000 TL olup, her biri 10 kuruşluk 250.000 adet hisseden oluşmaktadır."
+        "ground_truth": "TCMB'nin sermayesi 25.000 TL olup, her biri 10 kuruşluk 250.000 adet hisseden oluşmaktadır.",
+        "relevant_keywords": [
+            "250.000 adet hisse",
+            "10 kuruşluk",
+            "25.000 TL"
+        ]
     },
     {
         "id": "q_013",
         "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
         "question": "31 Aralık 2024 tarihi itibarıyla TCMB'nin altın rezervleri miktarı ne kadardır?",
-        "ground_truth": "Altın rezervleri 766,7 ton seviyesindedir."
+        "ground_truth": "Altın rezervleri 766,7 ton seviyesindedir.",
+        "relevant_keywords": [
+            "766,7 ton"
+        ]
     },
     {
         "id": "q_014",
         "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
         "question": "2024 yılında 12 aylık birikimli cari işlemler açığı ne kadar olarak gerçekleşmiştir?",
-        "ground_truth": "12 aylık birikimli cari işlemler açığı belirgin şekilde düşerek 10 milyar ABD doları olarak gerçekleşmiştir."
+        "ground_truth": "12 aylık birikimli cari işlemler açığı belirgin şekilde düşerek 10 milyar ABD doları olarak gerçekleşmiştir.",
+        "relevant_keywords": [
+            "10 milyar ABD doları",
+            "birikimli cari işlemler açığı"
+        ]
     },
     {
         "id": "q_015",
         "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
         "question": "Türkiye'de banknot basma ve ihraç imtiyazı doğrudan hangi kuruma aittir?",
-        "ground_truth": "Türkiye Büyük Millet Meclisi (TBMM), kendisine ait olan para basma yetkisini süresiz olarak devrettiği için doğrudan Türkiye Cumhuriyet Merkez Bankasına (TCMB) aittir."
+        "ground_truth": "Türkiye Büyük Millet Meclisi (TBMM), kendisine ait olan para basma yetkisini süresiz olarak devrettiği için doğrudan Türkiye Cumhuriyet Merkez Bankasına (TCMB) aittir.",
+        "relevant_keywords": [
+            "para basma yetkisini süresiz",
+            "banknot basma ve ihraç imtiyazı"
+        ]
     },
     {
         "id": "q_016",
         "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
         "question": "Türkiye'de iktisadi faaliyet 2024 yılında yıllık bazda yüzde kaç büyüme kaydetmiştir?",
-        "ground_truth": "İktisadi faaliyet 2024 yılında yıllık bazda yüzde 3,2 olarak büyüme kaydetmiştir."
+        "ground_truth": "İktisadi faaliyet 2024 yılında yıllık bazda yüzde 3,2 olarak büyüme kaydetmiştir.",
+        "relevant_keywords": [
+            "yüzde 3,2",
+            "iktisadi faaliyet"
+        ]
     },
     {
         "id": "q_017",
         "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
         "question": "Banka Meclisi üyelerinin görev süresi kaç yıldır ve yenilenme periyodu nasıldır?",
-        "ground_truth": "Görev süresi üç yıldır ve her yıl üçte biri yenilenmektedir."
+        "ground_truth": "Görev süresi üç yıldır ve her yıl üçte biri yenilenmektedir.",
+        "relevant_keywords": [
+            "üçte biri yenilenmektedir",
+            "Banka Meclisi"
+        ]
     },
     {
         "id": "q_018",
         "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
         "question": "Denetleme Kurulu kaç üyeden oluşur ve üyelerin görev süresi kaç yıldır?",
-        "ground_truth": "Genel Kurul tarafından seçilen dört üyeden oluşur ve görev süresi iki yıldır."
+        "ground_truth": "Genel Kurul tarafından seçilen dört üyeden oluşur ve görev süresi iki yıldır.",
+        "relevant_keywords": [
+            "Denetleme Kurulu",
+            "dört üyeden oluşur"
+        ]
     },
     {
         "id": "q_019",
         "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
         "question": "2024 yılında TCMB tarafından ihracat ve döviz kazandırıcı hizmetler reeskont kredisi olarak toplam ne kadar kredi kullandırılmıştır?",
-        "ground_truth": "Toplam 580,58 milyar TL tutarında ihracat ve döviz kazandırıcı hizmetler reeskont kredisi kullandırılmıştır."
+        "ground_truth": "Toplam 580,58 milyar TL tutarında ihracat ve döviz kazandırıcı hizmetler reeskont kredisi kullandırılmıştır.",
+        "relevant_keywords": [
+            "580,58 milyar TL",
+            "reeskont kredisi"
+        ]
     },
     {
         "id": "q_020",
         "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
         "question": "2024 yılı sonu itibarıyla TCMB'nin (A), (B), (C) ve (D) sınıfı hisselerinin sermayedeki pay oranları nedir?",
-        "ground_truth": "Sermayenin %55,12'si (A) sınıfı, %23,25'i (B) sınıfı, %2,51'i (C) sınıfı ve %19,12'si ise (D) sınıfı hisselerden oluşmaktadır."
+        "ground_truth": "Sermayenin %55,12'si (A) sınıfı, %23,25'i (B) sınıfı, %2,51'i (C) sınıfı ve %19,12'si ise (D) sınıfı hisselerden oluşmaktadır.",
+        "relevant_keywords": [
+            "%55,12",
+            "%23,25",
+            "%19,12"
+        ]
     },
     {
         "id": "q_021",
         "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
         "question": "Bankacılık sektörünün sermaye yeterlilik oranı 2024 yılı Kasım ayı itibarıyla yüzde kaçtır?",
-        "ground_truth": "Sermaye yeterlilik oranı yüzde 18,30 ile yasal sınırların üzerinde kalmaya devam etmiştir."
+        "ground_truth": "Sermaye yeterlilik oranı yüzde 18,30 ile yasal sınırların üzerinde kalmaya devam etmiştir.",
+        "relevant_keywords": [
+            "yüzde 18,30",
+            "sermaye yeterlilik oranı"
+        ]
     },
     {
         "id": "q_022",
         "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
         "question": "31 Aralık 2024 tarihi itibarıyla TCMB İdare Merkezi bünyesinde faaliyet gösteren kaç adet Genel Müdürlük bulunmaktadır?",
-        "ground_truth": "TCMB İdare Merkezi bünyesinde 19 Genel Müdürlük faaliyet göstermektedir."
+        "ground_truth": "TCMB İdare Merkezi bünyesinde 19 Genel Müdürlük faaliyet göstermektedir.",
+        "relevant_keywords": [
+            "19 Genel Müdürlük",
+            "İdare Merkezi"
+        ]
     },
     {
         "id": "q_023",
         "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
         "question": "Bireysel kredi kartı borç birikiminin yavaşlatılması amacıyla 2024 yılında devreye alınan yeni uygulama nedir?",
-        "ground_truth": "Bireysel kredi kartı dönem borcuna göre faiz farklılaşması uygulaması devreye alınmıştır."
+        "ground_truth": "Bireysel kredi kartı dönem borcuna göre faiz farklılaşması uygulaması devreye alınmıştır.",
+        "relevant_keywords": [
+            "dönem borcuna göre faiz farklılaşması",
+            "kredi kartı dönem borcu"
+        ]
     },
     {
         "id": "q_024",
         "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
         "question": "TCMB'nin 213 sayılı VUK hükümlerine uygun olarak tutulmakta olan defter kayıtlarında 2024 yılı dönem zararı ne kadar olarak raporlanmıştır?",
-        "ground_truth": "2024 yılı dönem zararı 695.678.727.620 TL olarak raporlanmıştır."
+        "ground_truth": "2024 yılı dönem zararı 695.678.727.620 TL olarak raporlanmıştır.",
+        "relevant_keywords": [
+            "695.678.727.620",
+            "dönem zararı"
+        ]
     }
 ]
