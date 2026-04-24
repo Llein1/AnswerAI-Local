@@ -479,7 +479,8 @@ Soru: "${query}"`
         chunkIndex: chunk.metadata?.chunkIndex,
         pageNumbers: chunk.metadata?.pageNumbers
             ? JSON.parse(chunk.metadata.pageNumbers || '[]')
-            : null
+            : null,
+        text: chunk.text || ''
     }))
 
     console.log(`[GraphRAG] ✅ ${subgraphEntities.length} entity, ${relevantCommunities.length} community, ${topChunks.length} chunk`)

@@ -212,7 +212,7 @@ export default function EvaluationPanel({ activeFiles }) {
                             RAG Değerlendirme Paneli
                         </h1>
                         <p className="text-sm text-slate-400 mt-1">
-                            {questions.length} soru • 6 yöntem • 5 metrik (LLM hakem + ROUGE-L + Latency)
+                            {questions.length} soru • 6 yöntem • 14 metrik (LLM Hakem + BLEU/ROUGE/METEOR + Retrieval + Latency)
                         </p>
                     </div>
                     {isDone && (
@@ -428,11 +428,23 @@ export default function EvaluationPanel({ activeFiles }) {
                                 <thead>
                                     <tr className="border-b border-slate-700 text-xs text-slate-400">
                                         <th className="px-4 py-2.5 text-left">Yöntem</th>
-                                        <th className="px-3 py-2.5 text-center">Bağlam Alaka</th>
-                                        <th className="px-3 py-2.5 text-center">Sadakat</th>
-                                        <th className="px-3 py-2.5 text-center">Cevap Alaka</th>
-                                        <th className="px-3 py-2.5 text-center">ROUGE-L</th>
-                                        <th className="px-3 py-2.5 text-center">Ort. Gecikme</th>
+                                        {/* LLM-as-a-Judge */}
+                                        <th className="px-3 py-2.5 text-center" title="LLM Hakem (1-5)">B.Alaka</th>
+                                        <th className="px-3 py-2.5 text-center" title="LLM Hakem (1-5)">Sadakat</th>
+                                        <th className="px-3 py-2.5 text-center" title="LLM Hakem (1-5)">C.Alaka</th>
+                                        {/* Referans Tabanlı */}
+                                        <th className="px-3 py-2.5 text-center" title="BLEU-4 (0-1)">BLEU-4</th>
+                                        <th className="px-3 py-2.5 text-center" title="ROUGE-1 (0-1)">ROUGE-1</th>
+                                        <th className="px-3 py-2.5 text-center" title="ROUGE-2 (0-1)">ROUGE-2</th>
+                                        <th className="px-3 py-2.5 text-center" title="ROUGE-L (0-1)">ROUGE-L</th>
+                                        <th className="px-3 py-2.5 text-center" title="METEOR (0-1)">METEOR</th>
+                                        {/* Retrieval */}
+                                        <th className="px-3 py-2.5 text-center" title="Precision@K (0-1)">P@K</th>
+                                        <th className="px-3 py-2.5 text-center" title="Recall@K (0-1)">R@K</th>
+                                        <th className="px-3 py-2.5 text-center" title="MRR (0-1)">MRR</th>
+                                        <th className="px-3 py-2.5 text-center" title="nDCG@K (0-1)">nDCG</th>
+                                        {/* End-to-End */}
+                                        <th className="px-3 py-2.5 text-center">Gecikme</th>
                                         <th className="px-3 py-2.5 text-center">Sorular</th>
                                         <th className="px-3 py-2.5 text-center">Hata</th>
                                     </tr>
@@ -446,6 +458,7 @@ export default function EvaluationPanel({ activeFiles }) {
                                             <td className="px-4 py-3">
                                                 <MethodBadge methodId={row.method} />
                                             </td>
+                                            {/* LLM-as-a-Judge */}
                                             <td className="px-3 py-3 text-center">
                                                 <ScoreCell value={row.avgContextRelevance} />
                                             </td>
@@ -455,9 +468,36 @@ export default function EvaluationPanel({ activeFiles }) {
                                             <td className="px-3 py-3 text-center">
                                                 <ScoreCell value={row.avgAnswerRelevance} />
                                             </td>
+                                            {/* Referans Tabanlı */}
+                                            <td className="px-3 py-3 text-center">
+                                                <ScoreCell value={row.avgBLEU} max={1} />
+                                            </td>
+                                            <td className="px-3 py-3 text-center">
+                                                <ScoreCell value={row.avgROUGE1} max={1} />
+                                            </td>
+                                            <td className="px-3 py-3 text-center">
+                                                <ScoreCell value={row.avgROUGE2} max={1} />
+                                            </td>
                                             <td className="px-3 py-3 text-center">
                                                 <ScoreCell value={row.avgRougeL} max={1} />
                                             </td>
+                                            <td className="px-3 py-3 text-center">
+                                                <ScoreCell value={row.avgMETEOR} max={1} />
+                                            </td>
+                                            {/* Retrieval */}
+                                            <td className="px-3 py-3 text-center">
+                                                <ScoreCell value={row.avgPrecisionAtK} max={1} />
+                                            </td>
+                                            <td className="px-3 py-3 text-center">
+                                                <ScoreCell value={row.avgRecallAtK} max={1} />
+                                            </td>
+                                            <td className="px-3 py-3 text-center">
+                                                <ScoreCell value={row.avgMRR} max={1} />
+                                            </td>
+                                            <td className="px-3 py-3 text-center">
+                                                <ScoreCell value={row.avgNDCG} max={1} />
+                                            </td>
+                                            {/* End-to-End */}
                                             <td className="px-3 py-3 text-center">
                                                 <LatencyCell ms={row.avgLatency} />
                                             </td>
@@ -492,10 +532,22 @@ export default function EvaluationPanel({ activeFiles }) {
                                     <tr className="border-b border-slate-700 text-slate-400">
                                         <th className="px-3 py-2 text-left">Yöntem</th>
                                         <th className="px-3 py-2 text-left">Soru</th>
-                                        <th className="px-2 py-2 text-center">B.Alaka</th>
-                                        <th className="px-2 py-2 text-center">Sadakat</th>
-                                        <th className="px-2 py-2 text-center">C.Alaka</th>
-                                        <th className="px-2 py-2 text-center">ROUGEL</th>
+                                        {/* LLM-as-a-Judge */}
+                                        <th className="px-2 py-2 text-center" title="Bağlam Alakalılık">B.Alaka</th>
+                                        <th className="px-2 py-2 text-center" title="Sadakat">Sadakat</th>
+                                        <th className="px-2 py-2 text-center" title="Cevap Alakalılık">C.Alaka</th>
+                                        {/* Referans Tabanlı */}
+                                        <th className="px-2 py-2 text-center" title="BLEU-4">BLEU-4</th>
+                                        <th className="px-2 py-2 text-center" title="ROUGE-1">ROUGE-1</th>
+                                        <th className="px-2 py-2 text-center" title="ROUGE-2">ROUGE-2</th>
+                                        <th className="px-2 py-2 text-center" title="ROUGE-L">ROUGE-L</th>
+                                        <th className="px-2 py-2 text-center" title="METEOR">METEOR</th>
+                                        {/* Retrieval */}
+                                        <th className="px-2 py-2 text-center" title="Precision@K">P@K</th>
+                                        <th className="px-2 py-2 text-center" title="Recall@K">R@K</th>
+                                        <th className="px-2 py-2 text-center" title="MRR">MRR</th>
+                                        <th className="px-2 py-2 text-center" title="nDCG@K">nDCG</th>
+                                        {/* End-to-End */}
                                         <th className="px-2 py-2 text-center">ms</th>
                                     </tr>
                                 </thead>
@@ -514,6 +566,7 @@ export default function EvaluationPanel({ activeFiles }) {
                                                     {r.question?.substring(0, 60)}...
                                                 </span>
                                             </td>
+                                            {/* LLM-as-a-Judge */}
                                             <td className="px-2 py-2 text-center">
                                                 <ScoreCell value={r.contextRelevance} />
                                             </td>
@@ -523,9 +576,36 @@ export default function EvaluationPanel({ activeFiles }) {
                                             <td className="px-2 py-2 text-center">
                                                 <ScoreCell value={r.answerRelevance} />
                                             </td>
+                                            {/* Referans Tabanlı */}
+                                            <td className="px-2 py-2 text-center">
+                                                <ScoreCell value={r.bleu} max={1} />
+                                            </td>
+                                            <td className="px-2 py-2 text-center">
+                                                <ScoreCell value={r.rouge1} max={1} />
+                                            </td>
+                                            <td className="px-2 py-2 text-center">
+                                                <ScoreCell value={r.rouge2} max={1} />
+                                            </td>
                                             <td className="px-2 py-2 text-center">
                                                 <ScoreCell value={r.rougeL} max={1} />
                                             </td>
+                                            <td className="px-2 py-2 text-center">
+                                                <ScoreCell value={r.meteor} max={1} />
+                                            </td>
+                                            {/* Retrieval */}
+                                            <td className="px-2 py-2 text-center">
+                                                <ScoreCell value={r.precisionAtK} max={1} />
+                                            </td>
+                                            <td className="px-2 py-2 text-center">
+                                                <ScoreCell value={r.recallAtK} max={1} />
+                                            </td>
+                                            <td className="px-2 py-2 text-center">
+                                                <ScoreCell value={r.mrr} max={1} />
+                                            </td>
+                                            <td className="px-2 py-2 text-center">
+                                                <ScoreCell value={r.ndcg} max={1} />
+                                            </td>
+                                            {/* End-to-End */}
                                             <td className="px-2 py-2 text-center">
                                                 <LatencyCell ms={r.latency} />
                                             </td>

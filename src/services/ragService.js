@@ -306,7 +306,9 @@ async function retrieveNaive(query, activeFileIds, topK, minSimilarity) {
 
 async function retrieveMMR(query, activeFileIds, topK, minSimilarity) {
     console.log(`[RAG: MMR] Maksimal marjinal alaka hesaplanıyor...`)
-    const lambda = 0.5  // alaka vs çeşitlilik dengesi
+    // lambda=0.7: alaka ağırlığı artırıldı (0.5 çok fazla çeşitliliğe yol açıyordu,
+    // olgusal sorularda benzer chunk'lar arasındaki küçük fark anlamlı bilgi içeriyor).
+    const lambda = 0.7  // alaka vs çeşitlilik dengesi
     const queryEmbedding = await createEmbedding(query)
     const candidates = await queryChunks(queryEmbedding, activeFileIds, topK * 4)
 
@@ -363,16 +365,17 @@ async function retrieveMMR(query, activeFileIds, topK, minSimilarity) {
 async function retrieveHyDE(query, activeFileIds, topK, minSimilarity) {
     console.log(`[RAG: HyDE] Varsayımsal belge üretiliyor...`)
 
-    const hydePrompt = `Aşağıdaki soruya cevap veren kısa bir belge paragrafı yaz (150-200 kelime). 
-Gerçekten var olan bir belgeden alıntı gibi yaz, soru sormadan doğrudan bilgi ver.
+    const hydePrompt = `Lütfen aşağıdaki soruyu cevaplayabilecek, varsayımsal bir belgede (örneğin kurumsal bir faaliyet raporunda) geçebilecek 1-2 cümlelik kısa bir metin parçası (chunk) oluştur. Gerçek veriyi bilmiyorsan en olası genel terimleri kullan, detay (sayı, isim vb.) uydurmaktan kaçın.
 Soru: "${query}"
-Belge paragrafı:`
+Varsayımsal Belge Parçası:`
 
     const hypotheticalDoc = await callLLM(hydePrompt)
     console.log(`[RAG: HyDE] Varsayımsal belge: "${hypotheticalDoc.substring(0, 100)}..."`)
 
-    // Use the hypothetical document as the query
-    const hydeEmbedding = await createEmbedding(hypotheticalDoc)
+    // Orijinal soru ile varsayımsal belgeyi birleştirerek arama yapıyoruz.
+    // Sadece varsayımsal belgeyi kullanmak, LLM halüsinasyon yaptığında ilgisiz chunk'ları getirmesine sebep oluyordu.
+    const combinedText = query + "\n\n" + hypotheticalDoc
+    const hydeEmbedding = await createEmbedding(combinedText)
     const results = await queryChunks(hydeEmbedding, activeFileIds, topK * 2)
 
     if (results.length === 0) throw new Error('Aktif dosyalardan işlenmiş içerik bulunamadı')
@@ -396,11 +399,19 @@ async function retrieveBM25Hybrid(query, activeFileIds, topK, minSimilarity) {
 
     if (results.length === 0) throw new Error('Aktif dosyalardan işlenmiş içerik bulunamadı')
 
+    // Türkçe ve genel stop-word'ler: keyword skorunu gürültülendirir.
+    const TR_STOP = new Set([
+        've','ile','için','olan','bu','bir','da','de','den','dan','ki','ne',
+        'çok','daha','en','her','ise','ama','veya','ya','ya da','hem','ancak',
+        'gibi','kadar','sonra','önce','üst','alt','içinde','üzerinde','hakkında',
+        'olan','edilmiş','yapılan','göre','olan','ait'
+    ])
+
     // Simple BM25-like keyword scoring
     const queryTerms = query.toLowerCase()
         .replace(/[^\w\sğüşıöçĞÜŞİÖÇ]/g, ' ')
         .split(/\s+/)
-        .filter(t => t.length > 2)
+        .filter(t => t.length > 3 && !TR_STOP.has(t))  // 3+ karakter ve stop-word değil
 
     // Compute raw keyword scores first
     const rawScores = results.map(chunk => {
@@ -499,13 +510,14 @@ Değerlendirme:`
     })
 
     // Add remaining candidates (not evaluated) with reduced score
+    // 0.8 katsayısı: değerlendirilmemiş chunk'ları tamamen elemek yerine hafifçe cezalandır.
     candidates.slice(evalBatchSize).forEach(chunk => {
-        scoredChunks.push({ ...chunk, similarity: chunk.similarity * 0.7 })
+        scoredChunks.push({ ...chunk, similarity: chunk.similarity * 0.8 })
     })
 
     scoredChunks.sort((a, b) => b.similarity - a.similarity)
 
-    const topChunks = scoredChunks.filter(c => c.similarity >= 0.3).slice(0, topK)
+    const topChunks = scoredChunks.filter(c => c.similarity >= 0.25).slice(0, topK)
     const finalChunks = topChunks.length > 0 ? topChunks : [scoredChunks[0]]
 
     console.log(`[RAG: Self-RAG] ${finalChunks.length} chunk seçildi (LLM değerlendirme + similarity)`)

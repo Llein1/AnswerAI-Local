@@ -239,5 +239,310 @@
             "695.678.727.620",
             "dönem zararı"
         ]
+    },
+    {
+        "id": "q_025",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "2024 yılında uygulanan parasal sıkılaştırma politikalarının iç talep, net ihracat ve iktisadi büyüme kompozisyonu üzerindeki genel etkileri neler olmuştur?",
+        "ground_truth": "Parasal sıkılaşma ile yurt içi talebin büyümeye katkısı belirgin şekilde düşmüş, buna karşılık net ihracatın pozitif katkısı ön plana çıkmıştır. Bu dengelenmeyle birlikte büyüme daha sağlıklı bir yapıya kavuşarak yüzde 3,2 olarak gerçekleşmiştir.",
+        "relevant_keywords": [
+            "parasal sıkılaşma",
+            "yurt içi talepte dengelenme",
+            "net ihracatın pozitif katkısı",
+            "yüzde 3,2"
+        ]
+    },
+    {
+        "id": "q_026",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "TCMB'nin 2024 yılında uyguladığı makroihtiyati çerçevedeki sadeleşme adımları (örneğin menkul kıymet tesisinin kaldırılması) ile tahvil getiri eğrisi arasındaki ilişki nedir?",
+        "ground_truth": "Menkul kıymet tesis düzenlemesinin yürürlükten kaldırılmasıyla piyasa mekanizmasının işlevselliği artmış ve tahvil getiri eğrisinin para politikası duruşu ile olan ilişkisi kuvvetlenmiştir.",
+        "relevant_keywords": [
+            "menkul kıymet tesisinin kaldırılması",
+            "tahvil getiri eğrisi",
+            "para politikası duruşu"
+        ]
+    },
+    {
+        "id": "q_027",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "Cari işlemler açığındaki düşüş ile hizmetler dengesi ve enerji fiyatları arasındaki ilişki nasıl gelişmiştir?",
+        "ground_truth": "Dış ticaret açığındaki azalış ve hizmetler dengesindeki (özellikle net seyahat gelirleri ile yabancı ziyaretçi sayısındaki artış) güçlü görünüm cari açığı azaltıcı yönde etkilerken, enerji fiyatlarındaki düşüş de enerji dengesini olumlu etkileyerek cari açıktaki düşüşü desteklemiştir.",
+        "relevant_keywords": [
+            "cari işlemler dengesi",
+            "hizmetler dengesi",
+            "enerji dengesi",
+            "seyahat gelirleri"
+        ]
+    },
+    {
+        "id": "q_028",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "2024 yılında enflasyon görünümünde hangi kalemler direnç (katılık) göstermiş, hangi kalemler ise düşüş eğilimini desteklemiştir?",
+        "ground_truth": "Kira, eğitim ve lokanta-otel gibi hizmet grubu enflasyonları ile yönetilen-yönlendirilen enerji fiyatlarında katılık gözlenirken; temel mal grubu enflasyonu ile Türk lirasındaki reel değerlenmenin etkisiyle kur kaynaklı baskıların azalması enflasyonun düşüş eğilimini desteklemiştir.",
+        "relevant_keywords": [
+            "hizmet enflasyonundaki katılık",
+            "temel mal enflasyonu",
+            "kira ve eğitim"
+        ]
+    },
+    {
+        "id": "q_029",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "TCMB'nin uluslararası rezerv yönetimi karar alma süreci hangi aşamalardan ve hiyerarşik yapıdan oluşmaktadır?",
+        "ground_truth": "Üç aşamalıdır: İlk aşamada Banka Meclisi genel yatırım kriterlerini belirler (Yönetmelikler). İkinci aşamada Yönetim Komitesi veya Başkanlık Makamı model portföy ve risk toleransını onaylar. Üçüncü aşamada ise Piyasalar Genel Müdürlüğü tarafından bu kısıtlar çerçevesinde rezerv yönetimi uygulamaları gerçekleştirilir.",
+        "relevant_keywords": [
+            "rezerv yönetimi karar alma süreci",
+            "Banka Meclisi",
+            "Yönetim Komitesi",
+            "model portföy"
+        ]
+    },
+    {
+        "id": "q_030",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "Gıda Komitesi'nin enflasyonla mücadeledeki rolü ve TCMB ile olan koordinasyonu nasıl işlemektedir?",
+        "ground_truth": "Gıda Komitesi, tarım ve gıda sektöründeki yapısal ve konjonktürel sorunları tespit edip çözüm üreterek gıda fiyatlarında istikrar ve öngörülebilirliği hedefler. TCMB, Gıda-EUS projesiyle kritik fiyat verilerini analiz ederek komiteye düzenli teknik destek ve politika önerileri sunar.",
+        "relevant_keywords": [
+            "Gıda Komitesi",
+            "gıda fiyatlarında istikrar",
+            "Gıda-EUS"
+        ]
+    },
+    {
+        "id": "q_031",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "2024 yılında devreye alınan FAST TR Karekod ve KOLAS gibi katman servislerinin ödemeler ekosistemindeki temel işlevi nedir?",
+        "ground_truth": "FAST Sisteminin markalaşması, bilinirliğinin artması ve tüm ödeme hizmeti kullanıcılarına aynı standartlarda ve güvenli (SİPER entegrasyonuyla) anlık para transferi deneyimi sunarak ödemeler alanında rekabet ve yenilikçiliği teşvik etmektir.",
+        "relevant_keywords": [
+            "FAST TR Karekod",
+            "KOLAS",
+            "ödemeler ekosistemi",
+            "SİPER"
+        ]
+    },
+    {
+        "id": "q_032",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "TCMB'nin araştırma gündeminde yer alan 'iklim değişikliği ve yeşil ekonomi' hedefleri ile uluslararası finans platformlarındaki temsiliyeti arasında nasıl bir bağlantı kurulmuştur?",
+        "ground_truth": "TCMB, '2053 Net Sıfır Emisyon Hedefi' doğrultusunda ulusal taksonomi çalışmalarına katkı sağlarken, NGFS (Finansal Sistemi Yeşillendirme Ağı) bünyesinde iklim değişikliği raporlarının yazımında rol almış ve G20 Sürdürülebilir Finans Çalışma Grubu'nda aktif bulunmuştur.",
+        "relevant_keywords": [
+            "NGFS",
+            "Finansal Sistemi Yeşillendirme Ağı",
+            "2053 Net Sıfır Emisyon",
+            "İklim Değişikliği"
+        ]
+    },
+    {
+        "id": "q_033",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "TCMB'nin Denetim Genel Müdürlüğü tarafından yapılan 'iç denetim' faaliyetleri ile bağımsız kuruluşlar tarafından yapılan 'dış denetim' (bağımsız denetim) arasındaki farklar ve amaçlar nelerdir?",
+        "ground_truth": "İç denetim (operasyonel, finansal, uygunluk ve bilişim) TCMB'nin kendi birimlerinin mevzuata uyumunu ve stratejik hedeflere ulaşmasını sağlamayı amaçlarken, dış/bağımsız denetim finansal tabloların uluslararası standartlara (UFRS) uygunluğu, şeffaflık ve kamuoyuna hesap verebilirlik ilkesi gereği yapılmaktadır.",
+        "relevant_keywords": [
+            "iç denetim",
+            "dış denetim",
+            "şeffaflık",
+            "bağımsız denetim"
+        ]
+    },
+    {
+        "id": "q_034",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "Bankacılık sektöründe LKO (Likidite Karşılama Oranı) ile sektörün dış borç çevirme oranı arasındaki genel görünüm 2024 yılında nasıl şekillenmiştir?",
+        "ground_truth": "Bankacılık sektörü yüksek likidite tamponlarını korumuş (toplam LKO yüzde 167, YP LKO yüzde 224), aynı zamanda risk primlerindeki düşüşle birlikte yurt dışından 29,60 milyar dolar net finansman sağlayarak dış borç yenileme oranını yüzde 115 seviyesinde gerçekleştirmiştir.",
+        "relevant_keywords": [
+            "Likidite Karşılama Oranı",
+            "LKO",
+            "dış borç yenileme oranı",
+            "29,60 milyar ABD doları"
+        ]
+    },
+    {
+        "id": "q_035",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "TCMB'nin iç iletişim ve akademik kapasitesini destekleyen 'Merkezin Güncesi' blog sayfasının, para politikası iletişimindeki rolü nedir?",
+        "ground_truth": "Makroekonomi, merkez bankacılığı, dijitalleşme, yapay zeka ve iklim değişikliği gibi konularda 19 yeni analiz yayımlanarak para politikalarının anlaşılabilirliği artırılmış ve şeffaf, çift yönlü iletişimi destekleyen önemli bir araç olarak kullanılmıştır.",
+        "relevant_keywords": [
+            "Merkezin Güncesi",
+            "blog sayfası",
+            "çift yönlü iletişim"
+        ]
+    },
+    {
+        "id": "q_036",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "TCMB 2023-2025 Stratejik Planı'nda belirtilen kurumun misyonu ve vizyonu genel çerçevede neleri kapsamaktadır?",
+        "ground_truth": "Misyonu; sürdürülebilir fiyat istikrarını sağlayarak ve finansal istikrarı destekleyerek toplumsal refaha katkıda bulunmak iken, Vizyonu; dinamik ve yenilikçi yapısıyla finansal piyasalara, ödeme sistemlerine ve dijital dönüşüme yön veren bir Merkez Bankası olmaktır.",
+        "relevant_keywords": [
+            "Stratejik Plan",
+            "Misyon",
+            "Vizyon",
+            "dijital dönüşüme yön veren"
+        ]
+    },
+    {
+        "id": "q_037",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "Türk lirasında likidite fazlasının oluştuğu dönemlerde TCMB, sterilizasyon mekanizmasını nasıl çeşitlendirmiş ve hangi araçları kullanmıştır?",
+        "ground_truth": "Sistemin fonlama ihtiyacında oluşan fazla likidite; zorunlu karşılık adımları, geleneksel 11.00-11.30 saatleri ile farklı vadelerdeki 13.45-14.15 TL depo alım ihaleleri, satım yönlü döviz/altın karşılığı ters swap ihaleleri ve kotasyon yoluyla piyasalardaki işlemlerle sterilize edilmiştir.",
+        "relevant_keywords": [
+            "sterilizasyon mekanizması",
+            "likidite fazlası",
+            "TL depo alım ihaleleri",
+            "ters swap"
+        ]
+    },
+    {
+        "id": "q_038",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "Katılım bankacılığının geliştirilmesi için TCMB, uluslararası standartlar ve yerel teşkilatlar bazında 2024 yılında ne gibi eş güdüm faaliyetleri yürütmüştür?",
+        "ground_truth": "TCMB, IFSB ve IILM gibi uluslararası kuruluşların toplantılarına katılmış, TKBB ve katılım bankalarının genel müdürleriyle bir araya gelerek güncel düzenleme taleplerini değerlendirmiş ve yurt dışı merkez bankalarına (Özbekistan, Tacikistan vb.) eğitimler vererek Türkiye'nin tecrübelerini aktarmıştır.",
+        "relevant_keywords": [
+            "IFSB",
+            "IILM",
+            "TKBB",
+            "Katılım Finans"
+        ]
+    },
+    {
+        "id": "q_039",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "Banknot tedavül sistemindeki 'MONY (Merkezi Olmayan Nakit Yönetimi)' ile 'KMPD (Konsinye Madeni Para Deposu)' projeleri arasındaki fark ve işlevsel ortaklık nedir?",
+        "ground_truth": "MONY, özel bankalar aracılığıyla banknot saklama ve işleme süreçlerinin optimize edilmesini sağlarken, KMPD ise PTT aracılığıyla madeni para nakit yönetimini ve dağıtımını sağlamaktadır; her iki proje de nakit dolaşımının ülke çapında kesintisiz, verimli ve düşük maliyetli yürümesine hizmet eder.",
+        "relevant_keywords": [
+            "MONY",
+            "KMPD",
+            "PTT",
+            "banknot saklama"
+        ]
+    },
+    {
+        "id": "q_040",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "İktisadi faaliyet ile iş gücü piyasası göstergeleri (istihdam ve işsizlik) arasındaki ilişki 2024 yılında nasıl bir görünüm çizmiştir?",
+        "ground_truth": "İktisadi faaliyette yurt içi talebin yavaşlamasına (soğumasına) rağmen iş gücü piyasası dirençli kalmış; tarım dışı, inşaat ve hizmet sektörlerindeki artışların desteğiyle istihdam 984 bin kişi artmış ve işsizlik oranı yüzde 8,7'ye gerilemiştir.",
+        "relevant_keywords": [
+            "iş gücü piyasası dirençli",
+            "istihdam artışı",
+            "yüzde 8,7 işsizlik"
+        ]
+    },
+    {
+        "id": "q_041",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "Yatırım Taahhütlü Avans Kredileri (YTAK) uygulamasının makroekonomik hedefleri nelerdir ve 2024 yılında bu kredilerin kullandırılma koşullarında hangi yenilikler yapılmıştır?",
+        "ground_truth": "YTAK'ın amacı büyük ölçekli, yüksek teknolojili ve stratejik yatırımların finansmanıdır. 2024 yılında krediye erişim için asgari 70 puanlık Teknoloji ve Strateji Puanı (TSP) koşulu getirilmiş ve baz faiz oranı hesaplama yöntemi politika faizine endekslenerek yenilenmiştir.",
+        "relevant_keywords": [
+            "YTAK",
+            "Yatırım Taahhütlü Avans Kredisi",
+            "Teknoloji ve Strateji Puanı",
+            "stratejik yatırımlar"
+        ]
+    },
+    {
+        "id": "q_042",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "Finansal tüketicilerden ve ticari müşterilerden alınan ücretlere yönelik çıkarılan (2020/4 ve 2020/7 sayılı) tebliğlerin genel amacı nedir ve piyasa işleyişine nasıl katkı sağlar?",
+        "ground_truth": "Bu tebliğlerin amacı, bankalar ile müşteriler arasındaki işlemlerde öngörülebilirliğin, şeffaflığın artırılması, kavram birliğinin sağlanması ve aşırı ücretlendirmenin önlenmesidir, böylece finansal hizmetlerin daha adil ve erişilebilir olmasını destekler.",
+        "relevant_keywords": [
+            "şeffaflık",
+            "öngörülebilirlik",
+            "aşırı ücretlendirmenin önlenmesi",
+            "ticari müşteriler"
+        ]
+    },
+    {
+        "id": "q_043",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "Kredi kartı faiz oranlarındaki düzenlemeler ile bireysel talep/tüketim eğilimi arasındaki etkileşim 2024 yılında nasıl kurgulanmıştır?",
+        "ground_truth": "TCMB, kredi kartı gecikme faizlerinde yapılandırma imkanı sağlarken aynı zamanda nakit çekim ile mal/hizmet alımında uygulanan aylık azami akdi faiz oranlarını artırarak ve dönem borcuna göre faiz farklılaştırması uygulayarak tüketimi dizginlemeyi ve bireysel borç birikimini yavaşlatmayı hedeflemiştir.",
+        "relevant_keywords": [
+            "kredi kartı faiz oranları",
+            "borç birikiminin yavaşlatılması",
+            "dönem borcuna göre faiz farklılaşması"
+        ]
+    },
+    {
+        "id": "q_044",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "Bankacılık sektöründe yabancı para mevduattan Türk lirası mevduata geçişi hızlandırmak için 2024 yılında zorunlu karşılıklar (ZK) mekanizması nasıl bir teşvik aracı olarak kullanılmıştır?",
+        "ground_truth": "TCMB, TL mevduat oranlarını artırmak amacıyla TL'ye geçiş ve yenileme hedeflerini tutturan bankaların tesis ettikleri zorunlu karşılıklara faiz ödemesi yapmaya başlamış, aynı zamanda yabancı para mevduatlar için ayrılması gereken TL cinsinden ZK oranlarını düşürerek bankaları TL mevduat toplamaya teşvik etmiştir.",
+        "relevant_keywords": [
+            "zorunlu karşılıklara faiz ödenmesi",
+            "Türk lirası mevduat payının artırılması",
+            "yabancı para mevduat"
+        ]
+    },
+    {
+        "id": "q_045",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "Yabancı merkez bankaları ile yapılan swap (para takası) anlaşmaları (örneğin Çin ve BAE ile) dış ticaretin finansmanı açısından nasıl bir stratejik önem taşımaktadır?",
+        "ground_truth": "Bu anlaşmalar sayesinde iki ülke arasındaki ticaret ve yatırım faaliyetlerinin ABD Doları yerine doğrudan yerel para birimleri (Yuan, Dirhem ve TL) ile finanse edilmesi sağlanarak kur riski azaltılmakta, reeskont kredileri ile dış ticaret desteklenmekte ve uluslararası ödemelerde yerel paraların kullanım hacmi artırılmaktadır.",
+        "relevant_keywords": [
+            "yerel para ile finansman",
+            "swap anlaşmaları",
+            "kur riskinin azaltılması"
+        ]
+    },
+    {
+        "id": "q_046",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "2024 yılında 'TCMB Bilişim Teknolojileri' mimarisindeki yenilikler operasyonel sürekliliği ve çalışan deneyimini nasıl etkilemiştir?",
+        "ground_truth": "EFT, POS ve EMKT uygulamaları 7/24 kesintisiz çalışabilecek ve dirençli yapıda yeniden tasarlanmış; EVDS kurumsal ihtiyaçlara göre güncellenmiş ve kurum içinde çalışanların güvenle kullanabileceği 'Yapay Zeka Odası' kurularak üretken yapay zeka asistanları operasyonlara entegre edilmiştir.",
+        "relevant_keywords": [
+            "EFT 7/24",
+            "Yapay Zeka Odası",
+            "Bilişim Teknolojileri mimarisi",
+            "operasyonel dayanıklılık"
+        ]
+    },
+    {
+        "id": "q_047",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "TCMB'nin bağımsız dış denetimden geçen finansal tablolarında 'Geçmiş Yıllar Zararı'nın kapatılması süreci ile kurumun kâr dağıtım politikası arasında nasıl bir yasal ilişki mevcuttur?",
+        "ground_truth": "1211 sayılı TCMB Kanunu ve 6102 sayılı Türk Ticaret Kanunu (Madde 509) gereğince, TCMB'nin mevcut olan geçmiş yıllar zararları (2024 yılı itibarıyla 808,8 milyar TL) tamamen kapanıp mahsup edilene kadar, kâr ve ihtiyat akçesi dağıtımı yapılamamaktadır.",
+        "relevant_keywords": [
+            "Geçmiş Yıllar Zararı",
+            "kâr dağıtımı",
+            "6102 sayılı TTK",
+            "ihtiyat akçesi"
+        ]
+    },
+    {
+        "id": "q_048",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "2024 Yılı Yıllık Faaliyet Raporuna göre Banka Meclisi üyelerinin seçimi ve TCMB'nin ortaklık yapısı (sermaye dağılımı) arasındaki kurumsal denge nasıl tanımlanmaktadır?",
+        "ground_truth": "TCMB sermayesi dört sınıf hisseden oluşur ve çoğunluk olan %55,12'lik (A) sınıfı hisse Hazine'ye aittir. Banka Meclisi üyeleri ise hissedarların temsil edildiği Genel Kurul tarafından 3 yıllığına seçilir; böylece Merkez Bankası hem bağımsız politika yürüten hem de hisse oranları doğrultusunda kamu ve özel sektörü temsil eden anonim şirket yapısına sahip bir karar alma organına kavuşur.",
+        "relevant_keywords": [
+            "Banka Meclisi",
+            "(A) sınıfı hisseler",
+            "Genel Kurul",
+            "anonim şirket"
+        ]
+    },
+    {
+        "id": "q_049",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "TCMB 'Yatırımcı Günleri' (örneğin New York buluşması) ve IMF-Dünya Bankası Bahar Toplantılarındaki yoğun ikili görüşmelerin TCMB'nin uluslararası finansal kredibilitesi üzerindeki amacı nedir?",
+        "ground_truth": "Küresel yatırımcılara Türkiye'nin uyguladığı dezenflasyon süreci, makroihtiyati sadeleşme ve para politikalarındaki kararlılık doğrudan aktarılarak öngörülebilirlik ve şeffaflık artırılmakta, dış finansmana erişim (risk priminin / CDS'in düşmesi) kolaylaştırılıp kurumsal kredibilite güçlendirilmektedir.",
+        "relevant_keywords": [
+            "Yatırımcı Günü",
+            "finansal kredibilite",
+            "CDS",
+            "şeffaflık",
+            "dış finansmana erişim"
+        ]
+    },
+    {
+        "id": "q_050",
+        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
+        "question": "TCMB'nin enflasyon oranlarındaki dönemsel veya geçici dalgalanmalara karşı sergilediği 'ihtiyatlı duruş' ve 'kararlılık' prensibi Para Politikası Kurulu (PPK) metinlerinde hangi şartlı ifadeyle özetlenmektedir?",
+        "ground_truth": "PPK kararlarında, 'Aylık enflasyonun ana eğiliminde belirgin ve kalıcı bir düşüş sağlanana ve enflasyon beklentileri öngörülen tahmin aralığına yakınsayana kadar sıkı para politikası duruşunun sürdürüleceği' ve 'enflasyonda belirgin bir bozulma öngörülmesi durumunda para politikası duruşunun sıkılaştırılacağı' vurgulanmaktadır.",
+        "relevant_keywords": [
+            "ihtiyatlı duruş",
+            "belirgin ve kalıcı bir düşüş",
+            "sıkı para politikası",
+            "beklentilerin yakınsaması"
+        ]
     }
 ]
