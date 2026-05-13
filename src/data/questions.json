@@ -1,548 +1,978 @@
 [
     {
         "id": "q_001",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "TCMB 2024 Yılı Yıllık Faaliyet Raporu'nun kapak ve ayraçlarında kullanılan fotoğraflar hangi temalı yarışmadan seçilmiştir?",
-        "ground_truth": "TCMB tarafından düzenlenen 'Ekonomi ve İnsan' temalı Uluslararası Fotoğraf Yarışmasından seçilmiştir.",
+        "document_name": "tofas.pdf",
+        "question": "TOFAŞ'ın konsolide finansal raporu KAP'ta hangi tarih ve saatte yayınlanmıştır?",
+        "ground_truth": "KAP'ta yayınlanma tarihi ve saati 09.02.2026 23:32:33'tür.",
         "relevant_keywords": [
-            "Ekonomi ve İnsan",
-            "Fotoğraf Yarışması"
+            "09.02.2026",
+            "23:32:33",
+            "KAP"
         ]
     },
     {
         "id": "q_002",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "TCMB'nin 2024 yılı sonu itibarıyla toplam çalışan sayısı kaçtır?",
-        "ground_truth": "2024 yılı sonu itibarıyla TCMB'nin toplam çalışan sayısı 3.892'dir.",
+        "document_name": "tofas.pdf",
+        "question": "Yayınlanan finansal rapor hangi şirkete aittir?",
+        "ground_truth": "Yayınlanan finansal rapor TOFAŞ Türk Otomobil Fabrikası A.Ş.'ye aittir.",
         "relevant_keywords": [
-            "3.892"
+            "TOFAŞ",
+            "Türk Otomobil Fabrikası A.Ş."
         ]
     },
     {
         "id": "q_003",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "Türkiye'de 2024 yıl sonunda yıllık enflasyon yüzde kaç olarak gerçekleşmiştir?",
-        "ground_truth": "Yıllık enflasyon 2024 yıl sonunda yüzde 44,4 olarak gerçekleşmiştir.",
+        "document_name": "tofas.pdf",
+        "question": "Finansal rapor hangi dönemi kapsamaktadır?",
+        "ground_truth": "Finansal rapor 2025 yılı 4. çeyrek (3 aylık bildirim) dönemini kapsamaktadır.",
         "relevant_keywords": [
-            "yüzde 44,4",
-            "44,4"
+            "2025",
+            "4. çeyrek",
+            "3 Aylık Bildirim"
         ]
     },
     {
         "id": "q_004",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "TCMB 2024 yılı Aralık ayında politika faizini hangi seviyeye indirmiştir?",
-        "ground_truth": "Aralık ayında politika faizi seviyesi yüzde 47,5 seviyesine indirilmiştir.",
+        "document_name": "tofas.pdf",
+        "question": "TOFAŞ'ın 2025 yılı konsolide finansal tablolarını denetleyen bağımsız denetim kuruluşu hangisidir?",
+        "ground_truth": "Denetimi DRT Bağımsız Denetim ve Serbest Muhasebeci Mali Müşavirlik A.Ş. yapmıştır.",
         "relevant_keywords": [
-            "47,5 seviyesine",
-            "yüzde 47,5"
+            "DRT Bağımsız Denetim"
         ]
     },
     {
         "id": "q_005",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "TCMB'nin 2023-2025 Stratejik Planı'na göre misyonu nedir?",
-        "ground_truth": "Sürdürülebilir fiyat istikrarını sağlayarak ve finansal istikrarı destekleyerek toplumsal refaha katkıda bulunmaktır.",
+        "document_name": "tofas.pdf",
+        "question": "Bağımsız denetçinin raporundaki denetim türü ve sonucu nedir?",
+        "ground_truth": "Denetim türü 'Sürekli', denetim sonucu ise 'Olumlu'dur.",
         "relevant_keywords": [
-            "toplumsal refaha katkıda",
-            "Sürdürülebilir fiyat istikrarını"
+            "Sürekli",
+            "Olumlu"
         ]
     },
     {
         "id": "q_006",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "TCMB'nin vizyonu nedir?",
-        "ground_truth": "Dinamik ve yenilikçi yapısıyla finansal piyasalara, ödeme sistemlerine ve dijital dönüşüme yön veren bir Merkez Bankası olmaktır.",
+        "document_name": "tofas.pdf",
+        "question": "Bağımsız denetim raporunu imzalayan sorumlu denetçi kimdir?",
+        "ground_truth": "Bağımsız denetimi yürütüp sonuçlandıran sorumlu denetçi Osman Arslan'dır.",
         "relevant_keywords": [
-            "dijital dönüşüme yön veren",
-            "yenilikçi yapısıyla"
+            "Osman Arslan",
+            "Sorumlu Denetçi"
         ]
     },
     {
         "id": "q_007",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "FAST işlem tutar limiti 4 Nisan 2024 tarihi itibarıyla standart para transferlerinde ve iş yeri ödemelerinde ne kadara yükseltilmiştir?",
-        "ground_truth": "Standart para transferlerinde 100 bin TL'ye, FAST TR Karekod kullanılarak gerçekleştirilen iş yeri ödemelerinde ise 250 bin TL'ye yükseltilmiştir.",
+        "document_name": "tofas.pdf",
+        "question": "Bağımsız denetim raporu hangi tarihte düzenlenmiştir?",
+        "ground_truth": "Bağımsız denetçi raporu 9 Şubat 2026 tarihinde İstanbul'da düzenlenmiştir.",
         "relevant_keywords": [
-            "FAST TR Karekod",
-            "250 bin TL",
-            "100 bin TL"
+            "9 Şubat 2026",
+            "İstanbul"
         ]
     },
     {
         "id": "q_008",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "Bankacılık sektöründe tahsili gecikmiş alacaklar (TGA) oranı 2024 yıl sonunda yüzde kaç olmuştur?",
-        "ground_truth": "TGA oranı 2024 yıl sonunda yüzde 1,80 seviyesine yükselmiştir.",
+        "document_name": "tofas.pdf",
+        "question": "Denetçi raporunda belirtilen kilit denetim konularından ilki nedir?",
+        "ground_truth": "İlk kilit denetim konusu 'Sözleşmelere ilişkin hasılatın muhasebeleştirilmesi'dir.",
         "relevant_keywords": [
-            "yüzde 1,80",
-            "TGA oranı"
+            "Kilit denetim",
+            "Hasılatın muhasebeleştirilmesi"
         ]
     },
     {
         "id": "q_009",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "31 Aralık 2024 tarihi itibarıyla TCMB'nin toplam uluslararası rezervleri ne kadardır?",
-        "ground_truth": "TCMB'nin uluslararası rezervleri 155,1 milyar ABD dolarına ulaşmıştır.",
+        "document_name": "tofas.pdf",
+        "question": "Denetçi raporunda belirtilen kilit denetim konularından ikincisi nedir?",
+        "ground_truth": "İkinci kilit denetim konusu 'İşletme Birleşmeleri'dir.",
         "relevant_keywords": [
-            "155,1 milyar",
-            "uluslararası rezervleri"
+            "İşletme Birleşmeleri",
+            "Kilit denetim"
         ]
     },
     {
         "id": "q_010",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "2024 yılı sonunda toplam mevduat içerisinde Türk lirası mevduatın payı yüzde kaça ulaşmıştır?",
-        "ground_truth": "2024 yıl sonunda Türk lirası mevduatın payı yüzde 59,2 seviyesine ulaşmıştır.",
+        "document_name": "tofas.pdf",
+        "question": "Hasılatın muhasebeleştirilmesi işlemi hangi TFRS standardı uyarınca yapılmaktadır?",
+        "ground_truth": "Hasılat, TFRS 15 'Müşteri Sözleşmelerinden Hasılat' hükümleri uyarınca finansal tablolara yansıtılmaktadır.",
         "relevant_keywords": [
-            "yüzde 59,2",
-            "59,2 seviyesine"
+            "TFRS 15",
+            "Müşteri Sözleşmelerinden Hasılat"
         ]
     },
     {
         "id": "q_011",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "TCMB 2024 yılında kurumsal yatırımcılar, ekonomistler ve analistlerin katılımıyla kaç adet yatırımcı toplantısı düzenlemiştir?",
-        "ground_truth": "86 yatırımcı toplantısı gerçekleştirilmiş ve 812 kuruluş ile iletişim sağlanmıştır.",
+        "document_name": "tofas.pdf",
+        "question": "İşletme birleşmelerinin muhasebeleştirilmesi işlemi hangi TFRS standardına göre yapılmıştır?",
+        "ground_truth": "İşletme birleşmeleri TFRS 3 'İşletme Birleşmeleri' standardına uygun olarak muhasebeleştirilmiştir.",
         "relevant_keywords": [
-            "86 yatırımcı",
-            "812 kuruluş"
+            "TFRS 3",
+            "İşletme Birleşmeleri"
         ]
     },
     {
         "id": "q_012",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "TCMB'nin sermaye tutarı ve hisse adedi ne kadardır?",
-        "ground_truth": "TCMB'nin sermayesi 25.000 TL olup, her biri 10 kuruşluk 250.000 adet hisseden oluşmaktadır.",
+        "document_name": "tofas.pdf",
+        "question": "Stellantis Grubu ile TOFAŞ arasındaki hisse alım sözleşmesi hangi tarihte imzalanmıştır?",
+        "ground_truth": "Hisse alım sözleşmesi 28 Temmuz 2023 tarihinde imzalanmıştır.",
         "relevant_keywords": [
-            "250.000 adet hisse",
-            "10 kuruşluk",
-            "25.000 TL"
+            "28 Temmuz 2023",
+            "Stellantis"
         ]
     },
     {
         "id": "q_013",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "31 Aralık 2024 tarihi itibarıyla TCMB'nin altın rezervleri miktarı ne kadardır?",
-        "ground_truth": "Altın rezervleri 766,7 ton seviyesindedir.",
+        "document_name": "tofas.pdf",
+        "question": "Stellantis Otomotiv Pazarlama A.Ş.'nin tüm hisselerinin TOFAŞ'a devri hangi tarihte tamamlanmıştır?",
+        "ground_truth": "Şirketin tüm hisselerinin TOFAŞ'a devri 30 Nisan 2025 tarihi itibarıyla tamamlanmıştır.",
         "relevant_keywords": [
-            "766,7 ton"
+            "30 Nisan 2025",
+            "Devir"
         ]
     },
     {
         "id": "q_014",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "2024 yılında 12 aylık birikimli cari işlemler açığı ne kadar olarak gerçekleşmiştir?",
-        "ground_truth": "12 aylık birikimli cari işlemler açığı belirgin şekilde düşerek 10 milyar ABD doları olarak gerçekleşmiştir.",
+        "document_name": "tofas.pdf",
+        "question": "TOFAŞ'ın devraldığı Stellantis operasyonları hangi otomobil markalarını içermektedir?",
+        "ground_truth": "Devralınan operasyonlar Peugeot, Citroën, Opel ve DS Automobiles markalarının Türkiye'deki dağıtım operasyonlarını içermektedir.",
         "relevant_keywords": [
-            "10 milyar ABD doları",
-            "birikimli cari işlemler açığı"
+            "Peugeot",
+            "Citroën",
+            "Opel",
+            "DS Automobiles"
         ]
     },
     {
         "id": "q_015",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "Türkiye'de banknot basma ve ihraç imtiyazı doğrudan hangi kuruma aittir?",
-        "ground_truth": "Türkiye Büyük Millet Meclisi (TBMM), kendisine ait olan para basma yetkisini süresiz olarak devrettiği için doğrudan Türkiye Cumhuriyet Merkez Bankasına (TCMB) aittir.",
+        "document_name": "tofas.pdf",
+        "question": "Finansal durum tablosunda (bilanço) sunum para birimi nedir?",
+        "ground_truth": "Finansal tablolar 1.000 TL (Bin Türk Lirası) cinsinden sunulmuştur.",
         "relevant_keywords": [
-            "para basma yetkisini süresiz",
-            "banknot basma ve ihraç imtiyazı"
+            "1.000 TL",
+            "Para Birimi"
         ]
     },
     {
         "id": "q_016",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "Türkiye'de iktisadi faaliyet 2024 yılında yıllık bazda yüzde kaç büyüme kaydetmiştir?",
-        "ground_truth": "İktisadi faaliyet 2024 yılında yıllık bazda yüzde 3,2 olarak büyüme kaydetmiştir.",
+        "document_name": "tofas.pdf",
+        "question": "TOFAŞ'ın 31.12.2025 tarihi itibarıyla toplam dönen varlıkları ne kadardır?",
+        "ground_truth": "31.12.2025 tarihi itibarıyla toplam dönen varlıklar 120.393.022 Bin TL'dir.",
         "relevant_keywords": [
-            "yüzde 3,2",
-            "iktisadi faaliyet"
+            "120.393.022",
+            "Toplam Dönen Varlıklar"
         ]
     },
     {
         "id": "q_017",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "Banka Meclisi üyelerinin görev süresi kaç yıldır ve yenilenme periyodu nasıldır?",
-        "ground_truth": "Görev süresi üç yıldır ve her yıl üçte biri yenilenmektedir.",
+        "document_name": "tofas.pdf",
+        "question": "31.12.2024 tarihi itibarıyla şirketin toplam dönen varlıkları ne kadardı?",
+        "ground_truth": "31.12.2024 tarihinde toplam dönen varlıklar 82.090.610 Bin TL idi.",
         "relevant_keywords": [
-            "üçte biri yenilenmektedir",
-            "Banka Meclisi"
+            "82.090.610"
         ]
     },
     {
         "id": "q_018",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "Denetleme Kurulu kaç üyeden oluşur ve üyelerin görev süresi kaç yıldır?",
-        "ground_truth": "Genel Kurul tarafından seçilen dört üyeden oluşur ve görev süresi iki yıldır.",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılı sonunda Nakit ve Nakit Benzerleri kalemi ne kadar olarak gerçekleşmiştir?",
+        "ground_truth": "2025 yılı sonunda Nakit ve Nakit Benzerleri 19.967.321 Bin TL olarak gerçekleşmiştir.",
         "relevant_keywords": [
-            "Denetleme Kurulu",
-            "dört üyeden oluşur"
+            "19.967.321",
+            "Nakit ve Nakit Benzerleri"
         ]
     },
     {
         "id": "q_019",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "2024 yılında TCMB tarafından ihracat ve döviz kazandırıcı hizmetler reeskont kredisi olarak toplam ne kadar kredi kullandırılmıştır?",
-        "ground_truth": "Toplam 580,58 milyar TL tutarında ihracat ve döviz kazandırıcı hizmetler reeskont kredisi kullandırılmıştır.",
+        "document_name": "tofas.pdf",
+        "question": "2024 yılı sonunda Nakit ve Nakit Benzerleri ne kadardı?",
+        "ground_truth": "2024 yılı sonunda Nakit ve Nakit Benzerleri 25.806.496 Bin TL idi.",
         "relevant_keywords": [
-            "580,58 milyar TL",
-            "reeskont kredisi"
+            "25.806.496"
         ]
     },
     {
         "id": "q_020",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "2024 yılı sonu itibarıyla TCMB'nin (A), (B), (C) ve (D) sınıfı hisselerinin sermayedeki pay oranları nedir?",
-        "ground_truth": "Sermayenin %55,12'si (A) sınıfı, %23,25'i (B) sınıfı, %2,51'i (C) sınıfı ve %19,12'si ise (D) sınıfı hisselerden oluşmaktadır.",
+        "document_name": "tofas.pdf",
+        "question": "TOFAŞ'ın 31.12.2025 itibarıyla toplam Ticari Alacakları ne kadardır?",
+        "ground_truth": "31.12.2025 itibarıyla toplam Ticari Alacaklar 50.686.020 Bin TL'dir.",
         "relevant_keywords": [
-            "%55,12",
-            "%23,25",
-            "%19,12"
+            "50.686.020",
+            "Ticari Alacaklar"
         ]
     },
     {
         "id": "q_021",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "Bankacılık sektörünün sermaye yeterlilik oranı 2024 yılı Kasım ayı itibarıyla yüzde kaçtır?",
-        "ground_truth": "Sermaye yeterlilik oranı yüzde 18,30 ile yasal sınırların üzerinde kalmaya devam etmiştir.",
+        "document_name": "tofas.pdf",
+        "question": "31.12.2024 tarihi itibarıyla toplam Ticari Alacaklar tutarı nedir?",
+        "ground_truth": "31.12.2024 tarihi itibarıyla toplam Ticari Alacaklar 27.336.971 Bin TL'dir.",
         "relevant_keywords": [
-            "yüzde 18,30",
-            "sermaye yeterlilik oranı"
+            "27.336.971"
         ]
     },
     {
         "id": "q_022",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "31 Aralık 2024 tarihi itibarıyla TCMB İdare Merkezi bünyesinde faaliyet gösteren kaç adet Genel Müdürlük bulunmaktadır?",
-        "ground_truth": "TCMB İdare Merkezi bünyesinde 19 Genel Müdürlük faaliyet göstermektedir.",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılı sonunda İlişkili Taraflardan Ticari Alacaklar ne kadar raporlanmıştır?",
+        "ground_truth": "İlişkili Taraflardan Ticari Alacaklar 2025 yılı sonunda 18.499.119 Bin TL olarak raporlanmıştır.",
         "relevant_keywords": [
-            "19 Genel Müdürlük",
-            "İdare Merkezi"
+            "18.499.119",
+            "İlişkili Taraflardan"
         ]
     },
     {
         "id": "q_023",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "Bireysel kredi kartı borç birikiminin yavaşlatılması amacıyla 2024 yılında devreye alınan yeni uygulama nedir?",
-        "ground_truth": "Bireysel kredi kartı dönem borcuna göre faiz farklılaşması uygulaması devreye alınmıştır.",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılında İlişkili Olmayan Taraflardan Ticari Alacaklar tutarı nedir?",
+        "ground_truth": "İlişkili Olmayan Taraflardan Ticari Alacaklar 32.186.901 Bin TL'dir.",
         "relevant_keywords": [
-            "dönem borcuna göre faiz farklılaşması",
-            "kredi kartı dönem borcu"
+            "32.186.901",
+            "İlişkili Olmayan Taraflardan"
         ]
     },
     {
         "id": "q_024",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "TCMB'nin 213 sayılı VUK hükümlerine uygun olarak tutulmakta olan defter kayıtlarında 2024 yılı dönem zararı ne kadar olarak raporlanmıştır?",
-        "ground_truth": "2024 yılı dönem zararı 695.678.727.620 TL olarak raporlanmıştır.",
+        "document_name": "tofas.pdf",
+        "question": "Şirketin 2025 yılı sonundaki Stoklar bakiyesi ne kadardır?",
+        "ground_truth": "2025 yılı sonunda Stoklar 16.855.555 Bin TL olarak gerçekleşmiştir.",
         "relevant_keywords": [
-            "695.678.727.620",
-            "dönem zararı"
+            "16.855.555",
+            "Stoklar"
         ]
     },
     {
         "id": "q_025",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "2024 yılında uygulanan parasal sıkılaştırma politikalarının iç talep, net ihracat ve iktisadi büyüme kompozisyonu üzerindeki genel etkileri neler olmuştur?",
-        "ground_truth": "Parasal sıkılaşma ile yurt içi talebin büyümeye katkısı belirgin şekilde düşmüş, buna karşılık net ihracatın pozitif katkısı ön plana çıkmıştır. Bu dengelenmeyle birlikte büyüme daha sağlıklı bir yapıya kavuşarak yüzde 3,2 olarak gerçekleşmiştir.",
+        "document_name": "tofas.pdf",
+        "question": "2024 yılında şirketin Stoklar bakiyesi ne kadardı?",
+        "ground_truth": "2024 yılında Stoklar bakiyesi 11.389.226 Bin TL idi.",
         "relevant_keywords": [
-            "parasal sıkılaşma",
-            "yurt içi talepte dengelenme",
-            "net ihracatın pozitif katkısı",
-            "yüzde 3,2"
+            "11.389.226"
         ]
     },
     {
         "id": "q_026",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "TCMB'nin 2024 yılında uyguladığı makroihtiyati çerçevedeki sadeleşme adımları (örneğin menkul kıymet tesisinin kaldırılması) ile tahvil getiri eğrisi arasındaki ilişki nedir?",
-        "ground_truth": "Menkul kıymet tesis düzenlemesinin yürürlükten kaldırılmasıyla piyasa mekanizmasının işlevselliği artmış ve tahvil getiri eğrisinin para politikası duruşu ile olan ilişkisi kuvvetlenmiştir.",
+        "document_name": "tofas.pdf",
+        "question": "Kısa vadeli Peşin Ödenmiş Giderler 31.12.2025'te ne kadar olarak açıklanmıştır?",
+        "ground_truth": "Kısa vadeli Peşin Ödenmiş Giderler 432.599 Bin TL olarak açıklanmıştır.",
         "relevant_keywords": [
-            "menkul kıymet tesisinin kaldırılması",
-            "tahvil getiri eğrisi",
-            "para politikası duruşu"
+            "432.599",
+            "Peşin Ödenmiş Giderler"
         ]
     },
     {
         "id": "q_027",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "Cari işlemler açığındaki düşüş ile hizmetler dengesi ve enerji fiyatları arasındaki ilişki nasıl gelişmiştir?",
-        "ground_truth": "Dış ticaret açığındaki azalış ve hizmetler dengesindeki (özellikle net seyahat gelirleri ile yabancı ziyaretçi sayısındaki artış) güçlü görünüm cari açığı azaltıcı yönde etkilerken, enerji fiyatlarındaki düşüş de enerji dengesini olumlu etkileyerek cari açıktaki düşüşü desteklemiştir.",
+        "document_name": "tofas.pdf",
+        "question": "TOFAŞ'ın 31.12.2025 itibarıyla Toplam Duran Varlıkları ne kadardır?",
+        "ground_truth": "Toplam Duran Varlıklar 31.12.2025 itibarıyla 53.131.184 Bin TL'dir.",
         "relevant_keywords": [
-            "cari işlemler dengesi",
-            "hizmetler dengesi",
-            "enerji dengesi",
-            "seyahat gelirleri"
+            "53.131.184",
+            "Toplam Duran Varlıklar"
         ]
     },
     {
         "id": "q_028",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "2024 yılında enflasyon görünümünde hangi kalemler direnç (katılık) göstermiş, hangi kalemler ise düşüş eğilimini desteklemiştir?",
-        "ground_truth": "Kira, eğitim ve lokanta-otel gibi hizmet grubu enflasyonları ile yönetilen-yönlendirilen enerji fiyatlarında katılık gözlenirken; temel mal grubu enflasyonu ile Türk lirasındaki reel değerlenmenin etkisiyle kur kaynaklı baskıların azalması enflasyonun düşüş eğilimini desteklemiştir.",
+        "document_name": "tofas.pdf",
+        "question": "31.12.2024 tarihinde şirketin Toplam Duran Varlıkları ne kadardı?",
+        "ground_truth": "31.12.2024 tarihinde Toplam Duran Varlıklar 37.885.274 Bin TL idi.",
         "relevant_keywords": [
-            "hizmet enflasyonundaki katılık",
-            "temel mal enflasyonu",
-            "kira ve eğitim"
+            "37.885.274"
         ]
     },
     {
         "id": "q_029",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "TCMB'nin uluslararası rezerv yönetimi karar alma süreci hangi aşamalardan ve hiyerarşik yapıdan oluşmaktadır?",
-        "ground_truth": "Üç aşamalıdır: İlk aşamada Banka Meclisi genel yatırım kriterlerini belirler (Yönetmelikler). İkinci aşamada Yönetim Komitesi veya Başkanlık Makamı model portföy ve risk toleransını onaylar. Üçüncü aşamada ise Piyasalar Genel Müdürlüğü tarafından bu kısıtlar çerçevesinde rezerv yönetimi uygulamaları gerçekleştirilir.",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılı sonunda şirketin Maddi Duran Varlıkları ne kadardır?",
+        "ground_truth": "2025 yılı sonunda Maddi Duran Varlıklar 21.664.395 Bin TL'dir.",
         "relevant_keywords": [
-            "rezerv yönetimi karar alma süreci",
-            "Banka Meclisi",
-            "Yönetim Komitesi",
-            "model portföy"
+            "21.664.395",
+            "Maddi Duran Varlıklar"
         ]
     },
     {
         "id": "q_030",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "Gıda Komitesi'nin enflasyonla mücadeledeki rolü ve TCMB ile olan koordinasyonu nasıl işlemektedir?",
-        "ground_truth": "Gıda Komitesi, tarım ve gıda sektöründeki yapısal ve konjonktürel sorunları tespit edip çözüm üreterek gıda fiyatlarında istikrar ve öngörülebilirliği hedefler. TCMB, Gıda-EUS projesiyle kritik fiyat verilerini analiz ederek komiteye düzenli teknik destek ve politika önerileri sunar.",
+        "document_name": "tofas.pdf",
+        "question": "2024 yılı sonunda Maddi Duran Varlıklar kalemi ne kadardı?",
+        "ground_truth": "2024 yılı sonunda Maddi Duran Varlıklar 18.959.064 Bin TL idi.",
         "relevant_keywords": [
-            "Gıda Komitesi",
-            "gıda fiyatlarında istikrar",
-            "Gıda-EUS"
+            "18.959.064"
         ]
     },
     {
         "id": "q_031",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "2024 yılında devreye alınan FAST TR Karekod ve KOLAS gibi katman servislerinin ödemeler ekosistemindeki temel işlevi nedir?",
-        "ground_truth": "FAST Sisteminin markalaşması, bilinirliğinin artması ve tüm ödeme hizmeti kullanıcılarına aynı standartlarda ve güvenli (SİPER entegrasyonuyla) anlık para transferi deneyimi sunarak ödemeler alanında rekabet ve yenilikçiliği teşvik etmektir.",
+        "document_name": "tofas.pdf",
+        "question": "TOFAŞ'ın 31.12.2025 bilançosunda yer alan Şerefiye tutarı nedir?",
+        "ground_truth": "31.12.2025 bilançosunda Şerefiye tutarı 7.378.612 Bin TL'dir.",
         "relevant_keywords": [
-            "FAST TR Karekod",
-            "KOLAS",
-            "ödemeler ekosistemi",
-            "SİPER"
+            "7.378.612",
+            "Şerefiye"
         ]
     },
     {
         "id": "q_032",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "TCMB'nin araştırma gündeminde yer alan 'iklim değişikliği ve yeşil ekonomi' hedefleri ile uluslararası finans platformlarındaki temsiliyeti arasında nasıl bir bağlantı kurulmuştur?",
-        "ground_truth": "TCMB, '2053 Net Sıfır Emisyon Hedefi' doğrultusunda ulusal taksonomi çalışmalarına katkı sağlarken, NGFS (Finansal Sistemi Yeşillendirme Ağı) bünyesinde iklim değişikliği raporlarının yazımında rol almış ve G20 Sürdürülebilir Finans Çalışma Grubu'nda aktif bulunmuştur.",
+        "document_name": "tofas.pdf",
+        "question": "Şirketin 2024 bilançosunda Şerefiye kalemi için hangi tutar raporlanmıştır?",
+        "ground_truth": "2024 bilançosunda Şerefiye kalemi 0 (sıfır) olarak raporlanmıştır.",
         "relevant_keywords": [
-            "NGFS",
-            "Finansal Sistemi Yeşillendirme Ağı",
-            "2053 Net Sıfır Emisyon",
-            "İklim Değişikliği"
+            "0"
         ]
     },
     {
         "id": "q_033",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "TCMB'nin Denetim Genel Müdürlüğü tarafından yapılan 'iç denetim' faaliyetleri ile bağımsız kuruluşlar tarafından yapılan 'dış denetim' (bağımsız denetim) arasındaki farklar ve amaçlar nelerdir?",
-        "ground_truth": "İç denetim (operasyonel, finansal, uygunluk ve bilişim) TCMB'nin kendi birimlerinin mevzuata uyumunu ve stratejik hedeflere ulaşmasını sağlamayı amaçlarken, dış/bağımsız denetim finansal tabloların uluslararası standartlara (UFRS) uygunluğu, şeffaflık ve kamuoyuna hesap verebilirlik ilkesi gereği yapılmaktadır.",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılı sonunda şirketin Ertelenmiş Vergi Varlığı ne kadardır?",
+        "ground_truth": "2025 yılı sonunda Ertelenmiş Vergi Varlığı 8.067.681 Bin TL'dir.",
         "relevant_keywords": [
-            "iç denetim",
-            "dış denetim",
-            "şeffaflık",
-            "bağımsız denetim"
+            "8.067.681",
+            "Ertelenmiş Vergi Varlığı"
         ]
     },
     {
         "id": "q_034",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "Bankacılık sektöründe LKO (Likidite Karşılama Oranı) ile sektörün dış borç çevirme oranı arasındaki genel görünüm 2024 yılında nasıl şekillenmiştir?",
-        "ground_truth": "Bankacılık sektörü yüksek likidite tamponlarını korumuş (toplam LKO yüzde 167, YP LKO yüzde 224), aynı zamanda risk primlerindeki düşüşle birlikte yurt dışından 29,60 milyar dolar net finansman sağlayarak dış borç yenileme oranını yüzde 115 seviyesinde gerçekleştirmiştir.",
+        "document_name": "tofas.pdf",
+        "question": "Şirketin 31.12.2025 itibarıyla Toplam Varlıkları (Aktif Toplamı) ne kadardır?",
+        "ground_truth": "31.12.2025 itibarıyla Toplam Varlıklar 173.524.206 Bin TL'dir.",
         "relevant_keywords": [
-            "Likidite Karşılama Oranı",
-            "LKO",
-            "dış borç yenileme oranı",
-            "29,60 milyar ABD doları"
+            "173.524.206",
+            "Toplam Varlıklar"
         ]
     },
     {
         "id": "q_035",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "TCMB'nin iç iletişim ve akademik kapasitesini destekleyen 'Merkezin Güncesi' blog sayfasının, para politikası iletişimindeki rolü nedir?",
-        "ground_truth": "Makroekonomi, merkez bankacılığı, dijitalleşme, yapay zeka ve iklim değişikliği gibi konularda 19 yeni analiz yayımlanarak para politikalarının anlaşılabilirliği artırılmış ve şeffaf, çift yönlü iletişimi destekleyen önemli bir araç olarak kullanılmıştır.",
+        "document_name": "tofas.pdf",
+        "question": "31.12.2024 tarihinde şirketin Toplam Varlıkları ne kadardı?",
+        "ground_truth": "31.12.2024 tarihinde Toplam Varlıklar 119.975.884 Bin TL idi.",
         "relevant_keywords": [
-            "Merkezin Güncesi",
-            "blog sayfası",
-            "çift yönlü iletişim"
+            "119.975.884"
         ]
     },
     {
         "id": "q_036",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "TCMB 2023-2025 Stratejik Planı'nda belirtilen kurumun misyonu ve vizyonu genel çerçevede neleri kapsamaktadır?",
-        "ground_truth": "Misyonu; sürdürülebilir fiyat istikrarını sağlayarak ve finansal istikrarı destekleyerek toplumsal refaha katkıda bulunmak iken, Vizyonu; dinamik ve yenilikçi yapısıyla finansal piyasalara, ödeme sistemlerine ve dijital dönüşüme yön veren bir Merkez Bankası olmaktır.",
+        "document_name": "tofas.pdf",
+        "question": "TOFAŞ'ın 2025 yılı Toplam Kısa Vadeli Yükümlülükleri ne kadardır?",
+        "ground_truth": "2025 yılı Toplam Kısa Vadeli Yükümlülükleri 70.790.631 Bin TL'dir.",
         "relevant_keywords": [
-            "Stratejik Plan",
-            "Misyon",
-            "Vizyon",
-            "dijital dönüşüme yön veren"
+            "70.790.631",
+            "Toplam Kısa Vadeli Yükümlülükler"
         ]
     },
     {
         "id": "q_037",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "Türk lirasında likidite fazlasının oluştuğu dönemlerde TCMB, sterilizasyon mekanizmasını nasıl çeşitlendirmiş ve hangi araçları kullanmıştır?",
-        "ground_truth": "Sistemin fonlama ihtiyacında oluşan fazla likidite; zorunlu karşılık adımları, geleneksel 11.00-11.30 saatleri ile farklı vadelerdeki 13.45-14.15 TL depo alım ihaleleri, satım yönlü döviz/altın karşılığı ters swap ihaleleri ve kotasyon yoluyla piyasalardaki işlemlerle sterilize edilmiştir.",
+        "document_name": "tofas.pdf",
+        "question": "2024 yılında şirketin Toplam Kısa Vadeli Yükümlülükleri ne kadardı?",
+        "ground_truth": "2024 yılında Toplam Kısa Vadeli Yükümlülükler 34.707.387 Bin TL idi.",
         "relevant_keywords": [
-            "sterilizasyon mekanizması",
-            "likidite fazlası",
-            "TL depo alım ihaleleri",
-            "ters swap"
+            "34.707.387"
         ]
     },
     {
         "id": "q_038",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "Katılım bankacılığının geliştirilmesi için TCMB, uluslararası standartlar ve yerel teşkilatlar bazında 2024 yılında ne gibi eş güdüm faaliyetleri yürütmüştür?",
-        "ground_truth": "TCMB, IFSB ve IILM gibi uluslararası kuruluşların toplantılarına katılmış, TKBB ve katılım bankalarının genel müdürleriyle bir araya gelerek güncel düzenleme taleplerini değerlendirmiş ve yurt dışı merkez bankalarına (Özbekistan, Tacikistan vb.) eğitimler vererek Türkiye'nin tecrübelerini aktarmıştır.",
+        "document_name": "tofas.pdf",
+        "question": "31.12.2025 itibarıyla şirketin toplam Ticari Borçları ne kadardır?",
+        "ground_truth": "31.12.2025 itibarıyla toplam Ticari Borçlar 43.400.941 Bin TL'dir.",
         "relevant_keywords": [
-            "IFSB",
-            "IILM",
-            "TKBB",
-            "Katılım Finans"
+            "43.400.941",
+            "Ticari Borçlar"
         ]
     },
     {
         "id": "q_039",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "Banknot tedavül sistemindeki 'MONY (Merkezi Olmayan Nakit Yönetimi)' ile 'KMPD (Konsinye Madeni Para Deposu)' projeleri arasındaki fark ve işlevsel ortaklık nedir?",
-        "ground_truth": "MONY, özel bankalar aracılığıyla banknot saklama ve işleme süreçlerinin optimize edilmesini sağlarken, KMPD ise PTT aracılığıyla madeni para nakit yönetimini ve dağıtımını sağlamaktadır; her iki proje de nakit dolaşımının ülke çapında kesintisiz, verimli ve düşük maliyetli yürümesine hizmet eder.",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılında İlişkili Taraflara Ticari Borçlar ne kadar olmuştur?",
+        "ground_truth": "2025 yılında İlişkili Taraflara Ticari Borçlar 18.733.851 Bin TL olmuştur.",
         "relevant_keywords": [
-            "MONY",
-            "KMPD",
-            "PTT",
-            "banknot saklama"
+            "18.733.851",
+            "İlişkili Taraflara Ticari Borçlar"
         ]
     },
     {
         "id": "q_040",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "İktisadi faaliyet ile iş gücü piyasası göstergeleri (istihdam ve işsizlik) arasındaki ilişki 2024 yılında nasıl bir görünüm çizmiştir?",
-        "ground_truth": "İktisadi faaliyette yurt içi talebin yavaşlamasına (soğumasına) rağmen iş gücü piyasası dirençli kalmış; tarım dışı, inşaat ve hizmet sektörlerindeki artışların desteğiyle istihdam 984 bin kişi artmış ve işsizlik oranı yüzde 8,7'ye gerilemiştir.",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılında İlişkili Olmayan Taraflara Ticari Borçlar tutarı nedir?",
+        "ground_truth": "İlişkili Olmayan Taraflara Ticari Borçlar 2025 yılında 24.667.090 Bin TL'dir.",
         "relevant_keywords": [
-            "iş gücü piyasası dirençli",
-            "istihdam artışı",
-            "yüzde 8,7 işsizlik"
+            "24.667.090"
         ]
     },
     {
         "id": "q_041",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "Yatırım Taahhütlü Avans Kredileri (YTAK) uygulamasının makroekonomik hedefleri nelerdir ve 2024 yılında bu kredilerin kullandırılma koşullarında hangi yenilikler yapılmıştır?",
-        "ground_truth": "YTAK'ın amacı büyük ölçekli, yüksek teknolojili ve stratejik yatırımların finansmanıdır. 2024 yılında krediye erişim için asgari 70 puanlık Teknoloji ve Strateji Puanı (TSP) koşulu getirilmiş ve baz faiz oranı hesaplama yöntemi politika faizine endekslenerek yenilenmiştir.",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılında Çalışanlara Sağlanan Faydalar Kapsamında Borçlar ne kadardır?",
+        "ground_truth": "Çalışanlara Sağlanan Faydalar Kapsamında Borçlar 1.828.014 Bin TL'dir.",
         "relevant_keywords": [
-            "YTAK",
-            "Yatırım Taahhütlü Avans Kredisi",
-            "Teknoloji ve Strateji Puanı",
-            "stratejik yatırımlar"
+            "1.828.014"
         ]
     },
     {
         "id": "q_042",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "Finansal tüketicilerden ve ticari müşterilerden alınan ücretlere yönelik çıkarılan (2020/4 ve 2020/7 sayılı) tebliğlerin genel amacı nedir ve piyasa işleyişine nasıl katkı sağlar?",
-        "ground_truth": "Bu tebliğlerin amacı, bankalar ile müşteriler arasındaki işlemlerde öngörülebilirliğin, şeffaflığın artırılması, kavram birliğinin sağlanması ve aşırı ücretlendirmenin önlenmesidir, böylece finansal hizmetlerin daha adil ve erişilebilir olmasını destekler.",
+        "document_name": "tofas.pdf",
+        "question": "Şirketin 2025 yılındaki Kısa Vadeli Karşılıklar toplamı nedir?",
+        "ground_truth": "2025 yılı Kısa Vadeli Karşılıklar toplamı 4.915.315 Bin TL'dir.",
         "relevant_keywords": [
-            "şeffaflık",
-            "öngörülebilirlik",
-            "aşırı ücretlendirmenin önlenmesi",
-            "ticari müşteriler"
+            "4.915.315",
+            "Kısa Vadeli Karşılıklar"
         ]
     },
     {
         "id": "q_043",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "Kredi kartı faiz oranlarındaki düzenlemeler ile bireysel talep/tüketim eğilimi arasındaki etkileşim 2024 yılında nasıl kurgulanmıştır?",
-        "ground_truth": "TCMB, kredi kartı gecikme faizlerinde yapılandırma imkanı sağlarken aynı zamanda nakit çekim ile mal/hizmet alımında uygulanan aylık azami akdi faiz oranlarını artırarak ve dönem borcuna göre faiz farklılaştırması uygulayarak tüketimi dizginlemeyi ve bireysel borç birikimini yavaşlatmayı hedeflemiştir.",
+        "document_name": "tofas.pdf",
+        "question": "TOFAŞ'ın 31.12.2025 itibarıyla Toplam Uzun Vadeli Yükümlülükleri ne kadardır?",
+        "ground_truth": "Toplam Uzun Vadeli Yükümlülükler 42.702.328 Bin TL'dir.",
         "relevant_keywords": [
-            "kredi kartı faiz oranları",
-            "borç birikiminin yavaşlatılması",
-            "dönem borcuna göre faiz farklılaşması"
+            "42.702.328",
+            "Toplam Uzun Vadeli Yükümlülükler"
         ]
     },
     {
         "id": "q_044",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "Bankacılık sektöründe yabancı para mevduattan Türk lirası mevduata geçişi hızlandırmak için 2024 yılında zorunlu karşılıklar (ZK) mekanizması nasıl bir teşvik aracı olarak kullanılmıştır?",
-        "ground_truth": "TCMB, TL mevduat oranlarını artırmak amacıyla TL'ye geçiş ve yenileme hedeflerini tutturan bankaların tesis ettikleri zorunlu karşılıklara faiz ödemesi yapmaya başlamış, aynı zamanda yabancı para mevduatlar için ayrılması gereken TL cinsinden ZK oranlarını düşürerek bankaları TL mevduat toplamaya teşvik etmiştir.",
+        "document_name": "tofas.pdf",
+        "question": "2024 yılında şirketin Toplam Uzun Vadeli Yükümlülükleri ne kadardı?",
+        "ground_truth": "2024 yılında Toplam Uzun Vadeli Yükümlülükler 23.616.098 Bin TL idi.",
         "relevant_keywords": [
-            "zorunlu karşılıklara faiz ödenmesi",
-            "Türk lirası mevduat payının artırılması",
-            "yabancı para mevduat"
+            "23.616.098"
         ]
     },
     {
         "id": "q_045",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "Yabancı merkez bankaları ile yapılan swap (para takası) anlaşmaları (örneğin Çin ve BAE ile) dış ticaretin finansmanı açısından nasıl bir stratejik önem taşımaktadır?",
-        "ground_truth": "Bu anlaşmalar sayesinde iki ülke arasındaki ticaret ve yatırım faaliyetlerinin ABD Doları yerine doğrudan yerel para birimleri (Yuan, Dirhem ve TL) ile finanse edilmesi sağlanarak kur riski azaltılmakta, reeskont kredileri ile dış ticaret desteklenmekte ve uluslararası ödemelerde yerel paraların kullanım hacmi artırılmaktadır.",
+        "document_name": "tofas.pdf",
+        "question": "2025 bilançosunda yer alan Uzun Vadeli Borçlanmalar kalemi ne kadardır?",
+        "ground_truth": "2025 bilançosunda Uzun Vadeli Borçlanmalar 37.415.420 Bin TL'dir.",
         "relevant_keywords": [
-            "yerel para ile finansman",
-            "swap anlaşmaları",
-            "kur riskinin azaltılması"
+            "37.415.420",
+            "Uzun Vadeli Borçlanmalar"
         ]
     },
     {
         "id": "q_046",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "2024 yılında 'TCMB Bilişim Teknolojileri' mimarisindeki yenilikler operasyonel sürekliliği ve çalışan deneyimini nasıl etkilemiştir?",
-        "ground_truth": "EFT, POS ve EMKT uygulamaları 7/24 kesintisiz çalışabilecek ve dirençli yapıda yeniden tasarlanmış; EVDS kurumsal ihtiyaçlara göre güncellenmiş ve kurum içinde çalışanların güvenle kullanabileceği 'Yapay Zeka Odası' kurularak üretken yapay zeka asistanları operasyonlara entegre edilmiştir.",
+        "document_name": "tofas.pdf",
+        "question": "Şirketin 31.12.2025 tarihi itibarıyla Toplam Yükümlülükleri ne kadardır?",
+        "ground_truth": "31.12.2025 tarihi itibarıyla Toplam Yükümlülükler 113.492.959 Bin TL'dir.",
         "relevant_keywords": [
-            "EFT 7/24",
-            "Yapay Zeka Odası",
-            "Bilişim Teknolojileri mimarisi",
-            "operasyonel dayanıklılık"
+            "113.492.959",
+            "Toplam Yükümlülükler"
         ]
     },
     {
         "id": "q_047",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "TCMB'nin bağımsız dış denetimden geçen finansal tablolarında 'Geçmiş Yıllar Zararı'nın kapatılması süreci ile kurumun kâr dağıtım politikası arasında nasıl bir yasal ilişki mevcuttur?",
-        "ground_truth": "1211 sayılı TCMB Kanunu ve 6102 sayılı Türk Ticaret Kanunu (Madde 509) gereğince, TCMB'nin mevcut olan geçmiş yıllar zararları (2024 yılı itibarıyla 808,8 milyar TL) tamamen kapanıp mahsup edilene kadar, kâr ve ihtiyat akçesi dağıtımı yapılamamaktadır.",
+        "document_name": "tofas.pdf",
+        "question": "31.12.2024 tarihinde şirketin Toplam Yükümlülükleri ne kadardı?",
+        "ground_truth": "31.12.2024 tarihinde Toplam Yükümlülükler 58.323.485 Bin TL idi.",
         "relevant_keywords": [
-            "Geçmiş Yıllar Zararı",
-            "kâr dağıtımı",
-            "6102 sayılı TTK",
-            "ihtiyat akçesi"
+            "58.323.485"
         ]
     },
     {
         "id": "q_048",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "2024 Yılı Yıllık Faaliyet Raporuna göre Banka Meclisi üyelerinin seçimi ve TCMB'nin ortaklık yapısı (sermaye dağılımı) arasındaki kurumsal denge nasıl tanımlanmaktadır?",
-        "ground_truth": "TCMB sermayesi dört sınıf hisseden oluşur ve çoğunluk olan %55,12'lik (A) sınıfı hisse Hazine'ye aittir. Banka Meclisi üyeleri ise hissedarların temsil edildiği Genel Kurul tarafından 3 yıllığına seçilir; böylece Merkez Bankası hem bağımsız politika yürüten hem de hisse oranları doğrultusunda kamu ve özel sektörü temsil eden anonim şirket yapısına sahip bir karar alma organına kavuşur.",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılı sonu itibarıyla TOFAŞ'ın Ana Ortaklığa Ait Özkaynakları ne kadardır?",
+        "ground_truth": "2025 yılı sonunda Ana Ortaklığa Ait Özkaynaklar 60.031.247 Bin TL'dir.",
         "relevant_keywords": [
-            "Banka Meclisi",
-            "(A) sınıfı hisseler",
-            "Genel Kurul",
-            "anonim şirket"
+            "60.031.247",
+            "Ana Ortaklığa Ait Özkaynaklar"
         ]
     },
     {
         "id": "q_049",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "TCMB 'Yatırımcı Günleri' (örneğin New York buluşması) ve IMF-Dünya Bankası Bahar Toplantılarındaki yoğun ikili görüşmelerin TCMB'nin uluslararası finansal kredibilitesi üzerindeki amacı nedir?",
-        "ground_truth": "Küresel yatırımcılara Türkiye'nin uyguladığı dezenflasyon süreci, makroihtiyati sadeleşme ve para politikalarındaki kararlılık doğrudan aktarılarak öngörülebilirlik ve şeffaflık artırılmakta, dış finansmana erişim (risk priminin / CDS'in düşmesi) kolaylaştırılıp kurumsal kredibilite güçlendirilmektedir.",
+        "document_name": "tofas.pdf",
+        "question": "2024 yılında Ana Ortaklığa Ait Özkaynaklar ne kadardı?",
+        "ground_truth": "2024 yılında Ana Ortaklığa Ait Özkaynaklar 61.652.399 Bin TL idi.",
         "relevant_keywords": [
-            "Yatırımcı Günü",
-            "finansal kredibilite",
-            "CDS",
-            "şeffaflık",
-            "dış finansmana erişim"
+            "61.652.399"
         ]
     },
     {
         "id": "q_050",
-        "document_name": "TCMB-Faaliyet-Raporu-2024.pdf",
-        "question": "TCMB'nin enflasyon oranlarındaki dönemsel veya geçici dalgalanmalara karşı sergilediği 'ihtiyatlı duruş' ve 'kararlılık' prensibi Para Politikası Kurulu (PPK) metinlerinde hangi şartlı ifadeyle özetlenmektedir?",
-        "ground_truth": "PPK kararlarında, 'Aylık enflasyonun ana eğiliminde belirgin ve kalıcı bir düşüş sağlanana ve enflasyon beklentileri öngörülen tahmin aralığına yakınsayana kadar sıkı para politikası duruşunun sürdürüleceği' ve 'enflasyonda belirgin bir bozulma öngörülmesi durumunda para politikası duruşunun sıkılaştırılacağı' vurgulanmaktadır.",
+        "document_name": "tofas.pdf",
+        "question": "TOFAŞ'ın Ödenmiş Sermayesi ne kadardır?",
+        "ground_truth": "Şirketin Ödenmiş Sermayesi 500.000 Bin TL'dir.",
         "relevant_keywords": [
-            "ihtiyatlı duruş",
-            "belirgin ve kalıcı bir düşüş",
-            "sıkı para politikası",
-            "beklentilerin yakınsaması"
+            "500.000",
+            "Ödenmiş Sermaye"
+        ]
+    },
+    {
+        "id": "q_051",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılı bilançosuna göre Sermaye Düzeltme Farkları ne kadardır?",
+        "ground_truth": "2025 yılında Sermaye Düzeltme Farkları 25.639.112 Bin TL'dir.",
+        "relevant_keywords": [
+            "25.639.112",
+            "Sermaye Düzeltme Farkları"
+        ]
+    },
+    {
+        "id": "q_052",
+        "document_name": "tofas.pdf",
+        "question": "Şirketin 2025 yılı net dönem karı (bilanço kalemine göre) ne kadar gerçekleşmiştir?",
+        "ground_truth": "2025 yılı net dönem karı 8.353.933 Bin TL olarak gerçekleşmiştir.",
+        "relevant_keywords": [
+            "8.353.933",
+            "Net Dönem Karı"
+        ]
+    },
+    {
+        "id": "q_053",
+        "document_name": "tofas.pdf",
+        "question": "Şirketin 2024 yılı net dönem karı (bilanço kalemine göre) ne kadardı?",
+        "ground_truth": "2024 yılı net dönem karı 6.834.463 Bin TL idi.",
+        "relevant_keywords": [
+            "6.834.463"
+        ]
+    },
+    {
+        "id": "q_054",
+        "document_name": "tofas.pdf",
+        "question": "TOFAŞ'ın 2025 yılı itibarıyla Toplam Kaynakları ne kadardır?",
+        "ground_truth": "31.12.2025 itibarıyla Toplam Kaynaklar 173.524.206 Bin TL'dir.",
+        "relevant_keywords": [
+            "173.524.206",
+            "Toplam Kaynaklar"
+        ]
+    },
+    {
+        "id": "q_055",
+        "document_name": "tofas.pdf",
+        "question": "TOFAŞ'ın 2025 yılı toplam Hasılatı (Geliri) ne kadar olarak açıklanmıştır?",
+        "ground_truth": "2025 yılı toplam Hasılatı 319.413.508 Bin TL olarak açıklanmıştır.",
+        "relevant_keywords": [
+            "319.413.508",
+            "Hasılat"
+        ]
+    },
+    {
+        "id": "q_056",
+        "document_name": "tofas.pdf",
+        "question": "Şirketin 2024 yılındaki Hasılatı ne kadardı?",
+        "ground_truth": "2024 yılındaki Hasılat 157.419.715 Bin TL idi.",
+        "relevant_keywords": [
+            "157.419.715"
+        ]
+    },
+    {
+        "id": "q_057",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılında Satışların Maliyeti ne kadar olmuştur?",
+        "ground_truth": "2025 yılında Satışların Maliyeti -301.107.616 Bin TL olmuştur.",
+        "relevant_keywords": [
+            "-301.107.616",
+            "Satışların Maliyeti"
+        ]
+    },
+    {
+        "id": "q_058",
+        "document_name": "tofas.pdf",
+        "question": "2024 yılında Satışların Maliyeti ne kadardı?",
+        "ground_truth": "2024 yılında Satışların Maliyeti -141.996.375 Bin TL idi.",
+        "relevant_keywords": [
+            "-141.996.375"
+        ]
+    },
+    {
+        "id": "q_059",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılında Ticari Faaliyetlerden Brüt Kar ne kadar gerçekleşmiştir?",
+        "ground_truth": "Ticari Faaliyetlerden Brüt Kar 2025 yılında 18.305.892 Bin TL gerçekleşmiştir.",
+        "relevant_keywords": [
+            "18.305.892",
+            "Ticari Faaliyetlerden Brüt Kar"
+        ]
+    },
+    {
+        "id": "q_060",
+        "document_name": "tofas.pdf",
+        "question": "2024 yılında Ticari Faaliyetlerden Brüt Kar ne kadardı?",
+        "ground_truth": "2024 yılında Ticari Faaliyetlerden Brüt Kar 15.423.340 Bin TL idi.",
+        "relevant_keywords": [
+            "15.423.340"
+        ]
+    },
+    {
+        "id": "q_061",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılında Finans Sektörü Faaliyetleri Hasılatı ne kadar olmuştur?",
+        "ground_truth": "Finans Sektörü Faaliyetleri Hasılatı 2025'te 12.831.486 Bin TL olmuştur.",
+        "relevant_keywords": [
+            "12.831.486",
+            "Finans Sektörü Faaliyetleri Hasılatı"
+        ]
+    },
+    {
+        "id": "q_062",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılında Finans Sektörü Faaliyetleri Maliyeti nedir?",
+        "ground_truth": "Finans Sektörü Faaliyetleri Maliyeti 2025'te -10.510.067 Bin TL'dir.",
+        "relevant_keywords": [
+            "-10.510.067"
+        ]
+    },
+    {
+        "id": "q_063",
+        "document_name": "tofas.pdf",
+        "question": "Şirketin 2025 yılı Toplam Brüt Karı ne kadardır?",
+        "ground_truth": "2025 yılı Toplam Brüt Karı 20.627.311 Bin TL'dir.",
+        "relevant_keywords": [
+            "20.627.311",
+            "Brüt Kar"
+        ]
+    },
+    {
+        "id": "q_064",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılında Genel Yönetim Giderleri ne kadar raporlanmıştır?",
+        "ground_truth": "2025 yılında Genel Yönetim Giderleri -4.434.404 Bin TL olarak raporlanmıştır.",
+        "relevant_keywords": [
+            "-4.434.404",
+            "Genel Yönetim Giderleri"
+        ]
+    },
+    {
+        "id": "q_065",
+        "document_name": "tofas.pdf",
+        "question": "2024 yılında Genel Yönetim Giderleri ne kadardı?",
+        "ground_truth": "2024 yılında Genel Yönetim Giderleri -4.777.256 Bin TL idi.",
+        "relevant_keywords": [
+            "-4.777.256"
+        ]
+    },
+    {
+        "id": "q_066",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılında Pazarlama Giderleri ne kadar olmuştur?",
+        "ground_truth": "2025 yılında Pazarlama Giderleri -12.014.928 Bin TL olmuştur.",
+        "relevant_keywords": [
+            "-12.014.928",
+            "Pazarlama Giderleri"
+        ]
+    },
+    {
+        "id": "q_067",
+        "document_name": "tofas.pdf",
+        "question": "2024 yılında Pazarlama Giderleri ne kadardı?",
+        "ground_truth": "2024 yılında Pazarlama Giderleri -5.971.631 Bin TL idi.",
+        "relevant_keywords": [
+            "-5.971.631"
+        ]
+    },
+    {
+        "id": "q_068",
+        "document_name": "tofas.pdf",
+        "question": "TOFAŞ'ın 2025 yılı Araştırma ve Geliştirme (Ar-Ge) Giderleri ne kadardır?",
+        "ground_truth": "2025 yılı Araştırma ve Geliştirme Giderleri -1.661.323 Bin TL'dir.",
+        "relevant_keywords": [
+            "-1.661.323",
+            "Araştırma ve Geliştirme Giderleri"
+        ]
+    },
+    {
+        "id": "q_069",
+        "document_name": "tofas.pdf",
+        "question": "2024 yılında Araştırma ve Geliştirme Giderleri ne kadardı?",
+        "ground_truth": "2024 yılında Araştırma ve Geliştirme Giderleri -2.721.761 Bin TL idi.",
+        "relevant_keywords": [
+            "-2.721.761"
+        ]
+    },
+    {
+        "id": "q_070",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılı Esas Faaliyetlerden Diğer Gelirler tutarı nedir?",
+        "ground_truth": "Esas Faaliyetlerden Diğer Gelirler 2025 yılında 11.319.347 Bin TL'dir.",
+        "relevant_keywords": [
+            "11.319.347",
+            "Esas Faaliyetlerden Diğer Gelirler"
+        ]
+    },
+    {
+        "id": "q_071",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılı Esas Faaliyetlerden Diğer Giderler tutarı nedir?",
+        "ground_truth": "Esas Faaliyetlerden Diğer Giderler 2025 yılında -10.230.854 Bin TL'dir.",
+        "relevant_keywords": [
+            "-10.230.854"
+        ]
+    },
+    {
+        "id": "q_072",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılında Esas Faaliyet Karı ne kadar gerçekleşmiştir?",
+        "ground_truth": "2025 yılında Esas Faaliyet Karı 3.605.149 Bin TL gerçekleşmiştir.",
+        "relevant_keywords": [
+            "3.605.149",
+            "Esas Faaliyet Karı"
+        ]
+    },
+    {
+        "id": "q_073",
+        "document_name": "tofas.pdf",
+        "question": "2024 yılında Esas Faaliyet Karı ne kadardı?",
+        "ground_truth": "2024 yılında Esas Faaliyet Karı 5.395.870 Bin TL idi.",
+        "relevant_keywords": [
+            "5.395.870"
+        ]
+    },
+    {
+        "id": "q_074",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılında Yatırım Faaliyetlerinden Gelirler ne kadar olmuştur?",
+        "ground_truth": "Yatırım Faaliyetlerinden Gelirler 2025 yılında 1.038.478 Bin TL olmuştur.",
+        "relevant_keywords": [
+            "1.038.478",
+            "Yatırım Faaliyetlerinden Gelirler"
+        ]
+    },
+    {
+        "id": "q_075",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılı Finansman Gelirleri ne kadar olarak raporlanmıştır?",
+        "ground_truth": "2025 yılı Finansman Gelirleri 9.635.916 Bin TL olarak raporlanmıştır.",
+        "relevant_keywords": [
+            "9.635.916",
+            "Finansman Gelirleri"
+        ]
+    },
+    {
+        "id": "q_076",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılı Finansman Giderleri ne kadardır?",
+        "ground_truth": "2025 yılı Finansman Giderleri -5.388.201 Bin TL'dir.",
+        "relevant_keywords": [
+            "-5.388.201",
+            "Finansman Giderleri"
+        ]
+    },
+    {
+        "id": "q_077",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılında Net Parasal Pozisyon Kayıpları ne kadardır?",
+        "ground_truth": "2025 yılında Net Parasal Pozisyon Kayıpları -53.151 Bin TL'dir.",
+        "relevant_keywords": [
+            "-53.151",
+            "Net Parasal Pozisyon"
+        ]
+    },
+    {
+        "id": "q_078",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılında Sürdürülen Faaliyetler Vergi Öncesi Karı ne kadar olmuştur?",
+        "ground_truth": "2025 yılında Sürdürülen Faaliyetler Vergi Öncesi Karı 8.838.191 Bin TL olmuştur.",
+        "relevant_keywords": [
+            "8.838.191",
+            "Vergi Öncesi Karı"
+        ]
+    },
+    {
+        "id": "q_079",
+        "document_name": "tofas.pdf",
+        "question": "Şirketin 2025 yılı Dönem Vergi Gideri ne kadardır?",
+        "ground_truth": "2025 yılı Dönem Vergi Gideri -1.139.074 Bin TL'dir.",
+        "relevant_keywords": [
+            "-1.139.074",
+            "Dönem Vergi Gideri"
+        ]
+    },
+    {
+        "id": "q_080",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılında kaydedilen Ertelenmiş Vergi Geliri ne kadardır?",
+        "ground_truth": "2025 yılında Ertelenmiş Vergi Geliri 654.816 Bin TL'dir.",
+        "relevant_keywords": [
+            "654.816",
+            "Ertelenmiş Vergi Geliri"
+        ]
+    },
+    {
+        "id": "q_081",
+        "document_name": "tofas.pdf",
+        "question": "Şirketin 2025 yılı gelir tablosunda yer alan Dönem Karı ne kadardır?",
+        "ground_truth": "2025 yılı Dönem Karı 8.353.933 Bin TL'dir.",
+        "relevant_keywords": [
+            "8.353.933",
+            "Dönem Karı"
+        ]
+    },
+    {
+        "id": "q_082",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılında TOFAŞ'ın Pay Başına Kazancı (TL) ne kadardır?",
+        "ground_truth": "2025 yılında Pay Başına Kazanç 16,71 TL'dir.",
+        "relevant_keywords": [
+            "16,71",
+            "Pay Başına Kazanç"
+        ]
+    },
+    {
+        "id": "q_083",
+        "document_name": "tofas.pdf",
+        "question": "2024 yılında Pay Başına Kazanç (TL) ne kadardı?",
+        "ground_truth": "2024 yılında Pay Başına Kazanç 13,67 TL idi.",
+        "relevant_keywords": [
+            "13,67"
+        ]
+    },
+    {
+        "id": "q_084",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılında Tanımlanmış Fayda Planları Yeniden Ölçüm Kayıpları ne kadardır?",
+        "ground_truth": "2025 yılında Tanımlanmış Fayda Planları Yeniden Ölçüm Kayıpları -203.447 Bin TL'dir.",
+        "relevant_keywords": [
+            "-203.447",
+            "Yeniden Ölçüm"
+        ]
+    },
+    {
+        "id": "q_085",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılı Toplam Kapsamlı Gelir (Gider) tablosunda Toplam Kapsamlı Gelir ne kadar olmuştur?",
+        "ground_truth": "2025 yılında Toplam Kapsamlı Gelir 5.514.362 Bin TL olmuştur.",
+        "relevant_keywords": [
+            "5.514.362",
+            "Toplam Kapsamlı Gelir"
+        ]
+    },
+    {
+        "id": "q_086",
+        "document_name": "tofas.pdf",
+        "question": "2024 yılında Toplam Kapsamlı Gelir ne kadardı?",
+        "ground_truth": "2024 yılında Toplam Kapsamlı Gelir 8.381.106 Bin TL idi.",
+        "relevant_keywords": [
+            "8.381.106"
+        ]
+    },
+    {
+        "id": "q_087",
+        "document_name": "tofas.pdf",
+        "question": "Nakit Akış Tablosuna göre 2025 yılında İşletme Faaliyetlerinden elde edilen net nakit akışı ne kadardır?",
+        "ground_truth": "2025 yılında İşletme Faaliyetlerinden Nakit Akışları 2.655.374 Bin TL'dir.",
+        "relevant_keywords": [
+            "2.655.374",
+            "İşletme Faaliyetlerinden Nakit Akışları"
+        ]
+    },
+    {
+        "id": "q_088",
+        "document_name": "tofas.pdf",
+        "question": "2024 yılında İşletme Faaliyetlerinden elde edilen net nakit akışı ne kadardı?",
+        "ground_truth": "2024 yılında İşletme Faaliyetlerinden Nakit Akışları -9.629.971 Bin TL idi.",
+        "relevant_keywords": [
+            "-9.629.971"
+        ]
+    },
+    {
+        "id": "q_089",
+        "document_name": "tofas.pdf",
+        "question": "Nakit akış tablosuna göre 2025 yılında Amortisman ve İtfa Gideri ile İlgili Düzeltmeler tutarı nedir?",
+        "ground_truth": "2025 yılında Amortisman ve İtfa Gideri ile İlgili Düzeltmeler 7.480.950 Bin TL'dir.",
+        "relevant_keywords": [
+            "7.480.950",
+            "Amortisman"
+        ]
+    },
+    {
+        "id": "q_090",
+        "document_name": "tofas.pdf",
+        "question": "Nakit akış tablosunda 2025 yılı için Karşılıklar İle İlgili Düzeltmeler tutarı nedir?",
+        "ground_truth": "2025 yılında Karşılıklar İle İlgili Düzeltmeler 5.733.855 Bin TL'dir.",
+        "relevant_keywords": [
+            "5.733.855",
+            "Karşılıklar"
+        ]
+    },
+    {
+        "id": "q_091",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılında Yatırım Faaliyetlerinden Kaynaklanan Nakit Çıkışları (Net) ne kadardır?",
+        "ground_truth": "Yatırım Faaliyetlerinden Kaynaklanan Nakit Akışları (Net) -19.690.587 Bin TL'dir.",
+        "relevant_keywords": [
+            "-19.690.587",
+            "Yatırım Faaliyetlerinden"
+        ]
+    },
+    {
+        "id": "q_092",
+        "document_name": "tofas.pdf",
+        "question": "Nakit akış tablosuna göre 2025 yılında Bağlı Ortaklıkların Kontrolünün Elde Edilmesine Yönelik Alışlara İlişkin Nakit Çıkışları ne kadardır?",
+        "ground_truth": "Bağlı ortaklık alımına ilişkin nakit çıkışı -13.136.350 Bin TL'dir.",
+        "relevant_keywords": [
+            "-13.136.350",
+            "Bağlı Ortaklıkların"
+        ]
+    },
+    {
+        "id": "q_093",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılında Maddi ve Maddi Olmayan Duran Varlıkların Alımından Kaynaklanan Nakit Çıkışları ne kadardır?",
+        "ground_truth": "Duran varlık alımından kaynaklanan nakit çıkışları -8.723.589 Bin TL'dir.",
+        "relevant_keywords": [
+            "-8.723.589",
+            "Duran Varlıkların Alımından"
+        ]
+    },
+    {
+        "id": "q_094",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılında Finansman Faaliyetlerinden Kaynaklanan Nakit Akışları ne kadardır?",
+        "ground_truth": "Finansman Faaliyetlerinden Nakit Akışları 2025 yılında 16.194.477 Bin TL'dir.",
+        "relevant_keywords": [
+            "16.194.477",
+            "Finansman Faaliyetlerinden"
+        ]
+    },
+    {
+        "id": "q_095",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılında Borçlanmadan Kaynaklanan Nakit Girişleri ne kadar olmuştur?",
+        "ground_truth": "Borçlanmadan kaynaklanan nakit girişleri 32.141.099 Bin TL olmuştur.",
+        "relevant_keywords": [
+            "32.141.099",
+            "Borçlanmadan Kaynaklanan"
+        ]
+    },
+    {
+        "id": "q_096",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılında Ödenen Temettüler (kar payı) tutarı nakit akış tablosunda ne kadar raporlanmıştır?",
+        "ground_truth": "2025 yılında Ödenen Temettüler -7.135.514 Bin TL olarak raporlanmıştır.",
+        "relevant_keywords": [
+            "-7.135.514",
+            "Ödenen Temettüler"
+        ]
+    },
+    {
+        "id": "q_097",
+        "document_name": "tofas.pdf",
+        "question": "2025 yılında nakit akış tablosuna göre Alınan Faiz tutarı ne kadardır?",
+        "ground_truth": "2025 yılında Alınan Faiz 5.146.943 Bin TL'dir.",
+        "relevant_keywords": [
+            "5.146.943",
+            "Alınan Faiz"
+        ]
+    },
+    {
+        "id": "q_098",
+        "document_name": "tofas.pdf",
+        "question": "Nakit ve Nakit Benzerlerine İlişkin Enflasyon Etkisi 2025 yılı için ne kadardır?",
+        "ground_truth": "2025 yılı için Nakit ve Nakit Benzerlerine İlişkin Enflasyon Etkisi -6.090.676 Bin TL'dir.",
+        "relevant_keywords": [
+            "-6.090.676",
+            "Enflasyon Etkisi"
+        ]
+    },
+    {
+        "id": "q_099",
+        "document_name": "tofas.pdf",
+        "question": "Nakit akış tablosuna göre 2025 yılı Dönem Başı Nakit ve Nakit Benzerleri bakiyesi ne kadardı?",
+        "ground_truth": "Dönem Başı Nakit ve Nakit Benzerleri 24.712.830 Bin TL idi.",
+        "relevant_keywords": [
+            "24.712.830",
+            "Dönem Başı"
+        ]
+    },
+    {
+        "id": "q_100",
+        "document_name": "tofas.pdf",
+        "question": "Nakit akış tablosuna göre 2025 yılı Dönem Sonu Nakit ve Nakit Benzerleri bakiyesi ne kadar gerçekleşmiştir?",
+        "ground_truth": "2025 yılı Dönem Sonu Nakit ve Nakit Benzerleri 19.693.056 Bin TL olarak gerçekleşmiştir.",
+        "relevant_keywords": [
+            "19.693.056",
+            "Dönem Sonu"
         ]
     }
 ]

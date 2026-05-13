@@ -26,7 +26,7 @@ import { ToastProvider, useToast } from './hooks/useToast.jsx'
 // React StrictMode in development mounts components twice to detect side effects.
 // Keep one-time startup logic idempotent across that double-mount cycle.
 let hasInitializedAppOnce = false
-let hasCheckedApiKeyOnce = false
+let hasShownOllamaNoticeOnce = false
 
 function AppContent() {
     const [files, setFiles] = useState([])
@@ -113,21 +113,14 @@ function AppContent() {
         initializeApp()
     }, [])
 
-    // Check API key on mount
+    // Ollama bağlantı hatırlatıcısı
     useEffect(() => {
-        if (hasCheckedApiKeyOnce) return
-        hasCheckedApiKeyOnce = true
+        if (hasShownOllamaNoticeOnce) return
+        hasShownOllamaNoticeOnce = true
 
-        const currentSettings = storageFacade.settings.load()
-        if (!currentSettings.apiKey || currentSettings.apiKey.trim() === '') {
-            // Open settings modal automatically if no API key
-            setTimeout(() => {
-                setSettingsOpen(true)
-                showError('Lütfen Gemini API anahtarınızı yapılandırın')
-            }, 500)
-        } else {
-            console.log('✅ API key configured')
-        }
+        setTimeout(() => {
+            console.log('💡 Ollama servisi için: ollama serve komutunu çalıştırın')
+        }, 500)
     }, [])
 
     // Auto-save current conversation when messages change

@@ -33,7 +33,6 @@ export const storageFacade = {
         save: SettingsStorage.saveSettings,
         reset: SettingsStorage.resetSettings,
         validate: SettingsStorage.validateSettings,
-        validateApiKey: SettingsStorage.validateApiKey
     },
 
     vectors: {

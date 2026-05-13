@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
-import { X, Eye, EyeOff, RotateCcw, Save, Settings as SettingsIcon, Wifi, WifiOff, Terminal, Brain } from 'lucide-react'
-import { validateApiKey, validateSettings } from '../services/settingsStorage'
+import { X, RotateCcw, Save, Settings as SettingsIcon, Wifi, WifiOff, Terminal, Brain } from 'lucide-react'
+import { validateSettings } from '../services/settingsStorage'
 import { checkHealth } from '../services/chromaDBService'
 import { RAG_METHODS } from '../services/ragService'
 
 export default function Settings({ isOpen, currentSettings, onSave, onClose, onChromaConnected }) {
     const [settings, setSettings] = useState(currentSettings)
-    const [showApiKey, setShowApiKey] = useState(false)
     const [hasChanges, setHasChanges] = useState(false)
     const [showResetConfirm, setShowResetConfirm] = useState(false)
     const [chromaStatus, setChromaStatus] = useState(null) // null | 'checking' | 'ok' | 'error'
@@ -64,9 +63,8 @@ export default function Settings({ isOpen, currentSettings, onSave, onClose, onC
             chunkSize: 1000,
             topK: 4,
             temperature: 0.7,
-            model: 'gemini-2.0-flash-exp',
+            model: 'gemma4:e2b-it-q4_K_M',
             chromaDBUrl: 'http://localhost:8000'
-            // API key is preserved
         })
         setShowResetConfirm(false)
     }
@@ -112,7 +110,6 @@ export default function Settings({ isOpen, currentSettings, onSave, onClose, onC
         }
     }
 
-    const isApiKeyValid = validateApiKey(settings.apiKey)
     const chunkSizeChanged = settings.chunkSize !== currentSettings.chunkSize
 
     const setupCommands = [
@@ -150,48 +147,6 @@ export default function Settings({ isOpen, currentSettings, onSave, onClose, onC
 
                 {/* Content */}
                 <div className="flex-1 overflow-y-auto p-6 space-y-6">
-                    {/* API Key Section */}
-                    <div className="space-y-3">
-                        <div className="flex items-center gap-2">
-                            <h3 className="text-lg font-semibold text-gray-200">Gemini API Anahtarı</h3>
-                            {isApiKeyValid && (
-                                <span className="text-xs text-green-400 bg-green-500/20 px-2 py-0.5 rounded">✓ Geçerli</span>
-                            )}
-                        </div>
-                        <div className="relative">
-                            <input
-                                type={showApiKey ? 'text' : 'password'}
-                                value={settings.apiKey}
-                                onChange={(e) => handleChange('apiKey', e.target.value)}
-                                placeholder="AIzaSy..."
-                                className="w-full px-4 py-3 pr-12 bg-slate-900 border border-slate-600 rounded-lg text-gray-200
-                                         placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500"
-                            />
-                            <button
-                                onClick={() => setShowApiKey(!showApiKey)}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-slate-700 rounded transition-colors"
-                                title={showApiKey ? 'Gizle' : 'Göster'}
-                            >
-                                {showApiKey ? (
-                                    <EyeOff className="w-5 h-5 text-gray-400" />
-                                ) : (
-                                    <Eye className="w-5 h-5 text-gray-400" />
-                                )}
-                            </button>
-                        </div>
-                        <p className="text-sm text-gray-400">
-                            API anahtarınızı{' '}
-                            <a
-                                href="https://aistudio.google.com/apikey"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-primary-400 hover:text-primary-300 underline"
-                            >
-                                Google AI Studio
-                            </a>
-                            {' '}adresinden alabilirsiniz.
-                        </p>
-                    </div>
 
                     {/* Ollama Section */}
                     <div className="space-y-4 pt-4 border-t border-slate-700">
@@ -478,19 +433,22 @@ export default function Settings({ isOpen, currentSettings, onSave, onClose, onC
 
                         {/* Model Selection */}
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-300">Model</label>
+                            <label className="text-sm font-medium text-gray-300">Model (Ollama)</label>
                             <select
                                 value={settings.model}
                                 onChange={(e) => handleChange('model', e.target.value)}
                                 className="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-gray-200
                                          focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500"
                             >
-                                <option value="gemini-3.1-flash-lite-preview">Gemini 3.1 Flash-Lite (Yeni - Hızlı)</option>
-                                <option value="gemini-3-flash-preview">Gemini 3 Flash (Dengeli ve Hızlı)</option>
-                                <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
-                                <option value="gemini-2.5-flash-lite">Gemini 2.5 Flash-Lite (Ekonomik)</option>
-                                <option value="gemma-3-27b-it">Gemma 3 27B (En Ekonomik)</option>
+                                <option value="gemma4:e2b-it-q4_K_M">Gemma 4 2B (Varsayılan - Hafif)</option>
+                                <option value="gemma3:1b">Gemma 3 1B (En Hızlı)</option>
+                                <option value="gemma3:4b">Gemma 3 4B (Dengeli)</option>
+                                <option value="llama3.2:3b">Llama 3.2 3B (Alternatif)</option>
+                                <option value="qwen2.5:7b">Qwen 2.5 7B (Güçlü)</option>
                             </select>
+                            <p className="text-xs text-gray-500">
+                                Modeli indirmek için: <code className="text-green-400 font-mono">ollama pull {settings.model}</code>
+                            </p>
                         </div>
                         {/* RAG Method Selection */}
                         <div className="space-y-3">
@@ -505,24 +463,21 @@ export default function Settings({ isOpen, currentSettings, onSave, onClose, onC
                                     <button
                                         key={method.id}
                                         onClick={() => handleChange('ragMethod', method.id)}
-                                        className={`flex items-start gap-2 p-3 rounded-lg border text-left transition-all ${
-                                            settings.ragMethod === method.id
-                                                ? 'border-primary-500 bg-primary-500/15 shadow-md shadow-primary-500/10'
-                                                : 'border-slate-600 bg-slate-900/60 hover:border-slate-500 hover:bg-slate-800'
-                                        }`}
+                                        className={`flex items-start gap-2 p-3 rounded-lg border text-left transition-all ${settings.ragMethod === method.id
+                                            ? 'border-primary-500 bg-primary-500/15 shadow-md shadow-primary-500/10'
+                                            : 'border-slate-600 bg-slate-900/60 hover:border-slate-500 hover:bg-slate-800'
+                                            }`}
                                     >
                                         <span className="text-xl shrink-0 mt-0.5">{method.icon}</span>
                                         <div className="min-w-0">
-                                            <p className={`text-xs font-semibold line-clamp-2 leading-tight ${
-                                                settings.ragMethod === method.id ? 'text-primary-300' : 'text-gray-200'
-                                            }`}>
+                                            <p className={`text-xs font-semibold line-clamp-2 leading-tight ${settings.ragMethod === method.id ? 'text-primary-300' : 'text-gray-200'
+                                                }`}>
                                                 {method.name}
                                             </p>
-                                            <span className={`inline-block text-[10px] px-1.5 py-0.5 rounded mt-0.5 ${
-                                                settings.ragMethod === method.id
-                                                    ? 'bg-primary-500/30 text-primary-200'
-                                                    : 'bg-slate-700 text-gray-400'
-                                            }`}>
+                                            <span className={`inline-block text-[10px] px-1.5 py-0.5 rounded mt-0.5 ${settings.ragMethod === method.id
+                                                ? 'bg-primary-500/30 text-primary-200'
+                                                : 'bg-slate-700 text-gray-400'
+                                                }`}>
                                                 {method.badge}
                                             </span>
                                         </div>
@@ -549,24 +504,22 @@ export default function Settings({ isOpen, currentSettings, onSave, onClose, onC
                                         <div className="space-y-1">
                                             <p className="text-[10px] text-gray-500 uppercase tracking-wide">Hız</p>
                                             <div className="flex gap-1">
-                                                {[1,2,3,4,5].map(i => (
-                                                    <div key={i} className={`h-1.5 flex-1 rounded-full ${
-                                                        i <= RAG_METHODS[settings.ragMethod].speed
-                                                            ? 'bg-green-400'
-                                                            : 'bg-slate-700'
-                                                    }`} />
+                                                {[1, 2, 3, 4, 5].map(i => (
+                                                    <div key={i} className={`h-1.5 flex-1 rounded-full ${i <= RAG_METHODS[settings.ragMethod].speed
+                                                        ? 'bg-green-400'
+                                                        : 'bg-slate-700'
+                                                        }`} />
                                                 ))}
                                             </div>
                                         </div>
                                         <div className="space-y-1">
                                             <p className="text-[10px] text-gray-500 uppercase tracking-wide">Kalite</p>
                                             <div className="flex gap-1">
-                                                {[1,2,3,4,5].map(i => (
-                                                    <div key={i} className={`h-1.5 flex-1 rounded-full ${
-                                                        i <= RAG_METHODS[settings.ragMethod].quality
-                                                            ? 'bg-primary-400'
-                                                            : 'bg-slate-700'
-                                                    }`} />
+                                                {[1, 2, 3, 4, 5].map(i => (
+                                                    <div key={i} className={`h-1.5 flex-1 rounded-full ${i <= RAG_METHODS[settings.ragMethod].quality
+                                                        ? 'bg-primary-400'
+                                                        : 'bg-slate-700'
+                                                        }`} />
                                                 ))}
                                             </div>
                                         </div>
@@ -590,11 +543,10 @@ export default function Settings({ isOpen, currentSettings, onSave, onClose, onC
                                     <button
                                         key={opt.value}
                                         onClick={() => handleChange('responseLanguage', opt.value)}
-                                        className={`flex flex-col items-center gap-1 py-2.5 px-2 rounded-lg border text-center transition-all ${
-                                            (settings.responseLanguage ?? 'auto') === opt.value
-                                                ? 'border-primary-500 bg-primary-500/15 shadow-sm shadow-primary-500/10'
-                                                : 'border-slate-600 bg-slate-900/60 hover:border-slate-500 hover:bg-slate-800'
-                                        }`}
+                                        className={`flex flex-col items-center gap-1 py-2.5 px-2 rounded-lg border text-center transition-all ${(settings.responseLanguage ?? 'auto') === opt.value
+                                            ? 'border-primary-500 bg-primary-500/15 shadow-sm shadow-primary-500/10'
+                                            : 'border-slate-600 bg-slate-900/60 hover:border-slate-500 hover:bg-slate-800'
+                                            }`}
                                     >
                                         <span className={`text-xs font-semibold ${(settings.responseLanguage ?? 'auto') === opt.value ? 'text-primary-300' : 'text-gray-200'}`}>
                                             {opt.label}

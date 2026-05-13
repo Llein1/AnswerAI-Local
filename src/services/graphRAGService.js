@@ -3,67 +3,26 @@
  * Real GraphRAG implementation — Microsoft paper (Edge et al., 2024)
  *
  * INDEXING (per file, runs once):
- *   Chunks → Entity/Relation Extraction (Gemini) → Knowledge Graph
+ *   Chunks → Entity/Relation Extraction (Ollama LLM) → Knowledge Graph
  *         → Greedy Louvain Community Detection
- *         → Community Summarization (Gemini)
+ *         → Community Summarization (Ollama LLM)
  *         → IndexedDB (graphData table)
  *
  * LOCAL SEARCH (per query):
  *   Query → Entity Extraction → Subgraph Traversal (1-hop)
  *         → Community Summaries + ChromaDB chunk lookup → Context
  *
- * Rate limits (Free Tier):
- *   - 30 requests / minute  (RPM)
- *   - 15,000 input tokens / minute (TPM)
+ * Local LLM (Ollama) kullanıldığı için rate-limit süreleri kaldırıldı.
  */
 
 import { invokeLLM, createEmbedding } from './geminiService'
 import { queryChunks, getChunksByFile } from './chromaDBService'
 import { loadGraphData, saveGraphData, hasGraphData } from './indexedDBService'
 
-// ─── Rate Limiter ─────────────────────────────────────────────────────────────
+// ─── Direct LLM Call (No rate limiting needed for local Ollama) ──────────────
 
-const _RPM_LIMIT = 30
-const _TPM_LIMIT = 15000
-const _MIN_DELAY_MS = 2200   // ~60 000 / 30 + 200 ms safety margin
-
-const _callWindow = []  // { ts: number, tokens: number }[]
-
-async function _rateLimitedLLMCall(prompt) {
-    const now = Date.now()
-    const estTokens = Math.ceil(prompt.length / 4)
-
-    // Prune entries older than 60 s
-    while (_callWindow.length > 0 && now - _callWindow[0].ts > 60_000) {
-        _callWindow.shift()
-    }
-
-    const windowReqs   = _callWindow.length
-    const windowTokens = _callWindow.reduce((s, e) => s + e.tokens, 0)
-
-    let waitMs = _MIN_DELAY_MS
-
-    if (windowReqs >= _RPM_LIMIT - 2 && _callWindow.length > 0) {
-        const needed = _callWindow[0].ts + 61_000 - Date.now()
-        if (needed > waitMs) {
-            console.log(`[GraphRAG Rate] RPM eşiği (${windowReqs}/dk), ${Math.ceil(needed / 1000)}s bekleniyor`)
-            waitMs = needed
-        }
-    }
-
-    if (windowTokens + estTokens > _TPM_LIMIT * 0.88 && _callWindow.length > 0) {
-        const needed = _callWindow[0].ts + 61_000 - Date.now()
-        if (needed > waitMs) {
-            console.log(`[GraphRAG Rate] Token eşiği (~${windowTokens} token), ${Math.ceil(needed / 1000)}s bekleniyor`)
-            waitMs = needed
-        }
-    }
-
-    await new Promise(r => setTimeout(r, Math.max(waitMs, 0)))
-
-    const response = await invokeLLM(prompt)
-    _callWindow.push({ ts: Date.now(), tokens: estTokens })
-    return response
+async function _callLLM(prompt) {
+    return await invokeLLM(prompt)
 }
 
 // ─── JSON Utilities ───────────────────────────────────────────────────────────

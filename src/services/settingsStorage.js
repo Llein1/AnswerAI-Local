@@ -7,16 +7,15 @@ const STORAGE_KEY = 'answerAI_settings'
 
 // Default settings configuration
 export const DEFAULT_SETTINGS = {
-    apiKey: '',
     chunkSize: 1000,
     chunkOverlap: 200,  // Auto-calculated as chunkSize / 5
     topK: 4,
     minSimilarity: 0.3, // Cosine similarity eşiği (literatür standardı: 0.3)
     temperature: 0.7,
     maxOutputTokens: 2048,
-    model: 'gemini-2.5-flash',
+    model: 'gemma4:e2b-it-q4_K_M',
     chromaDBUrl: 'http://localhost:8000',
-    ollamaUrl: 'http://localhost:11434',  // Local Ollama embedding server
+    ollamaUrl: 'http://localhost:11434',  // Local Ollama server (hem embedding hem LLM)
     ragMethod: 'naive',      // RAG retrieval yöntemi
     responseLanguage: 'auto' // Yanıt dili: 'auto' | 'tr' | 'en'
 }
@@ -82,11 +81,6 @@ export function saveSettings(settings) {
 export function validateSettings(settings) {
     const errors = []
 
-    // API Key validation (optional but should be string)
-    if (settings.apiKey !== undefined && typeof settings.apiKey !== 'string') {
-        errors.push('API key must be a string')
-    }
-
     // Chunk size validation
     if (!Number.isInteger(settings.chunkSize) || settings.chunkSize < 500 || settings.chunkSize > 2000) {
         errors.push('Chunk size must be between 500 and 2000')
@@ -114,13 +108,13 @@ export function validateSettings(settings) {
         errors.push('maxOutputTokens must be between 256 and 8192')
     }
 
-    // Model validation
+    // Model validation (Ollama modelleri)
     const validModels = [
-        'gemini-3.1-flash-lite-preview',
-        'gemini-3-flash-preview',
-        'gemini-2.5-flash',
-        'gemini-2.5-flash-lite',
-        'gemma-3-27b-it'
+        'gemma4:e2b-it-q4_K_M',
+        'gemma3:1b',
+        'gemma3:4b',
+        'llama3.2:3b',
+        'qwen2.5:7b'
     ]
     if (!validModels.includes(settings.model)) {
         errors.push(`Model must be one of: ${validModels.join(', ')}`)
@@ -150,15 +144,8 @@ export function validateSettings(settings) {
  */
 export function resetSettings() {
     try {
-        // Keep API key when resetting (don't lose user's key)
-        const current = loadSettings()
-        const resetted = {
-            ...DEFAULT_SETTINGS,
-            apiKey: current.apiKey  // Preserve API key
-        }
-
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(resetted))
-        console.log('✅ Settings reset to defaults (API key preserved)')
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_SETTINGS))
+        console.log('✅ Settings reset to defaults')
         return true
     } catch (error) {
         console.error('Failed to reset settings:', error)
@@ -166,16 +153,3 @@ export function resetSettings() {
     }
 }
 
-/**
- * Validate API key format
- * @param {string} key - API key to validate
- * @returns {boolean} - True if format is valid
- */
-export function validateApiKey(key) {
-    if (!key || typeof key !== 'string') {
-        return false
-    }
-
-    // Basic format check: should start with "AIza" and be reasonably long
-    return key.startsWith('AIza') && key.length > 30
-}
